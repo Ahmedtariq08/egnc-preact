@@ -1,0 +1,40 @@
+{
+  "name": "sample-ojet-app",
+  "version": "1.0.0",
+  "description": "An Oracle JavaScript Extension Toolkit(JET) web app",
+  "dependencies": {
+    "@oracle/oraclejet": "~15.0.0",
+    "@oracle/oraclejet-core-pack": "~15.0.0"
+  },
+  "devDependencies": {
+    "@oracle/ojet-cli": "~15.0.0",
+    "@prefresh/babel-plugin": "0.5.0",
+    "@prefresh/webpack": "4.0.0",
+    "@types/node": "18.16.3",
+    "clean-webpack-plugin": "4.0.0",
+    "compression-webpack-plugin": "10.0.0",
+    "copy-webpack-plugin": "11.0.0",
+    "css-fix-url-loader": "1.0.2",
+    "css-loader": "6.8.1",
+    "extract-zip": "^1.7.0",
+    "fs-extra": "^8.1.0",
+    "glob": "7.2.0",
+    "html-replace-webpack-plugin": "2.6.0",
+    "html-webpack-plugin": "5.5.3",
+    "mini-css-extract-plugin": "2.7.6",
+    "noop-loader": "1.0.0",
+    "raw-loader": "4.0.2",
+    "style-loader": "3.3.3",
+    "ts-loader": "8.4.0",
+    "typescript": "5.0.4",
+    "underscore": "^1.10.2",
+    "webpack": "5.75.0",
+    "webpack-dev-server": "4.15.1",
+    "webpack-merge": "5.9.0",
+    "yargs-parser": "13.1.2"
+  },
+  "engines": {
+    "node": ">=12.21.0"
+  },
+  "private": true
+}
