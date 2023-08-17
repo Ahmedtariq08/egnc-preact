@@ -2,9 +2,9 @@ import { registerCustomElement } from "ojs/ojvcomponent";
 import { h } from "preact";
 import { useEffect } from "preact/hooks";
 import Context = require("ojs/ojcontext");
-import { Footer } from "./footer";
-import { Header } from "./header";
-import { Content } from "./content/index";
+import { Footer } from "./components/footer";
+import { Header } from "./components/header";
+import { Content } from "./components/content/index";
 
 type Props = Readonly<{
   appName?: string;
@@ -17,12 +17,12 @@ export const App = registerCustomElement(
     useEffect(() => {
       Context.getPageContext().getBusyContext().applicationBootstrapComplete();
     }, []);
-    
+
     return (
       <div id="appContainer" class="oj-web-applayout-page">
         <Header
-          appName={appName} 
-          userLogin={userLogin} 
+          appName={appName}
+          userLogin={userLogin}
         />
         <Content />
         <Footer />
