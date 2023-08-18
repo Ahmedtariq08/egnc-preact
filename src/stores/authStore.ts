@@ -1,4 +1,9 @@
+import { APIs } from "../api/endpoints";
 import { makeAutoObservable, runInAction } from "mobx";
+import { store } from "./store";
+import { AxiosError } from "axios";
+
+
 
 //used for login page and storing user auth data
 export default class AuthStore {
@@ -15,15 +20,26 @@ export default class AuthStore {
     }
 
     loginUser = async (username: string, password: string) => {
-        this.loginLoader = true;
-        try {
-
-        } catch (error) {
-            console.log(error) //handle error better
-        } finally {
-            runInAction(() => {
-                this.loginLoader = false;
-            })
+        if (!username || !password) {
+            store.commonStore.showNotification("error", "Both username and password are required");
+        } else {
+            this.loginLoader = true;
+            try {
+                const response = await APIs.AUTH.loginUser(username, password);
+                const token = response.token
+                runInAction(() => {
+                    this.token = token;
+                })
+                store.commonStore.showNotification("confirmation", `Login success: ${token}`);
+            } catch (error) {
+                const message = (error as AxiosError).response?.data;
+                store.commonStore.showNotification("error", `${message ?? 'Login failed'}`);
+            } finally {
+                runInAction(() => {
+                    this.loginLoader = false;
+                })
+            }
         }
+
     }
 }

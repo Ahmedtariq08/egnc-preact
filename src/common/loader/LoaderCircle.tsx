@@ -11,6 +11,7 @@ export type CustomLoader = {
 
 export const LoaderCircle = (props: CustomLoader) => {
     const { isLoading, text = "Loading ...", styleClasses } = props;
+    console.log(isLoading);
     const classesToApply = styleClasses ? `loader-center ${styleClasses}` : 'loader-center';
     const Circle = () => {
         return (<div>

@@ -10,6 +10,7 @@ import { LoaderCircle } from '../../common/loader/LoaderCircle';
 import { Footer } from "../../components/app-layout/Footer";
 import Notification from "../../components/notification/Notification";
 import { observer } from "mobx-react-lite";
+import { useStore } from "../../stores/store";
 
 const passwordValidator = [new AsyncLengthValidator({
     max: 32, countBy: "codeUnit",
@@ -47,25 +48,17 @@ export const LoginPage = observer(() => {
     );
 })
 
-const CredentialsForm = () => {
+const CredentialsForm = observer(() => {
     const navigate = useNavigate();
+
+    const { authStore } = useStore();
 
     const [userName, setUserName] = useState<string>("");
     const [password, setPassword] = useState<string>("");
-    const [showLoader, setShowLoader] = useState(false);
+    // const [showLoader, setShowLoader] = useState(false);
 
     const signIn = () => {
-        console.log("sign in");
-
-        // if (userName && password) {
-        //     AuthService.setUsernameInStorage(userName);
-        //     setTimeout(() => {
-        //         navigate(Paths.DASHBOARD);
-        //     }, 2000)
-
-        // } else {
-        //     dispatch(showNotification(getNotification("error", "Both User Name and Password are required.")));
-        // }
+        authStore.loginUser(userName, password);
     };
 
     const ssoSignIn = () => {
@@ -90,8 +83,6 @@ const CredentialsForm = () => {
         );
     }
 
-
-    console.log("component rendered")
     return (
         <div className="oj-web-applayout-content oj-flex oj-sm-align-items-center oj-sm-flex-direction-column oj-sm-margin-12x-top">
             <oj-form-layout id="personal-information" direction="column">
@@ -122,7 +113,7 @@ const CredentialsForm = () => {
                 ></oj-input-password>
                 <oj-button onClick={signIn} class='oj-sm-width-full oj-md-margin-8x-top'>Sign In</oj-button>
             </oj-form-layout>
-            <LoaderCircle isLoading={showLoader} text='  ' styleClasses='oj-sm-margin-12x-top' />
+            <LoaderCircle isLoading={authStore.loginLoader} text='  ' styleClasses='oj-sm-margin-12x-top' />
         </div>
     )
-}
+})
