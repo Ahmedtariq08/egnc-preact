@@ -1,32 +1,25 @@
-// import { registerCustomElement } from "ojs/ojvcomponent";
-// import { h } from "preact";
-// import { useEffect } from "preact/hooks";
-// import Context = require("ojs/ojcontext");
-// import { Footer } from "./components/app-layout/footer";
-// import { Header } from "./components/app-layout/header";
-// import { Content } from "./components/content/index";
+import { customElement, GlobalProps } from 'ojs/ojvcomponent';
+import { Component, ComponentChild } from 'preact';
+import Context = require('ojs/ojcontext');
+import "./app.css";
+import { RouterProvider } from 'react-router-dom';
+import { router } from './routes/Router';
+import { StoreContext, store } from './stores/store';
 
-// type Props = Readonly<{
-//   appName?: string;
-//   userLogin?: string;
-// }>;
 
-// export const App = registerCustomElement(
-//   "app-root",
-//   ({ appName = "App Name", userLogin = "john.hancock@oracle.com" }: Props) => {
-//     useEffect(() => {
-//       Context.getPageContext().getBusyContext().applicationBootstrapComplete();
-//     }, []);
+@customElement('app-root')
+export default class App extends Component<GlobalProps> {
+  render(): ComponentChild {
+    return (
+      <StoreContext.Provider value={store}>
+        <RouterProvider router={router} />
+      </StoreContext.Provider>
+    );
+  }
 
-//     return (
-//       <div id="appContainer" class="oj-web-applayout-page">
-//         <Header
-//           appName={appName}
-//           userLogin={userLogin}
-//         />
-//         <Content />
-//         <Footer />
-//       </div>
-//     );
-//   }
-// );
+  componentDidMount() {
+    Context.getPageContext().getBusyContext().applicationBootstrapComplete();
+  }
+}
+
+

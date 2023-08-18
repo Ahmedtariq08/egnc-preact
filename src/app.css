@@ -6,38 +6,157 @@
         This is where any of your application specific styles should be included
 */
 .demo-oracle-icon {
-    width:137px;
-    height:18px
+    width: 137px;
+    height: 18px
 }
 
+/* Icons */
+.gosaas-icon {
+    content: url("assets/images/gosaas_logo_128.png");
+    height: 34px;
+    width: 96px;
+}
+
+
 .demo-oracle-icon:before {
-    content:url("images/oracle_logo.svg")
+    content: url("assets/images/oracle_logo.svg")
 }
 
 html:not([dir="rtl"]) .demo-oracle-icon {
-    padding-right:4px
+    padding-right: 4px
 }
 
 html[dir="rtl"] .demo-oracle-icon {
-    padding-left:4px
+    padding-left: 4px
 }
 
 .demo-oracle-icon:before {
-    display:inline
+    display: inline
 }
 
 .demo-appheader-avatar {
-    width:24px;
-    height:24px
+    width: 24px;
+    height: 24px
 }
 
 .demo-appheader-avatar:before {
-    content:url("images/avatar_24px.png")
+    content: url("assets/images/avatar_24px.png")
 }
-@media (-webkit-min-device-pixel-ratio: 1.5), (min-resolution: 144dpi), (min-resolution: 1.5dppx) {
+
+@media (-webkit-min-device-pixel-ratio: 1.5),
+(min-resolution: 144dpi),
+(min-resolution: 1.5dppx) {
     .demo-appheader-avatar:before {
-        content:url("images/avatar_24px_2x.png");
-        -webkit-transform:translate(-25%, -25%) scale(0.5);
-        transform:translate(-25%, -25%) scale(0.5)
+        content: url("assets/images/avatar_24px_2x.png");
+        -webkit-transform: translate(-25%, -25%) scale(0.5);
+        transform: translate(-25%, -25%) scale(0.5)
     }
+}
+
+/* Main app container */
+.app-container {
+    overflow: auto;
+    position: relative;
+    top: 4rem;
+}
+
+.app-content-container {
+    margin: 1.8rem 4rem;
+    overflow: auto;
+}
+
+/* Loader circle */
+.loader-center {
+    margin-right: auto;
+    margin-left: auto;
+    display: flex;
+    justify-content: center;
+}
+
+/* Login page classes */
+.or-text {
+    margin: 0 10px;
+    font-size: 16px;
+}
+
+.textContainer {
+    margin-right: auto;
+    margin-left: auto;
+    display: flex;
+    min-height: 260px;
+    justify-content: center;
+}
+
+.text {
+    display: flex;
+    flex-direction: column;
+    align-self: flex-end;
+    padding-bottom: 40px;
+}
+
+.head1 {
+    font-family: Georgia;
+    font-size: 30px;
+    font-weight: 400;
+    color: #fff;
+    text-align: left;
+    letter-spacing: 0.01em;
+    display: block;
+    margin-bottom: 4px;
+}
+
+.head2 {
+    font-family: Georgia;
+    font-size: 36px;
+    color: #fff;
+    text-align: left;
+    letter-spacing: 0.01em;
+    max-width: 100vw;
+}
+
+.logo {
+    width: 74px;
+    height: 42px;
+    margin-right: 20px
+}
+
+/* Custom popup classes */
+.popup {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    z-index: 160;
+}
+
+.layer {
+    z-index: 150;
+    /* ojet adds 100 z index to footer by default */
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.popup-inner {
+    position: relative;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    margin: auto;
+    background: white;
+}
+
+.popup-fadeOut {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s linear 300ms, opacity 300ms;
+}
+
+.popup-fadeIn {
+    visibility: visible;
+    opacity: 1;
+    transition: visibility 0s linear 0s, opacity 300ms;
 }
