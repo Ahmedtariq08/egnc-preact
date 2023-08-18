@@ -1,6 +1,6 @@
 import { createContext, useContext } from "react";
 import CommonStore from "./commonStore";
-import AuthStore from "./authStore";
+import AuthStore from "./auth/authStore";
 
 
 interface Store {

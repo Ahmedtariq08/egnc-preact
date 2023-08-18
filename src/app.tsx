@@ -4,7 +4,7 @@ import Context = require('ojs/ojcontext');
 import "./app.css";
 import { RouterProvider } from 'react-router-dom';
 import { router } from './routes/Router';
-import { StoreContext, store } from './stores/store';
+import { StoreContext, store } from './modules/store';
 
 
 @customElement('app-root')

@@ -10,7 +10,7 @@ import { LoaderCircle } from '../../common/loader/LoaderCircle';
 import { Footer } from "../../components/app-layout/Footer";
 import Notification from "../../components/notification/Notification";
 import { observer } from "mobx-react-lite";
-import { useStore } from "../../stores/store";
+import { useStore } from "../../modules/store";
 
 const passwordValidator = [new AsyncLengthValidator({
     max: 32, countBy: "codeUnit",

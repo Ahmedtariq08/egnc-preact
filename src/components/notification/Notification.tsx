@@ -2,7 +2,7 @@ import { ojMessage } from "@oracle/oraclejet/ojmessage";
 import { observer } from "mobx-react-lite";
 import "ojs/ojmessages";
 import { useEffect, useState } from 'preact/hooks';
-import { useStore } from "../../stores/store";
+import { useStore } from "../../modules/store";
 import MutableArrayDataProvider = require('ojs/ojmutablearraydataprovider');
 
 const Notifications = () => {

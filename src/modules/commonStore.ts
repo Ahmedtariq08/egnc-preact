@@ -18,5 +18,9 @@ export default class CommonStore {
         }];
     }
 
+    clearNotifications = () => {
+        this.notifications = [];
+    }
+
 
 }

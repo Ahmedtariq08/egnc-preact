@@ -1,9 +1,6 @@
-import { FunctionComponent } from 'react';
-import { Navigate, RouteObject, createBrowserRouter } from 'react-router-dom';
-import { Footer } from "../components/app-layout/Footer";
-import { Header } from "../components/app-layout/Header";
-import Notifications from '../components/notification/Notification';
-import { LoginPage } from '../views/login/Login';
+import { RouteObject, createBrowserRouter } from 'react-router-dom';
+import { Main } from './Main';
+import Dashboard from '../views/dashboard/Dashboard';
 
 const Paths = {
     Root: '/',
@@ -14,6 +11,7 @@ const Paths = {
 //used in Link to={} or useNavigate
 export const NavigateTo = {
     Login: Paths.Root,
+    Dashboard: `/${Paths.Dashboard}`
 
 }
 
@@ -21,7 +19,10 @@ export const NavigateTo = {
 export const routes: RouteObject[] = [
     {
         path: Paths.Root,
-        element: <LoginPage />,
+        element: <Main />,
+        children: [
+            { path: Paths.Dashboard, element: <Dashboard /> }
+        ]
         // children: [
         //     {
         //         element: <RequireAuth />, children: [
@@ -44,22 +45,4 @@ export const routes: RouteObject[] = [
 ]
 
 export const router = createBrowserRouter(routes);
-
-// const PageWrapper = (Component: FunctionComponent) => {
-//     const isAuthenticated = AuthService.getUsernameFromStorage();
-//     const WrappedPage = () => {
-//         return (
-//         <div id="appContainer" class="oj-web-applayout-page">
-//             <Header />
-//             <div class="app-container">
-//                 <div class="app-content-container">
-//                     <Component />
-//                 </div>
-//             </div>
-//             <Notifications />
-//             <Footer />
-//         </div>)
-//     }
-//     return isAuthenticated ? <WrappedPage /> : <Navigate to={Paths.LOGIN} />
-// }
 
