@@ -1,8 +1,11 @@
 import { observer } from "mobx-react-lite"
+import { Greetings } from "./components/Greetings";
 
 const DashboardView = () => {
     return (
-        <h1>Dashboard</h1>
+        <div className="dashboard-background">
+            <Greetings />
+        </div>
     )
 }
 

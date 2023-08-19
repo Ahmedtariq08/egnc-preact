@@ -1,16 +1,23 @@
 /*
-    Document   : override
-    Created on : <date>
-    Author     : <author>
+    Created on : <14th August, 2023>
+    Author     : <Ahmed Tariq>
     Description:
         This is where any of your application specific styles should be included
 */
+:root {
+    --top-header-margin: 3.3rem
+}
+
+body {
+    margin: 0
+}
+
 .demo-oracle-icon {
     width: 137px;
     height: 18px
 }
 
-/* Icons */
+/* ANCHOR - Images / Icons */
 .gosaas-icon {
     content: url("assets/images/gosaas_logo_128.png");
     height: 34px;
@@ -21,6 +28,11 @@
     content: url("assets/images/eg&c-logo.png");
     height: 30px;
     width: 30px;
+}
+
+.dashboard-background {
+    background-image: url("assets/images/backgroundcard.png");
+    height: 430px;
 }
 
 
@@ -59,27 +71,41 @@ html[dir="rtl"] .demo-oracle-icon {
     }
 }
 
-/* Main app container */
+/* ANCHOR - App layout */
 .app-container {
     overflow: auto;
     position: relative;
-    top: 4rem;
+    top: var(--top-header-margin);
 }
 
 .app-content-container {
-    margin: 1.8rem 4rem;
+    /* margin: 1.8rem 4rem; */
     overflow: auto;
 }
 
-/* Loader circle */
-.loader-center {
-    margin-right: auto;
-    margin-left: auto;
-    display: flex;
-    justify-content: center;
+.drawer-height {
+    height: calc(100vh - var(--top-header-margin) - 4px);
+    overflow: hidden;
 }
 
-/* Login page classes */
+/*Drawers*/
+.drawer-start {
+    min-width: 12.5rem;
+    height: calc(100% - var(--top-header-margin) - 4px);
+    margin-top: 15px;
+}
+
+.oj-drawer-reflow-wrapper.oj-drawer-reflow,
+.oj-drawer-overlay {
+    overflow-y: none !important;
+}
+
+.oj-drawer-start {
+    border: none !important;
+    overflow: hidden !important;
+}
+
+/* ANCHOR - Login Page */
 .or-text {
     margin: 0 10px;
     font-size: 16px;
@@ -126,7 +152,18 @@ html[dir="rtl"] .demo-oracle-icon {
     margin-right: 20px
 }
 
-/* Custom popup classes */
+/* ANCHOR - Dashboard Page */
+.greeting {
+    font-weight: 100;
+    color: white;
+    font-family: Georgia, Times, Times New Roman, serif;
+    font-size: 36px;
+    text-align: start;
+    margin: auto;
+    padding-top: 30px;
+}
+
+/* ANCHOR - Custom popup */
 .popup {
     position: fixed;
     width: 100%;
@@ -165,4 +202,12 @@ html[dir="rtl"] .demo-oracle-icon {
     visibility: visible;
     opacity: 1;
     transition: visibility 0s linear 0s, opacity 300ms;
+}
+
+/* ANCHOR - Custom Loader */
+.loader-center {
+    margin-right: auto;
+    margin-left: auto;
+    display: flex;
+    justify-content: center;
 }
