@@ -4,9 +4,9 @@ import { store } from "../store";
 import { AxiosError } from "axios";
 import { NavigateTo, router } from "../../routes/Router";
 
-
-
-//used for login page and storing user auth data
+/**
+ * @classdesc Used for login page and storing user auth data
+ */
 export default class AuthStore {
     isLoggedIn: boolean = false;
     userPemissions: UserPermissionsStorage | undefined = undefined;
@@ -15,6 +15,20 @@ export default class AuthStore {
 
     constructor() {
         makeAutoObservable(this);
+    }
+
+    //Used in main wrapper component whenever a new page loads it populates the store with permissions in local storage
+    populateAuth = () => {
+        const token = AuthService.getTokenFromStorage();
+        const permissions = AuthService.getPermissionsFromStorage();
+        if (token === null || permissions === null) {
+            this.isLoggedIn = false;
+            AuthService.clearStorage();
+            router.navigate(NavigateTo.Login);
+        } else {
+            this.isLoggedIn = true;
+            this.userPemissions = permissions;
+        }
     }
 
     //Used on landing page to see if user is already authenticated, then redirect to dashboard
@@ -65,6 +79,7 @@ export default class AuthStore {
                     this.userPemissions = processedPermissions;
                     this.isLoggedIn = true;
                 });
+                store.commonStore.clearNotifications();
                 router.navigate(NavigateTo.Dashboard);
             } catch (error) {
                 const message = (error as AxiosError).response?.data;
@@ -83,6 +98,7 @@ export default class AuthStore {
             AuthService.clearStorage();
             this.userPemissions = undefined;
             this.isLoggedIn = false;
+            router.navigate(NavigateTo.Login);
         } catch (error) {
             console.log(error);
         }

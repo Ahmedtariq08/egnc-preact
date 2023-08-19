@@ -3,11 +3,6 @@ import { makeAutoObservable } from "mobx";
 
 export default class CommonStore {
     notifications: ojMessage.Message[] = [];
-    isDrawerOpened: boolean = false;
-
-    constructor() {
-        makeAutoObservable(this)
-    }
 
     showNotification = (severity: ojMessage.Message['severity'], summary: string, detail?: string, autoTimeout?: number, timestamp?: string) => {
         this.notifications = [{
@@ -22,10 +17,4 @@ export default class CommonStore {
     clearNotifications = () => {
         this.notifications = [];
     }
-
-    toggleDrawer = () => {
-        this.isDrawerOpened = !this.isDrawerOpened;
-    }
-
-
 }

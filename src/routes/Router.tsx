@@ -1,8 +1,8 @@
 import { RouteObject, createBrowserRouter } from 'react-router-dom';
-import { Main } from './Main';
 import Dashboard from '../views/dashboard/Dashboard';
 import { LandingPage } from '../views/landing-view/LandingPage';
 import { LoginPage } from '../views/login/Login';
+import { Main } from './Main';
 
 const Paths = {
     Root: '/',
@@ -17,7 +17,8 @@ const Paths = {
 export const NavigateTo = {
     Root: Paths.Root,
     Login: Paths.Login,
-    Dashboard: `${Paths.EGNC}/${Paths.Dashboard}`
+    Dashboard: `${Paths.EGNC}/${Paths.Dashboard}`,
+    ProductManagement: (id: string) => `${Paths.EGNC}/${Paths.ProductManagement}/${id}`
 }
 
 

@@ -8,15 +8,11 @@ import { LoginPage } from "../views/login/Login";
 import Notifications from '../components/notification/Notification';
 
 export const Main = observer(() => {
-    // const { authStore: { isLoggedIn, checkSignedIn } } = useStore();
+    const { authStore: { populateAuth } } = useStore();
 
-    // useEffect(() => {
-    //     checkSignedIn();
-    // }, [checkSignedIn])
-
-    // if (!isLoggedIn) {
-    //     return <LoginPage />
-    // }
+    useEffect(() => {
+        populateAuth();
+    }, [populateAuth])
 
     return (
         <div id="appContainer" class="oj-web-applayout-page">

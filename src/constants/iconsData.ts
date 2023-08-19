@@ -65,7 +65,9 @@ export const Icons = {
     submit: "oj-ux-ico-send",
     view: "oj-ux-ico-view",
     textFile: "oj-ux-ico-file-text",
-    drawer: "oj-ux-ico-menu"
+    drawer: "oj-ux-ico-menu",
+    home: "oj-ux-ico-home half",
+    star: "oj-ux-ico-star half"
   },
   blockIcons: {
     generalInfo: "oj-ux-ico-page-header",
