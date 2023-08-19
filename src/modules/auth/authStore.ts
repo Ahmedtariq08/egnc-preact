@@ -10,14 +10,43 @@ import { NavigateTo, router } from "../../routes/Router";
 export default class AuthStore {
     isLoggedIn: boolean = false;
     userPemissions: UserPermissionsStorage | undefined = undefined;
-    loginLoader = false;
+    loginLoader = false; //login page
+    appLoader = false;  //landing page
 
     constructor() {
         makeAutoObservable(this);
     }
 
-    private setLoggedIn = () => {
-        this.isLoggedIn = AuthService.getTokenFromStorage() !== null && !!this.userPemissions;
+    //Used on landing page to see if user is already authenticated, then redirect to dashboard
+    //If not logged in, then redirect to login page
+    checkSignedIn = async () => {
+        const token = AuthService.getTokenFromStorage();
+        const permissions = AuthService.getPermissionsFromStorage();
+        if (token === null || permissions === null) {
+            this.isLoggedIn = false;
+            AuthService.clearStorage();
+            router.navigate(NavigateTo.Login);
+        } else {
+            this.appLoader = true;
+            try {
+                await Auth.permissions();
+                runInAction(() => {
+                    this.isLoggedIn = true;
+                    this.userPemissions = permissions;
+                });
+                router.navigate(NavigateTo.Dashboard);
+            } catch (error) {
+                runInAction(() => {
+                    this.isLoggedIn = false;
+                    AuthService.clearStorage();
+                });
+                router.navigate(NavigateTo.Login);
+            } finally {
+                runInAction(() => {
+                    this.appLoader = false;
+                })
+            }
+        }
     }
 
     //Logs in the user and sets token and permission in local storage.
@@ -34,7 +63,7 @@ export default class AuthStore {
                     const processedPermissions = AuthService.processPermissions(permissions);
                     AuthService.setPermissionsInStorage(processedPermissions);
                     this.userPemissions = processedPermissions;
-                    this.setLoggedIn();
+                    this.isLoggedIn = true;
                 });
                 router.navigate(NavigateTo.Dashboard);
             } catch (error) {
@@ -53,7 +82,7 @@ export default class AuthStore {
             await Auth.logoutUser();
             AuthService.clearStorage();
             this.userPemissions = undefined;
-            this.setLoggedIn();
+            this.isLoggedIn = false;
         } catch (error) {
             console.log(error);
         }

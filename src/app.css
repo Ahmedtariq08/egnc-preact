@@ -17,6 +17,12 @@
     width: 96px;
 }
 
+.leaf-icon {
+    content: url("assets/images/eg&c-logo.png");
+    height: 30px;
+    width: 30px;
+}
+
 
 .demo-oracle-icon:before {
     content: url("assets/images/oracle_logo.svg")

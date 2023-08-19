@@ -51,11 +51,8 @@ export class AuthService {
         }
 
         public static getPermissionsFromStorage = (): UserPermissionsStorage | null => {
-                let permissions = null;
-                if (localStorage.has(permissionSessionEntry)) {
-                        permissions = JSON.parse(localStorage.getItem(permissionSessionEntry)!);
-                }
-                return permissions;
+                let permissions = localStorage.getItem(permissionSessionEntry);
+                return permissions ? JSON.parse(permissions) : null;
         }
 
         public static processPermissions = (permissions: UserPermissions): UserPermissionsStorage => {

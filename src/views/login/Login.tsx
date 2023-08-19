@@ -1,3 +1,4 @@
+import { observer } from "mobx-react-lite";
 import AsyncLengthValidator from "ojs/ojasyncvalidator-length";
 import "ojs/ojbutton";
 import 'ojs/ojformlayout';
@@ -5,11 +6,9 @@ import "ojs/ojinputtext";
 import 'ojs/ojlabel';
 import "ojs/ojmessages";
 import { useState } from 'preact/hooks';
-import { useNavigate, useLocation } from 'react-router-dom';
 import { LoaderCircle } from '../../common/loader/LoaderCircle';
 import { Footer } from "../../components/app-layout/Footer";
 import Notification from "../../components/notification/Notification";
-import { observer } from "mobx-react-lite";
 import { useStore } from "../../modules/store";
 
 const passwordValidator = [new AsyncLengthValidator({
@@ -49,13 +48,10 @@ export const LoginPage = observer(() => {
 })
 
 const CredentialsForm = observer(() => {
-    const navigate = useNavigate();
-
     const { authStore } = useStore();
 
     const [userName, setUserName] = useState<string>("");
     const [password, setPassword] = useState<string>("");
-    // const [showLoader, setShowLoader] = useState(false);
 
     const signIn = () => {
         authStore.loginUser(userName, password);
@@ -73,21 +69,10 @@ const CredentialsForm = observer(() => {
         value == "invalidShown" && setUserName("");
     }
 
-    const Divider = () => {
-        return (
-            <div className='oj-flex oj-sm-flex-direction-row oj-sm-margin-4x-vertical'>
-                <hr className="oj-sm-width-2/5" />
-                <span className="oj-sm-width-1/5" style={{ textAlign: 'center' }}>or</span>
-                <hr className="oj-sm-width-2/5" />
-            </div>
-        );
-    }
-
     return (
         <div className="oj-web-applayout-content oj-flex oj-sm-align-items-center oj-sm-flex-direction-column oj-sm-margin-12x-top">
             <oj-form-layout id="personal-information" direction="column">
                 <oj-button onClick={ssoSignIn} class='oj-sm-width-full oj-md-margin-8x-top' chroming="callToAction">Company Single Sign-on</oj-button>
-                {/* <Divider /> */}
                 <hr />
                 <oj-input-text
                     id="username"
