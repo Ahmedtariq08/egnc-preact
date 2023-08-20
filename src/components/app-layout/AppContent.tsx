@@ -4,13 +4,13 @@ import "ojs/ojdrawerlayout";
 import "ojs/ojnavigationlist";
 import { useEffect } from 'react';
 import { Outlet } from "react-router-dom";
-import { Footer } from "../components/app-layout/Footer";
-import { Header } from "../components/app-layout/header/Header";
-import Notifications from '../components/notification/Notification';
-import { useStore } from "../modules/store";
-import { Drawer } from "../components/app-layout/Drawer";
+import { Footer } from "./Footer";
+import { Header } from "./header/Header";
+import Notifications from '../notification/Notification';
+import { useStore } from "../../modules/store";
+import { Drawer } from "./Drawer";
 
-export const Main = observer(() => {
+export const AppContent = observer(() => {
     const { authStore: { populateAuth }, layoutStore: { isDrawerOpened } } = useStore();
 
     useEffect(() => {
