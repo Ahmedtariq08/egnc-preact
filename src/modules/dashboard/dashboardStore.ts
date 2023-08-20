@@ -1,7 +1,7 @@
 import { makeAutoObservable } from "mobx";
 import { ConveyorBeltCard, DashboardService } from "./dashboardService";
 import { store } from "../../modules/store";
-import { AuthService } from "../../modules/auth/authService";
+import { AuthService, UserPermissionsStorage } from "../../modules/auth/authService";
 
 export default class DashboardStore {
     conveyorBeltCards: ConveyorBeltCard[] = [];
@@ -11,6 +11,11 @@ export default class DashboardStore {
     }
 
     loadAllCards = () => {
+        this.loadConveyorCards();
+    }
+
+    /*This is also needed in layout store to populate drawer on refresh */
+    loadConveyorCards = () => {
         const permissions = AuthService.getPermissionsFromStorage();
         if (permissions && permissions.roles) {
             const conveyorCards = DashboardService.getConveyorBeltCards(permissions.roles);

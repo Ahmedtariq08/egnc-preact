@@ -1,19 +1,16 @@
 import { observer } from "mobx-react-lite";
 import "ojs/ojactioncard";
-import "ojs/ojconveyorbelt";
 import "ojs/ojavatar";
-import { ConveyorBeltCard } from "../../../modules/dashboard/dashboardService";
+import "ojs/ojconveyorbelt";
 import { useStore } from "../../../modules/store";
-import { router } from "../../../routes/Router";
-import { Paths, getRedirectionPath } from "../../../routes/paths";
-
+import { Paths, navigateToPath } from "../../../routes/redirection";
 
 const ConveyorBelt = () => {
     const { dashboardStore: { conveyorBeltCards } } = useStore();
 
     const redirection = (event: any, link: Paths) => {
         event.preventDefault();
-        router.navigate(getRedirectionPath(link as any));
+        navigateToPath(link as any);
     }
 
     return (

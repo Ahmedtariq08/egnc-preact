@@ -11,7 +11,7 @@ import { useStore } from "../../../modules/store";
 import { ButtonComponent } from "../../../common/button/ButtonComponent";
 import { Icons } from "../../../constants/iconsData";
 import { HeaderToolbar } from "./HeaderToolbar";
-import { Paths, getRedirectionPath } from "../../../routes/paths";
+import { Paths, getRedirectionPath } from "../../../routes/redirection";
 
 export const Header = observer(() => {
   const { layoutStore } = useStore();

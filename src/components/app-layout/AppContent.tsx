@@ -11,11 +11,12 @@ import { useStore } from "../../modules/store";
 import { Drawer } from "./Drawer";
 
 export const AppContent = observer(() => {
-    const { authStore: { populateAuth }, layoutStore: { isDrawerOpened } } = useStore();
+    const { authStore: { populateAuth }, layoutStore: { isDrawerOpened }, dashboardStore: { loadAllCards } } = useStore();
 
     useEffect(() => {
         populateAuth();
-    }, [populateAuth])
+        loadAllCards();
+    }, [populateAuth, loadAllCards])
 
     return (
         <div id="appContainer" class="oj-web-applayout-page">

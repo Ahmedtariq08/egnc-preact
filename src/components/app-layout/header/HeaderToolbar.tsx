@@ -3,7 +3,7 @@ import { useStore } from "../../../modules/store";
 import { ButtonComponent } from "../../../common/button/ButtonComponent";
 import { Icons } from "../../../constants/iconsData";
 import { FavouritesAndRecents } from "./FavouritesRecents";
-
+import { navigateToPath, Paths } from '../../../routes/redirection'
 
 export const HeaderToolbar = observer(() => {
     const { authStore } = useStore();
@@ -13,12 +13,12 @@ export const HeaderToolbar = observer(() => {
         console.log("reset password");
     }
 
-    const redirectToDashboard = () => {
-        console.log("redirecting to dashbaord");
-    }
-
     const HomeButton = () => {
-        return <ButtonComponent buttonTitle="Dashboard" icon={Icons.icons.home} ojAction={redirectToDashboard} />
+        return <ButtonComponent
+            buttonTitle="Dashboard"
+            icon={Icons.icons.home}
+            ojAction={() => navigateToPath(Paths.Dashboard)}
+        />
     }
 
     return (
