@@ -1,7 +1,6 @@
 import { makeAutoObservable } from "mobx";
+import { AuthService } from "../../modules/auth/authService";
 import { ConveyorBeltCard, DashboardCardRow, DashboardService } from "./dashboardService";
-import { store } from "../../modules/store";
-import { AuthService, UserPermissionsStorage } from "../../modules/auth/authService";
 
 export default class DashboardStore {
     cardsAreSet = false;

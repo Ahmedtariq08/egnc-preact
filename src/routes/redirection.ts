@@ -1,5 +1,5 @@
 import { router } from "./Router";
-import { Paths, NavData } from "./paths";
+import { Paths } from "./paths";
 
 type Redirect =
     | { page: Paths.Root }
