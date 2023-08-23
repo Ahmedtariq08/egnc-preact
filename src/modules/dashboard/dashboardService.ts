@@ -1,6 +1,10 @@
 import { NavData, Paths, RoleToPathMap } from '../../routes/paths';
-import { UserPermissionsStorage } from "../auth/authService";
+import { AuthService, UserPermissionsStorage } from "../auth/authService";
+import { requests } from "../../api/apiClient";
+import { getRedirectionPath } from '../../routes/redirection';
+import { Constants } from '../../constants/constants';
 
+//ANCHOR - Interfaces / Constants
 export interface DashboardCardRow {
     label: string,
     count: number,
@@ -17,11 +21,22 @@ export interface ConveyorBeltCard {
     link: Paths
 }
 
-export class DashboardService {
+const ShowObjectCard = { item: true, mpn: true, partGroup: true }
+const ShowPendingCard = { pendingApprovals: true, pendingRequests: true }
 
-    // public arePermissionsSet = () : boolean => {
-    //     return ![null, undefined].includes(getUserId());
-    // }
+
+//ANCHOR - APIs
+const DashboardApi = {
+    getItems: (body: {}) => requests.post<{ result: any[] }>('MainService/item/advanceSearch/', body),
+    getPartGroups: (body: {}) => requests.post<{ result: any[] }>('MainService/partGroup//advanceSearch/', body),
+    getMpns: (body: {}) => requests.post<{ result: any[] }>('MainService/manufacturer/advanceSearch/', body),
+    getPendingRequests: () => requests.get<any[]>(`MainService/declaration/?state=${Constants.WORKFLOWSTATES.OPEN_TO_SUPPLIER}`),
+    getPendingApprovals: () => requests.get<any[]>(`MainService/declaration/?state=${Constants.WORKFLOWSTATES.OPEN_TO_MANAGER}`),
+}
+
+
+//ANCHOR - Service
+export class DashboardService {
 
     public static getConveyorBeltCards = (roles: UserPermissionsStorage['roles']): ConveyorBeltCard[] => {
         const userRoles = roles.map(role => role.name);
@@ -47,71 +62,108 @@ export class DashboardService {
     }
 
 
-    // public getObjectsNeedingDeclarationCards = async () : Promise<DashboardCardRow[]> => {
-    //     if (isManager()) {
-    //         let cards: DashboardCardRow[] = [];
-    //         const todaysDate = new Date();
-    //         const sevenDaysAgo = new Date();
-    //         const userId = getUserId();
-    //         sevenDaysAgo.setDate(todaysDate.getDate() - 6);
-    //         const data = { page: 0, size: 100, userId, affectedObjectId: ["", "null"] };
-    //         const [itemVisible, mpnVisible, partGroupVisible] = Object.values(Config.OBJECT_card);
-    //         const [startDate, endDate] = [sevenDaysAgo, todaysDate].map(d => d.toISOString().split('T')[0]);
-    //         const dataWithCreationDate = { ...data, creationDate: [[startDate, endDate], "between"] };
-    //         const dataWithInsertionDate = { ...data, insertionDate: [[startDate, endDate], "between"] };
-    //         const dataWithInsertionDateAndCompliance = { ...dataWithInsertionDate, compliance: ["", "null"] };
+    public static getObjectsNeedingDeclarationCards = async (): Promise<DashboardCardRow[] | undefined> => {
+        const permissions = AuthService.getPermissionsFromStorage();
+        let cards: DashboardCardRow[] | undefined = undefined;
+        if (permissions?.isManager) {
+            const todaysDate = new Date();
+            const sevenDaysAgo = new Date();
+            const userId = permissions.id;
+            sevenDaysAgo.setDate(todaysDate.getDate() - 6);
+            const data = { page: 0, size: 100, userId, affectedObjectId: ["", "null"] };
+            const [itemVisible, mpnVisible, partGroupVisible] = Object.values(ShowObjectCard);
+            const [startDate, endDate] = [sevenDaysAgo, todaysDate].map(d => d.toISOString().split('T')[0]);
+            const dataWithCreationDate = { ...data, creationDate: [[startDate, endDate], "between"] };
+            const dataWithInsertionDate = { ...data, insertionDate: [[startDate, endDate], "between"] };
+            const dataWithInsertionDateAndCompliance = { ...dataWithInsertionDate, compliance: ["", "null"] };
+            let mpnCount = 0;
+            let itemCount = 0;
+            let partGroupCount = 0;
+            try {
+                const [items, mpns, partGroups] = await Promise.all([
+                    DashboardApi.getItems(dataWithInsertionDateAndCompliance),
+                    DashboardApi.getMpns(dataWithInsertionDate),
+                    DashboardApi.getPartGroups(dataWithCreationDate)
+                ]);
+                mpnCount = mpnVisible ? mpns?.result?.length : 0;
+                itemCount = itemVisible ? items?.result?.length : 0;
+                partGroupCount = partGroupVisible ? partGroups?.result?.length : 0;
+            } catch (error) {
+                console.log(error);
+                cards = undefined;
+            }
+            cards = [
+                {
+                    label: "Items",
+                    count: itemCount,
+                    superscript: itemCount == 100,
+                    class: "oj-text-color-danger",
+                    visibility: itemVisible,
+                    link: getRedirectionPath(Paths.ProductManagement, { category: "item" })
+                },
+                {
+                    label: "Manufacturer Parts",
+                    count: mpnCount,
+                    superscript: mpnCount == 100,
+                    class: "oj-text-color-secondary",
+                    visibility: mpnVisible,
+                    link: getRedirectionPath(Paths.ProductManagement, { category: "mpn" })
+                },
+                {
+                    label: "Part Groups",
+                    count: partGroupCount,
+                    superscript: partGroupCount == 100,
+                    class: "oj-text-color-warning",
+                    visibility: partGroupVisible,
+                    link: getRedirectionPath(Paths.ProductManagement, { category: "partGroup" })
+                },
+            ];
+            cards = cards.filter(card => card.visibility);
+        }
 
+        return cards;
+    }
 
-    //         const [items, mpns, partGroups] = await Promise.all([
-    //             this.generatePostCall(URLS.ITEMS, dataWithInsertionDateAndCompliance),
-    //             this.generatePostCall(URLS.MPNS, dataWithInsertionDate), 
-    //             this.generatePostCall(URLS.PART_GROUP, dataWithCreationDate)
-    //         ]);
-    //         const mpnCount = mpnVisible ? (await mpns.json()).result.length : 0;
-    //         const itemCount = itemVisible ? (await items.json()).result.length : 0;
-    //         const partGroupCount = partGroupVisible ? (await partGroups.json()).result.length : 0;
+    public static getPendingDataCards = async (): Promise<DashboardCardRow[] | undefined> => {
+        let cards: DashboardCardRow[] | undefined = undefined;
+        const permissions = AuthService.getPermissionsFromStorage();
+        if (permissions?.isManager || permissions?.isAdmin) {
+            const [approvals, requests] = await Promise.all([DashboardService.loadPendingApprovalsCount(), DashboardService.loadPendingRequestsCount()]);
+            cards = [...approvals, ...requests];
+        } else if (permissions?.isSupplier) {
+            cards = await this.loadPendingRequestsCount();
+        }
+        return cards;
+    }
 
-    //         cards.push({label: "Items", count: itemCount, superscript: itemCount == 100, class: "oj-text-color-danger", visibility: itemVisible, link: generateHref(PAGES.ITEM_SEARCH, undefined, undefined, {fetchNewlyAddedAffectedObject: "Item"}) })
-    //         cards.push({label: "Manufacturer Parts", count: mpnCount, superscript: mpnCount == 100, class: "oj-text-color-secondary", visibility: mpnVisible, link: generateHref(PAGES.ITEM_SEARCH, undefined, undefined, {fetchNewlyAddedAffectedObject: "Manufacturer Part"}) })
-    //         cards.push({label: "Part Groups", count: partGroupCount, superscript: partGroupCount == 100, class: "oj-text-color-warning", visibility: partGroupVisible, link: generateHref(PAGES.ITEM_SEARCH, undefined, undefined, {fetchNewlyAddedAffectedObject: "Part Group"}) })
-    //         return cards.filter(card => card.visibility);
-    //     } 
-    //     return undefined;
-    // }
+    private static loadPendingRequestsCount = async () => {
+        const isCardVisible = ShowPendingCard.pendingRequests;
+        if (isCardVisible) {
+            const response = await DashboardApi.getPendingRequests();
+            return [{
+                label: "Pending Requests",
+                count: response.length,
+                class: "oj-text-color-danger",
+                visibility: isCardVisible,
+                link: getRedirectionPath(Paths.PendingRequests),
+            }]
+        }
+        return [];
+    }
 
-    // public getPendingDataCards = async () : Promise<DashboardCardRow[]> => {
-    //     let cards: DashboardCardRow[] = undefined;
-    //     if (isManager() || isAdmin()) {
-    //         const [approvals, requests] = await Promise.all([this.loadPendingApprovalsCount(), this.loadPendingRequestsCount()]);
-    //         cards = [...approvals, ...requests];
-    //     } else if (isSupplier()) {
-    //         cards = await this.loadPendingRequestsCount();
-    //     }
-    //     return cards;
-    // }
-
-    // private generatePostCall = (url: string, body: Object): Promise<Response> => {
-    //     return fetch(url, { credentials: "include", method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body)})
-    // }
-
-    // private loadPendingRequestsCount = async () => {
-    //     let pendingReqCards: DashboardCardRow[] = [];
-    //     const isCardVisible = Config.THINGS_card.pendingReq; 
-    //     if (isCardVisible) {
-    //       var response = await RestUtils.get(URLS.PENDING_REQUESTS);
-    //       pendingReqCards.push({label: "Pending Requests", count: response.length, class: "oj-text-color-danger", link: generateHref(PAGES.PENDING_REQUESTS), visibility: isCardVisible});
-    //     }
-    //     return pendingReqCards;
-    // }
-
-    // private loadPendingApprovalsCount = async () => {
-    //     let pendingReqCards: DashboardCardRow[] = [];
-    //     const isCardVisible = Config.THINGS_card.pendingApprovals; 
-    //     if (isCardVisible) {
-    //       var response = await RestUtils.get(URLS.PENDING_APPROVALS);
-    //       pendingReqCards.push({label: "Pending Approvals", count: response.length, class: "oj-text-color-success", link: generateHref(PAGES.PENDING_APPROVALS), visibility: isCardVisible});
-    //     }
-    //     return pendingReqCards;
-    // }
+    private static loadPendingApprovalsCount = async () => {
+        const isCardVisible = ShowPendingCard.pendingApprovals;
+        if (isCardVisible) {
+            const response = await DashboardApi.getPendingApprovals();
+            return [{
+                label: "Pending Approvals",
+                count: response.length,
+                class: "oj-text-color-success",
+                visibility: isCardVisible,
+                link: getRedirectionPath(Paths.PendingApprovals),
+            }]
+        }
+        return [];
+    }
 
 }

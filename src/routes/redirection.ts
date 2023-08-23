@@ -5,9 +5,9 @@ type Redirect =
     | { page: Paths.Root }
     | { page: Paths.Login }
     | { page: Paths.Dashboard }
-    | { page: Paths.ProductManagement; params: { category: string } }
-    | { page: Paths.PendingRequests; params: { id: number, itemNumber: string } }
-    | { page: Paths.PendingApprovals; params: { id: number, mpnPartNumber: string } }
+    | { page: Paths.ProductManagement; params: { category: "item" | "mpn" | "partGroup" | "all" } }
+    | { page: Paths.PendingRequests }
+    | { page: Paths.PendingApprovals }
     | { page: Paths.AdminPanel }
     | { page: Paths.Reports }
     | { page: Paths.Dossiers }
@@ -72,5 +72,15 @@ export const navigateToPath = <Page extends Redirect['page']>(
     }
     router.navigate(outputPath);
 };
+
+/**
+ * @description Still in testing phase, used when link is already embedded in UI elements
+ * @param link 
+ */
+export const navigateToLink = (link: string) => {
+    if (link) {
+        router.navigate(link);
+    }
+}
 
 export { Paths };
