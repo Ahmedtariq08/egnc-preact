@@ -13,18 +13,13 @@ const DashboardView = () => {
     }, [loadAllCards]);
 
     return (
-        <>
-            <div className="dashboard-background">
-                <div className='greetings-conveyor-container'>
-                    <Greetings />
-                    <ConveyorBelt />
-                    <CountCards />
-                </div>
+        <div className="dashboard-background">
+            <div className='greetings-conveyor-container'>
+                <Greetings />
+                <ConveyorBelt />
+                <CountCards />
             </div>
-
-        </>
-
-
+        </div>
     )
 }
 

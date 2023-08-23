@@ -32,7 +32,7 @@ body {
 
 .dashboard-background {
     background-image: url("assets/images/backgroundcard.png");
-    height: 100%;
+    height: calc(100vh - var(--top-header-margin) - 4px);
     /* height: 430px; */
 }
 
@@ -203,48 +203,6 @@ html[dir="rtl"] .demo-oracle-icon {
     font-weight: 400;
     color: #fff;
 }
-
-/* Declaration cards */
-/* .declaration-cards-container {
-    position: relative;
-    top: 44%;
-    transform: translate(-70%, -36%);
-    left: 80%;
-    width: 80%
-} */
-/* 
-#cardStyle {
-    display: flex;
-    flex-direction: row;
-    position: relative;
-    top: 44%;
-    transform: translate(-70%, -36%);
-    left: 50%;
-}
-
-#objectsCard {
-    width: 31rem;
-    display: inline-grid;
-}
-
-.ttf-2 {
-    height: 230px;
-    width: 384px;
-    text-align: start;
-}
-
-.greeting_2 {
-    color: white;
-    font-size: 20px;
-    text-align: start;
-    margin: auto;
-}
-
-#dashboardTable {
-    border-collapse: collapse;
-    background-color: whitesmoke;
-    border-radius: 6px;
-} */
 
 /* ANCHOR - Custom popup */
 .popup {

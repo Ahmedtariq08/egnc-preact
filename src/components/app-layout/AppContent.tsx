@@ -10,6 +10,7 @@ import Notifications from '../notification/Notification';
 import { useStore } from "../../modules/store";
 import { Drawer } from "./Drawer";
 import { updateDocumentTitle } from "../../routes/paths";
+import { SkeletonTheme } from "react-loading-skeleton";
 
 export const AppContent = observer(() => {
     const { authStore: { populateAuth }, layoutStore: { isDrawerOpened }, dashboardStore: { loadAllCards } } = useStore();
@@ -28,7 +29,14 @@ export const AppContent = observer(() => {
             <div class="app-container">
                 <oj-drawer-layout startOpened={isDrawerOpened} class="drawer-height" style={{ border: 0 }}>
                     <div class="app-content-container">
-                        <Outlet />
+                        <SkeletonTheme
+                            baseColor="#5294e0"
+                            highlightColor="#96c7ff"
+                            borderRadius="0.5rem"
+                            duration={4}
+                        >
+                            <Outlet />
+                        </SkeletonTheme>
                     </div>
                     <Drawer />
                 </oj-drawer-layout>
