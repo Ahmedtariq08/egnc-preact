@@ -10,6 +10,8 @@ import { LoaderCircle } from '../../common/loader/LoaderCircle';
 import { Footer } from "../../components/app-layout/Footer";
 import Notification from "../../components/notification/Notification";
 import { useStore } from "../../modules/store";
+import { useLocation } from "react-router-dom";
+import { updateDocumentTitle } from "../../routes/paths";
 
 const passwordValidator = [new AsyncLengthValidator({
     max: 32, countBy: "codeUnit",
@@ -19,6 +21,9 @@ const passwordValidator = [new AsyncLengthValidator({
 
 
 export const LoginPage = observer(() => {
+
+    const location = useLocation();
+    updateDocumentTitle(location.pathname);
 
     const SignInHeader = () => {
         return (

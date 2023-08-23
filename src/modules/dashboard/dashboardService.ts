@@ -99,7 +99,7 @@ export class DashboardService {
                     superscript: itemCount == 100,
                     class: "oj-text-color-danger",
                     visibility: itemVisible,
-                    link: getRedirectionPath(Paths.ProductManagement, { category: "item" })
+                    link: getRedirectionPath(Paths.ProductManagementFetch, { category: "item" })
                 },
                 {
                     label: "Manufacturer Parts",
@@ -107,7 +107,7 @@ export class DashboardService {
                     superscript: mpnCount == 100,
                     class: "oj-text-color-secondary",
                     visibility: mpnVisible,
-                    link: getRedirectionPath(Paths.ProductManagement, { category: "mpn" })
+                    link: getRedirectionPath(Paths.ProductManagementFetch, { category: "mpn" })
                 },
                 {
                     label: "Part Groups",
@@ -115,7 +115,7 @@ export class DashboardService {
                     superscript: partGroupCount == 100,
                     class: "oj-text-color-warning",
                     visibility: partGroupVisible,
-                    link: getRedirectionPath(Paths.ProductManagement, { category: "partGroup" })
+                    link: getRedirectionPath(Paths.ProductManagementFetch, { category: "partGroup" })
                 },
             ];
             cards = cards.filter(card => card.visibility);

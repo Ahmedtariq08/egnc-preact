@@ -3,15 +3,19 @@ import "ojs/ojbutton";
 import "ojs/ojdrawerlayout";
 import "ojs/ojnavigationlist";
 import { useEffect } from 'react';
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import { Footer } from "./Footer";
 import { Header } from "./header/Header";
 import Notifications from '../notification/Notification';
 import { useStore } from "../../modules/store";
 import { Drawer } from "./Drawer";
+import { updateDocumentTitle } from "../../routes/paths";
 
 export const AppContent = observer(() => {
     const { authStore: { populateAuth }, layoutStore: { isDrawerOpened }, dashboardStore: { loadAllCards } } = useStore();
+
+    const location = useLocation();
+    updateDocumentTitle(location.pathname);
 
     useEffect(() => {
         populateAuth();

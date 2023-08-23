@@ -5,7 +5,8 @@ type Redirect =
     | { page: Paths.Root }
     | { page: Paths.Login }
     | { page: Paths.Dashboard }
-    | { page: Paths.ProductManagement; params: { category: "item" | "mpn" | "partGroup" | "all" } }
+    | { page: Paths.ProductManagement }
+    | { page: Paths.ProductManagementFetch; params: { category: "item" | "mpn" | "partGroup" } }
     | { page: Paths.PendingRequests }
     | { page: Paths.PendingApprovals }
     | { page: Paths.AdminPanel }
@@ -64,11 +65,6 @@ export const navigateToPath = <Page extends Redirect['page']>(
     } catch (error) {
         console.log('Error in redirection');
         console.log(error);
-    }
-    //route to path
-    const displayName = NavData.get(page)?.displayName;
-    if (displayName) {
-        document.title = displayName;
     }
     router.navigate(outputPath);
 };

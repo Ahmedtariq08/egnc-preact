@@ -7,6 +7,7 @@ export enum Paths {
     EGNC = '/egnc',
     Dashboard = 'dashboard',
     ProductManagement = 'product-management',
+    ProductManagementFetch = 'product-management/:category',
     PendingRequests = 'pending-requests',
     PendingApprovals = 'pending-approvals',
     AdminPanel = 'admin-panel',
@@ -17,7 +18,7 @@ export enum Paths {
 //ANCHOR - Navigation setting for paths used in dashboard cards, sidebar, breadcrumbs, favorites and recents
 interface PathDetails {
     displayName: string,
-    order?: number,
+    order?: number, //required for order in drawer and conveyor cards
     icon?: string,
 }
 
@@ -31,6 +32,34 @@ export const NavData = new Map<Paths, PathDetails>([
     [Paths.Reports, { displayName: "Reports", order: 5, icon: Icons.icons.reports }],
     [Paths.Dossiers, { displayName: "Dossiers", order: 6, icon: Icons.icons.dossiers }],
 ]);
+
+
+const defaultDocumentTitle = 'EG&C';
+/**
+ * @usage Updates the document title from respective displayName in NavData
+ * @param location 
+ */
+export const updateDocumentTitle = (location: string) => {
+    const getDocumentTitle = (location: string) => {
+        const locationData = NavData.get(location as Paths)
+        if (locationData) {
+            return locationData.displayName;
+        }
+        const arr = location.split('/');
+        for (const path of arr) {
+            const currentPath = path as Paths;
+            const navData = NavData.get(currentPath);
+            if (navData) {
+                return navData.displayName || defaultDocumentTitle;
+            }
+        }
+        return defaultDocumentTitle;
+    }
+    const documentTitle = getDocumentTitle(location);
+    document.title = documentTitle;
+}
+
+
 
 /* Mapping used in dashboard cards and side drawer over path access for roles */
 export const RoleToPathMap = new Map<UserRole, Paths[]>([

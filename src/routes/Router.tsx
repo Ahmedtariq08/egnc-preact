@@ -22,6 +22,7 @@ export const routes: RouteObject[] = [
         children: [
             { path: Paths.Dashboard, element: <Dashboard /> },
             { path: Paths.ProductManagement, element: <ProductManagement /> },
+            { path: Paths.ProductManagementFetch, element: <ProductManagement /> },
             { path: Paths.PendingRequests, element: <PendingView /> },
             { path: Paths.PendingApprovals, element: <PendingView /> },
             { path: Paths.AdminPanel, element: <Dashboard /> },
