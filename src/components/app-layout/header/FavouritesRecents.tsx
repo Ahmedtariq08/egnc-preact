@@ -37,10 +37,6 @@ export const FavouritesAndRecents = () => {
 
     const [selectedTab, setSelectedTab] = useState<FavAndRecent>(FavAndRecent.Recents);
 
-    useEffect(() => {
-        console.log(selectedTab);
-    }, [selectedTab]);
-
     const getFavouritesAndRecents = () => {
         console.log("api call goes");
     }

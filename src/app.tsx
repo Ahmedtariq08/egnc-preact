@@ -1,11 +1,10 @@
 import { customElement, GlobalProps } from 'ojs/ojvcomponent';
 import { Component, ComponentChild } from 'preact';
-import Context = require('ojs/ojcontext');
-import "./app.css";
 import { RouterProvider } from 'react-router-dom';
+import "./app.css";
+import { store, StoreContext } from './modules/store';
 import { router } from './routes/Router';
-import { StoreContext, store } from './modules/store';
-
+import Context = require('ojs/ojcontext');
 
 @customElement('app-root')
 export default class App extends Component<GlobalProps> {
@@ -21,5 +20,3 @@ export default class App extends Component<GlobalProps> {
     Context.getPageContext().getBusyContext().applicationBootstrapComplete();
   }
 }
-
-

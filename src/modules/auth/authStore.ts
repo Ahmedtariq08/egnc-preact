@@ -2,7 +2,7 @@ import { Auth, UserPermissionsStorage, AuthService } from "./authService";
 import { makeAutoObservable, reaction, runInAction } from "mobx";
 import { store } from "../store";
 import { AxiosError } from "axios";
-import { NavigateTo, router } from "../../routes/Router";
+import { Paths, navigateToPath } from '../../routes/redirection'
 
 /**
  * @classdesc Used for login page and storing user auth data
@@ -24,7 +24,7 @@ export default class AuthStore {
         if (token === null || permissions === null) {
             this.isLoggedIn = false;
             AuthService.clearStorage();
-            router.navigate(NavigateTo.Login);
+            navigateToPath(Paths.Login);
         } else {
             this.isLoggedIn = true;
             this.userPemissions = permissions;
@@ -39,7 +39,7 @@ export default class AuthStore {
         if (token === null || permissions === null) {
             this.isLoggedIn = false;
             AuthService.clearStorage();
-            router.navigate(NavigateTo.Login);
+            navigateToPath(Paths.Login);
         } else {
             this.appLoader = true;
             try {
@@ -48,13 +48,13 @@ export default class AuthStore {
                     this.isLoggedIn = true;
                     this.userPemissions = permissions;
                 });
-                router.navigate(NavigateTo.Dashboard);
+                navigateToPath(Paths.Dashboard);
             } catch (error) {
                 runInAction(() => {
                     this.isLoggedIn = false;
                     AuthService.clearStorage();
                 });
-                router.navigate(NavigateTo.Login);
+                navigateToPath(Paths.Login);
             } finally {
                 runInAction(() => {
                     this.appLoader = false;
@@ -80,7 +80,7 @@ export default class AuthStore {
                     this.isLoggedIn = true;
                 });
                 store.commonStore.clearNotifications();
-                router.navigate(NavigateTo.Dashboard);
+                navigateToPath(Paths.Dashboard);
             } catch (error) {
                 const message = (error as AxiosError).response?.data;
                 store.commonStore.showNotification("error", `${message ?? 'Login failed'}`);
@@ -98,7 +98,7 @@ export default class AuthStore {
             AuthService.clearStorage();
             this.userPemissions = undefined;
             this.isLoggedIn = false;
-            router.navigate(NavigateTo.Login);
+            navigateToPath(Paths.Login);
         } catch (error) {
             console.log(error);
         }

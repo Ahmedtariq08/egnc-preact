@@ -32,7 +32,8 @@ body {
 
 .dashboard-background {
     background-image: url("assets/images/backgroundcard.png");
-    height: 430px;
+    height: 100%;
+    /* height: 430px; */
 }
 
 
@@ -93,11 +94,6 @@ html[dir="rtl"] .demo-oracle-icon {
     min-width: 12.5rem;
     height: calc(100% - var(--top-header-margin) - 4px);
     margin-top: 15px;
-}
-
-.oj-drawer-reflow-wrapper.oj-drawer-reflow,
-.oj-drawer-overlay {
-    overflow-y: none !important;
 }
 
 .oj-drawer-start {
@@ -161,6 +157,93 @@ html[dir="rtl"] .demo-oracle-icon {
     text-align: start;
     margin: auto;
     padding-top: 30px;
+}
+
+.greetings-conveyor-container {
+    margin: auto;
+    width: 70%;
+    padding: 10px;
+}
+
+#conveyorActionCard {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    border: none;
+    height: 156px;
+    width: 150px;
+}
+
+.action-card-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+}
+
+#actionCardAvatar {
+    font-size: 44px;
+    height: 70%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#conveyorBelt .oj-avatar-square {
+    background-color: transparent;
+    font-size: 44px;
+}
+
+#conveyorBelt .oj-avatar-background-image {
+    background-image: none;
+}
+
+.card-label {
+    text-align: center;
+    font-size: 14px;
+    font-weight: 400;
+    color: #fff;
+}
+
+/* Declaration cards */
+/* .declaration-cards-container {
+    position: relative;
+    top: 44%;
+    transform: translate(-70%, -36%);
+    left: 80%;
+    width: 80%
+} */
+
+#cardStyle {
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    top: 44%;
+    transform: translate(-70%, -36%);
+    left: 50%;
+}
+
+#objectsCard {
+    width: 31rem;
+    display: inline-grid;
+}
+
+.ttf-2 {
+    height: 230px;
+    width: 384px;
+    text-align: start;
+}
+
+.greeting_2 {
+    color: white;
+    font-size: 20px;
+    text-align: start;
+    margin: auto;
+}
+
+#dashboardTable {
+    border-collapse: collapse;
+    background-color: whitesmoke;
+    border-radius: 6px;
 }
 
 /* ANCHOR - Custom popup */

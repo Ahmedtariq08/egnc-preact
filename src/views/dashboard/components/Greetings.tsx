@@ -1,8 +1,9 @@
 import { useStore } from "../../../modules/store";
 import { Constants } from "../../../constants/constants";
+import { observer } from "mobx-react-lite";
 const { GREETINGS } = Constants;
 
-export const Greetings = () => {
+export const Greetings = observer(() => {
     const { authStore: { userPemissions } } = useStore();
     const username = userPemissions?.username ?? '';
     let currentTime = new Date();
@@ -14,4 +15,4 @@ export const Greetings = () => {
     return (<div>
         <h1 class="greeting">{`${greetingString}, ${username}!`}</h1>
     </div>)
-}
+})
