@@ -1,7 +1,8 @@
 {
-  "name": "sample-ojet-app",
-  "version": "1.0.0",
-  "description": "An Oracle JavaScript Extension Toolkit(JET) web app",
+  "name": "egnc",
+  "version": "2.0.0",
+  "description": "Environment and Government Compliance",
+  "author": "Ahmed Tariq",
   "dependencies": {
     "@mobx-devtools/tools": "^0.0.4",
     "@oracle/oraclejet": "~15.0.0",
