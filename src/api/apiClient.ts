@@ -1,5 +1,9 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { ojMessage } from "@oracle/oraclejet/ojmessage";
+import { router } from '../routes/Router';
+import { Paths } from '../routes/paths';
+import { store } from '../modules/store';
+import { AuthService } from '../modules/auth/authService';
 
 export interface ApiResponse<T> {
     isSuccess: boolean,
@@ -15,30 +19,12 @@ const apiClient = axios.create({
 
 const responseBody = <T>(response: AxiosResponse<T>) => response.data;
 
-// const successHandler = <T>(response: AxiosResponse<T>): ApiResponse<T> => {
-//     return {
-//         isSuccess: true,
-//         data: response.data
-//     }
-// };
-
-// const errorHandler = <T>(error: AxiosError<T>): ApiResponse<T> => {
-//     //handle status codes here
-//     return {
-//         isSuccess: false,
-//         data: error.response?.data,
-//         error: error
-//     }
-// }
-
 export const requests = {
     get: <T>(url: string) => apiClient.get<T>(url).then(responseBody),
     post: <T>(url: string, body?: {}) => apiClient.post<T>(url, body ?? {}).then(responseBody),
     put: <T>(url: string, body?: {}) => apiClient.put<T>(url, body ?? {}).then(responseBody),
     del: <T>(url: string) => apiClient.delete<T>(url).then(responseBody),
 }
-
-
 
 apiClient.interceptors.response.use(async response => {
     //handle success here
@@ -51,7 +37,11 @@ apiClient.interceptors.response.use(async response => {
             //handle bad request
             break;
         case 401:
-            //handle unauthorized
+            // AuthService.clearStorage();
+            // // store.authStore.logoutUser();
+            // const currentState = router.state;
+            // console.log(currentState);
+            // router.navigate(Paths.Login, { state: currentState });
             break;
         case 403:
             //handle forbidden

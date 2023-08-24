@@ -10,6 +10,7 @@ import { useStore } from "../../modules/store";
 import { getReadonlyTemplates } from "../../utils/render";
 import { Declaration } from "../../models/categories/declaration";
 import { Paths, getRedirectionPath, navigateToPath } from "../../routes/redirection";
+import Skeleton from "react-loading-skeleton";
 
 interface Props {
     isApprovals: boolean
@@ -72,14 +73,15 @@ export const PendingView = observer((props: Props) => {
     }
 
     return (
-        <div class='oj-sm-margin-4x-verticle oj-sm-margin-8x-horizontal'>
+        <div style={{ margin: '2rem 4rem' }}>
             <h4>Pending {isApprovals ? 'Approvals' : 'Requests'}</h4>
             <div class='oj-panel oj-sm-margin-2x'>
                 <ActionBar
                     actions={actions}
                 />
+
                 {loadingData ?
-                    <LoaderCircle isLoading={loadingData} /> :
+                    <Skeleton count={15} height={35} style={{ margin: '4px 0' }} /> :
                     <DataTable
                         tableColumns={columns.addedColumns}
                         templates={getTemplates()}
