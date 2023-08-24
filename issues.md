@@ -1,3 +1,6 @@
+### Components
+1. Popup fade not working
+   
 ### Login
 1. company single sign on not implmemented
 

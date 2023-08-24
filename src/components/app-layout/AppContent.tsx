@@ -13,15 +13,15 @@ import { updateDocumentTitle } from "../../routes/paths";
 import { SkeletonTheme } from "react-loading-skeleton";
 
 export const AppContent = observer(() => {
-    const { authStore: { populateAuth }, layoutStore: { isDrawerOpened }, dashboardStore: { loadAllCards } } = useStore();
+    const { authStore: { populateAuth }, layoutStore: { isDrawerOpened }, dashboardStore: { loadConveyorCards } } = useStore();
 
     const location = useLocation();
     updateDocumentTitle(location.pathname);
 
     useEffect(() => {
         populateAuth();
-        loadAllCards();
-    }, [populateAuth, loadAllCards])
+        loadConveyorCards();
+    }, [populateAuth, loadConveyorCards])
 
     return (
         <div id="appContainer" class="oj-web-applayout-page">
@@ -29,14 +29,7 @@ export const AppContent = observer(() => {
             <div class="app-container">
                 <oj-drawer-layout startOpened={isDrawerOpened} class="drawer-height" style={{ border: 0 }}>
                     <div class="app-content-container">
-                        <SkeletonTheme
-                            baseColor="#5294e0"
-                            highlightColor="#96c7ff"
-                            borderRadius="0.5rem"
-                            duration={4}
-                        >
-                            <Outlet />
-                        </SkeletonTheme>
+                        <Outlet />
                     </div>
                     <Drawer />
                 </oj-drawer-layout>

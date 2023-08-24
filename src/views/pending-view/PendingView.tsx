@@ -1,12 +1,14 @@
-import { useStore } from "../../modules/store";
-import { ActionBar, ActionBarElement, Action } from "../../common/action-bar/ActionBar";
-import { useState, useEffect } from 'react';
-import { ReorderColumnsPopup } from "../../common/reorder-columns/ReorderColumns";
+import { observer } from "mobx-react-lite";
+import { useEffect, useState } from 'react';
+import { Action, ActionBar, ActionBarElement } from "../../common/action-bar/ActionBar";
 import { AddRemoveColumnsPopup } from "../../common/add-remove/AddRemoveColumns";
 import { DataTable } from "../../common/data-table/DataTable";
-import { getReadonlyTemplates } from "../../utils/render";
+import { LoaderCircle } from "../../common/loader/LoaderCircle";
+import { ReorderColumnsPopup } from "../../common/reorder-columns/ReorderColumns";
 import { PendingTemplates } from "../../modules/pending/pendingService";
-import MutableArrayDataProvider = require("ojs/ojmutablearraydataprovider");
+import { useStore } from "../../modules/store";
+import { getReadonlyTemplates } from "../../utils/render";
+import { Declaration } from "../../models/categories/declaration";
 
 interface Props {
     isApprovals: boolean
@@ -18,11 +20,11 @@ enum Hooks {
     OpenConfirmation = 'openConfirmationHook'
 }
 
-export const PendingView = (props: Props) => {
+export const PendingView = observer((props: Props) => {
     const { isApprovals } = props;
     const { pendingStore } = useStore();
-    const { loadingData, loadPendingData, pendingDeclarations, columns, reorderColumns, addRemoveColumns } = pendingStore;
-    const [dataProvider, setDataProvier] = useState(new MutableArrayDataProvider(pendingDeclarations, { keyAttributes: "id" }));
+    const { loadingData, loadPendingData, pendingDeclarations, columns,
+        reorderColumns, addRemoveColumns, dataProvider } = pendingStore;
 
     const [popupHooks, setPopupHooks] = useState({
         [Hooks.AddRemoveColumns]: false,
@@ -41,10 +43,6 @@ export const PendingView = (props: Props) => {
         console.log("Exporting data");
     }
 
-    const refreshData = () => {
-        console.log('refreshing data');
-    }
-
     const deleteSelected = () => {
         console.log('deleting')
     }
@@ -54,20 +52,40 @@ export const PendingView = (props: Props) => {
         { type: Action.Export, action: exportData },
         { type: Action.ReorderColumns, action: () => openPopup(Hooks.ReorderColumns), hasStartSeperator: true },
         { type: Action.AddColumn, action: () => openPopup(Hooks.AddRemoveColumns) },
-        { type: Action.Refresh, action: refreshData, hasStartSeperator: true },
+        { type: Action.Refresh, action: () => loadPendingData(isApprovals), hasStartSeperator: true },
         { type: Action.Delete, action: deleteSelected }
     ]
+
+    const redirection = (id: number) => {
+        console.log(`redirecting to dec: ${id}`);
+    }
+
+    const getTemplates = () => {
+        const { requestId, ...readonlyTemplates } = PendingTemplates
+        const idTemplate = <template slot={requestId} render={(data) => {
+            const row = data.item.data as Declaration;
+            return <a onClick={() => redirection(row.id)}
+                href={'#'}
+                class="oj-link-standalone">
+                <label>{row.id}</label>
+            </a>
+        }} />;
+        const readOnlyTemplates = getReadonlyTemplates(Object.values(readonlyTemplates));
+        return [idTemplate, ...readOnlyTemplates];
+    }
 
     return (
         <div class='oj-sm-margin-4x-verticle oj-sm-margin-8x-horizontal'>
             <h4>Pending {isApprovals ? 'Approvals' : 'Requests'}</h4>
             <div class='oj-panel oj-sm-margin-2x'>
                 <ActionBar actions={actions} />
-                <DataTable
-                    tableColumns={columns.addedColumns}
-                    templates={getReadonlyTemplates(Object.values(PendingTemplates))}
-                    tableDataProvider={dataProvider}
-                />
+                {loadingData ?
+                    <LoaderCircle isLoading={loadingData} /> :
+                    <DataTable
+                        tableColumns={columns.addedColumns}
+                        templates={getTemplates()}
+                        tableDataProvider={dataProvider}
+                    />}
             </div>
             <ReorderColumnsPopup
                 showPopup={popupHooks[Hooks.ReorderColumns]}
@@ -83,4 +101,4 @@ export const PendingView = (props: Props) => {
             />
         </div>
     )
-}
+})

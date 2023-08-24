@@ -1,13 +1,15 @@
-import { makeAutoObservable, runInAction } from "mobx";
+import { makeAutoObservable, reaction, runInAction } from "mobx";
 import { Declaration } from "../../models/categories/declaration";
 import { store } from "../store";
 import { PendingApis, PendingColumns } from "./pendingService";
 import { Column } from "../../constants/tableColumns";
 import { ColumnsMetaData } from "../../common/add-remove/AddRemoveColumns";
+import MutableArrayDataProvider = require("ojs/ojmutablearraydataprovider");
 
 export default class PendingStore {
     loadingData = false;
     pendingDeclarations: Declaration[] = [];
+    dataProvider: MutableArrayDataProvider<string, Declaration> = new MutableArrayDataProvider(this.pendingDeclarations, { keyAttributes: "id" });
     columns: ColumnsMetaData = { addedColumns: PendingColumns, columnsToBeAdded: [], }
 
     constructor() {
@@ -19,13 +21,18 @@ export default class PendingStore {
         try {
             const data = isApprovals ? await PendingApis.getPendingApprovals() : await PendingApis.getPendingRequests();
             runInAction(() => {
-                this.pendingDeclarations = data;
+                this.updateDeclarationsData(data);
             })
         } catch (error) {
             store.commonStore.showNotification("error", `Failed to fetch pending ${isApprovals ? 'approvals' : 'requests'}.`);
         } finally {
             this.loadingData = false;
         }
+    }
+
+    private updateDeclarationsData = (declarations: Declaration[]) => {
+        this.pendingDeclarations = declarations;
+        this.dataProvider.data = declarations;
     }
 
     reorderColumns = (reorderedColumns: Column[]) => {
