@@ -12,6 +12,7 @@ type Redirect =
     | { page: Paths.AdminPanel }
     | { page: Paths.Reports }
     | { page: Paths.Dossiers }
+    | { page: Paths.Declaration, params: { id: number | string } }
 
 const NoEgncPrefix = [Paths.Root, Paths.Login];
 

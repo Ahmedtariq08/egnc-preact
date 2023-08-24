@@ -31,7 +31,7 @@ export const dateFormatterForRequest = (date: string): string | undefined => {
  * @param date 2023-02-23 00:00:00
  * @returns February 23, 2023
  */
-export const dateFormatter = (date: string): string => {
+export const dateFormatter = (date: string | null): string | null => {
     let outputDate = date;
     if (date) {
         try {

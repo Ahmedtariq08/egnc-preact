@@ -1,5 +1,8 @@
 ### Components
 1. Popup fade not working
+
+### Router
+1. Implement document title mapping for paths with params (e.g declaration / item)
    
 ### Login
 1. company single sign on not implmemented

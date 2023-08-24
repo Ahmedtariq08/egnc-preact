@@ -8,6 +8,7 @@ import { ProductManagement } from '../views/product-management/ProductManagement
 import { PendingView } from '../views/pending-view/PendingView';
 import { Reports } from '../views/reports/Reports';
 import { Dossiers } from '../views/dossiers/Dossiers';
+import { DeclarationBlock } from '..//views/declaration-block/DeclarationBlock';
 
 export const routes: RouteObject[] = [
     {
@@ -28,6 +29,7 @@ export const routes: RouteObject[] = [
             { path: Paths.AdminPanel, element: <Dashboard /> },
             { path: Paths.Reports, element: <Reports /> },
             { path: Paths.Dossiers, element: <Dossiers /> },
+            { path: Paths.Declaration, element: <DeclarationBlock /> },
         ]
     }
 ]

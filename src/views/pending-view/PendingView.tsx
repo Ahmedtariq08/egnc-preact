@@ -9,6 +9,7 @@ import { PendingTemplates } from "../../modules/pending/pendingService";
 import { useStore } from "../../modules/store";
 import { getReadonlyTemplates } from "../../utils/render";
 import { Declaration } from "../../models/categories/declaration";
+import { Paths, getRedirectionPath, navigateToPath } from "../../routes/redirection";
 
 interface Props {
     isApprovals: boolean
@@ -56,16 +57,12 @@ export const PendingView = observer((props: Props) => {
         { type: Action.Delete, action: deleteSelected }
     ]
 
-    const redirection = (id: number) => {
-        console.log(`redirecting to dec: ${id}`);
-    }
-
     const getTemplates = () => {
         const { requestId, ...readonlyTemplates } = PendingTemplates
         const idTemplate = <template slot={requestId} render={(data) => {
             const row = data.item.data as Declaration;
-            return <a onClick={() => redirection(row.id)}
-                href={'#'}
+            return <a onClick={() => navigateToPath(Paths.Declaration, { id: row.id })}
+                href={getRedirectionPath(Paths.Declaration, { id: row.id })}
                 class="oj-link-standalone">
                 <label>{row.id}</label>
             </a>
@@ -78,7 +75,9 @@ export const PendingView = observer((props: Props) => {
         <div class='oj-sm-margin-4x-verticle oj-sm-margin-8x-horizontal'>
             <h4>Pending {isApprovals ? 'Approvals' : 'Requests'}</h4>
             <div class='oj-panel oj-sm-margin-2x'>
-                <ActionBar actions={actions} />
+                <ActionBar
+                    actions={actions}
+                />
                 {loadingData ?
                     <LoaderCircle isLoading={loadingData} /> :
                     <DataTable

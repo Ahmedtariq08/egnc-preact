@@ -1,7 +1,7 @@
-import { Constants } from "../../constants/constants";
 import { requests } from "../../api/apiClient";
+import { Constants } from "../../constants/constants";
+import { Column } from "../../constants/tableColumns";
 import { Declaration } from "../../models/categories/declaration";
-import { Column } from "src/constants/tableColumns";
 
 //ANCHOR - APIs
 export const PendingApis = {
@@ -10,6 +10,16 @@ export const PendingApis = {
     getPendingApprovals:
         () => requests.get<Declaration[]>(`MainService/declaration/?state=${Constants.WORKFLOWSTATES.OPEN_TO_MANAGER}`),
 }
+
+//ANCHOR - Service
+// export class PendingService {
+
+//     public static getPendingData = async (isApprovals: boolean) : Promise<Declaration[]> => {
+//         const response = isApprovals ? await PendingApis.getPendingApprovals() : await PendingApis.getPendingRequests();
+
+//         return data;
+//     }
+// }
 
 //ANCHOR - Table Constants
 export const PendingTemplates = {

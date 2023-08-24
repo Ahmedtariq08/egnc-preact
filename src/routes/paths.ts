@@ -13,6 +13,7 @@ export enum Paths {
     AdminPanel = 'admin-panel',
     Reports = 'reports',
     Dossiers = 'doessiers',
+    Declaration = 'declaration/:id'
 }
 
 //ANCHOR - Navigation setting for paths used in dashboard cards, sidebar, breadcrumbs, favorites and recents
@@ -31,6 +32,7 @@ export const NavData = new Map<Paths, PathDetails>([
     [Paths.AdminPanel, { displayName: "Admin Panel", order: 4, icon: Icons.icons.adminPanel }],
     [Paths.Reports, { displayName: "Reports", order: 5, icon: Icons.icons.reports }],
     [Paths.Dossiers, { displayName: "Dossiers", order: 6, icon: Icons.icons.dossiers }],
+    [Paths.Declaration, { displayName: "Declaration" }]
 ]);
 
 
@@ -51,6 +53,8 @@ export const updateDocumentTitle = (location: string) => {
             const navData = NavData.get(currentPath);
             if (navData) {
                 return navData.displayName || defaultDocumentTitle;
+            } else {
+                //TODO - Implement title mapping for paths with params
             }
         }
         return defaultDocumentTitle;
