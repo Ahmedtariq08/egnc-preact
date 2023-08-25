@@ -4,6 +4,7 @@
 ### Router
 1. Implement document title mapping for paths with params (e.g declaration / item)
 2. Redirect to login if an API fails, implement authenticated app routes
+3. 3. Wrap app in authentication
    
 ### Login
 1. company single sign on not implmemented

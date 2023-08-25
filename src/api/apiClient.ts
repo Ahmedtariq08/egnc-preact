@@ -37,6 +37,7 @@ apiClient.interceptors.response.use(async response => {
             //handle bad request
             break;
         case 401:
+            store.commonStore.showNotification("error", "Unauthorised. Session expired.");
             // AuthService.clearStorage();
             // // store.authStore.logoutUser();
             // const currentState = router.state;

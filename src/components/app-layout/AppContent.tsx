@@ -4,19 +4,22 @@ import "ojs/ojdrawerlayout";
 import "ojs/ojnavigationlist";
 import { useEffect } from 'react';
 import { Outlet, useLocation } from "react-router-dom";
+import { useStore } from "../../modules/store";
+import { Paths, updateDocumentTitle } from "../../routes/paths";
+import Notifications from '../notification/Notification';
+import { BreadCrumbs } from "./Breadcrumbs";
+import { Drawer } from "./Drawer";
 import { Footer } from "./Footer";
 import { Header } from "./header/Header";
-import Notifications from '../notification/Notification';
-import { useStore } from "../../modules/store";
-import { Drawer } from "./Drawer";
-import { updateDocumentTitle } from "../../routes/paths";
-import { SkeletonTheme } from "react-loading-skeleton";
 
 export const AppContent = observer(() => {
-    const { authStore: { populateAuth }, layoutStore: { isDrawerOpened }, dashboardStore: { loadConveyorCards } } = useStore();
+    const { authStore: { populateAuth, checkSignedIn }, layoutStore: { isDrawerOpened }, dashboardStore: { loadConveyorCards } } = useStore();
 
     const location = useLocation();
     updateDocumentTitle(location.pathname);
+    console.log(location.pathname);
+    console.log(Paths.Dashboard);
+    const isDashboardPage = location.pathname === Paths.Dashboard;
 
     useEffect(() => {
         populateAuth();
@@ -28,9 +31,11 @@ export const AppContent = observer(() => {
             <Header />
             <div class="app-container">
                 <oj-drawer-layout startOpened={isDrawerOpened} class="drawer-height" style={{ border: 0 }}>
-                    <div class="app-content-container">
-                        <Outlet />
-                    </div>
+                    {isDashboardPage ? <Outlet /> :
+                        <div class="app-content-container">
+                            <BreadCrumbs />
+                            <Outlet />
+                        </div>}
                     <Drawer />
                 </oj-drawer-layout>
             </div>

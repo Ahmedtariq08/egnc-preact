@@ -73,7 +73,7 @@ export const PendingView = observer((props: Props) => {
     }
 
     return (
-        <div style={{ margin: '2rem 4rem' }}>
+        <div style={{ margin: '1rem 4rem' }}>
             <h4>Pending {isApprovals ? 'Approvals' : 'Requests'}</h4>
             <div class='oj-panel oj-sm-margin-2x'>
                 <ActionBar

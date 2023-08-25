@@ -80,7 +80,7 @@ html[dir="rtl"] .demo-oracle-icon {
 }
 
 .app-content-container {
-    /* margin: 1.8rem 4rem; */
+    margin: 1.8rem 4rem;
     overflow: auto;
 }
 
