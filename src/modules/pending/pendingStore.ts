@@ -38,6 +38,20 @@ export default class PendingStore {
         }
     }
 
+    withdrawRequest = async (declarationId: string | number) => {
+        this.loadingData = true;
+        try {
+            await PendingApis.withdrawRequest(declarationId);
+            const declarations = this.pendingDeclarations.filter(dec => dec.id !== declarationId);
+            this.updateDeclarationsData(declarations);
+            store.commonStore.showNotification("confirmation", 'Withdrawl request made successfully');
+        } catch (error) {
+            store.commonStore.showNotification("error", "Withdraw request failed.")
+        } finally {
+            this.loadingData = false;
+        }
+    }
+
     private updateDeclarationsData = (declarations: Declaration[]) => {
         this.pendingDeclarations = declarations;
         this.dataProvider.data = declarations;

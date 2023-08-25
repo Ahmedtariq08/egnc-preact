@@ -2,6 +2,7 @@ import { requests } from "../../api/apiClient";
 import { Constants } from "../../constants/constants";
 import { Column } from "../../constants/tableColumns";
 import { Declaration } from "../../models/categories/declaration";
+import { AuthService } from "../auth/authService";
 
 //ANCHOR - APIs
 export const PendingApis = {
@@ -9,6 +10,10 @@ export const PendingApis = {
         () => requests.get<Declaration[]>(`MainService/declaration/?state=${Constants.WORKFLOWSTATES.OPEN_TO_SUPPLIER}`),
     getPendingApprovals:
         () => requests.get<Declaration[]>(`MainService/declaration/?state=${Constants.WORKFLOWSTATES.OPEN_TO_MANAGER}`),
+    withdrawRequest:
+        (declarationId: string | number) => requests.put(`MainService/declaration/${declarationId}/state`, {
+            action: 'prev', comments: '', lastModifiedBy: AuthService.getPermissionsFromStorage()?.username
+        })
 }
 
 //ANCHOR - Table Constants

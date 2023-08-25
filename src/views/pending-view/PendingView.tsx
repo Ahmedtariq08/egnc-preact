@@ -10,6 +10,7 @@ import { PendingTemplates } from "../../modules/pending/pendingService";
 import { useStore } from "../../modules/store";
 import { Pages, getRedirectionPath, navigateToPath } from "../../routes/redirection";
 import { getReadonlyTemplates } from "../../utils/render";
+import { CustomConfirmationPopup } from "../../common/confirmation-popup/ConfirmationPopup";
 
 interface Props {
     isApprovals: boolean
@@ -24,8 +25,10 @@ enum Hooks {
 export const PendingView = observer((props: Props) => {
     const { isApprovals } = props;
     const { pendingStore } = useStore();
-    const { loadingData, loadPendingData, pendingDeclarations, columns,
+    const { loadingData, loadPendingData, withdrawRequest, columns,
         reorderColumns, addRemoveColumns, dataProvider } = pendingStore;
+
+    const [selectedDeclaration, setSelectedDeclaration] = useState<Declaration>();
 
     const [popupHooks, setPopupHooks] = useState({
         [Hooks.AddRemoveColumns]: false,
@@ -45,18 +48,24 @@ export const PendingView = observer((props: Props) => {
     }
 
     const deleteSelected = () => {
-        console.log('deleting')
+        if (selectedDeclaration) {
+            withdrawRequest(selectedDeclaration.id);
+        }
     }
 
 
-    const actions: ActionBarElement[] = [
-        { type: Action.Export, action: exportData },
-        { type: Action.ReorderColumns, action: () => openPopup(Hooks.ReorderColumns), hasStartSeperator: true },
-        { type: Action.AddColumn, action: () => openPopup(Hooks.AddRemoveColumns) },
-        { type: Action.Refresh, action: () => loadPendingData(isApprovals), hasStartSeperator: true },
-        { type: Action.Delete, action: deleteSelected }
-    ]
+    const getActions = (): ActionBarElement[] => {
+        const baseActions: ActionBarElement[] = [
+            { type: Action.Export, action: exportData },
+            { type: Action.ReorderColumns, action: () => openPopup(Hooks.ReorderColumns), hasStartSeperator: true },
+            { type: Action.AddColumn, action: () => openPopup(Hooks.AddRemoveColumns) },
+            { type: Action.Refresh, action: () => loadPendingData(isApprovals), hasStartSeperator: true },
+        ];
+        return isApprovals ? baseActions : [...baseActions,
+        { type: Action.Delete, action: () => openPopup(Hooks.OpenConfirmation), disable: selectedDeclaration === undefined }];
+    }
 
+    //ANCHOR - Table
     const getTemplates = () => {
         const { requestId, ...readonlyTemplates } = PendingTemplates
         const idTemplate = <template slot={requestId} render={(data) => {
@@ -71,12 +80,19 @@ export const PendingView = observer((props: Props) => {
         return [idTemplate, ...readOnlyTemplates];
     }
 
+    const rowChangeHandler = (event: any) => {
+        const { key, data } = event.detail.value;
+        if (data) {
+            setSelectedDeclaration(data as Declaration);
+        }
+    }
+
     return (
-        <div style={{ margin: '1rem 4rem' }}>
+        <div style={{ margin: '1rem 0rem' }}>
             <h4>Pending {isApprovals ? 'Approvals' : 'Requests'}</h4>
             <div class='oj-panel oj-sm-margin-2x'>
                 <ActionBar
-                    actions={actions}
+                    actions={getActions()}
                 />
 
                 {loadingData ?
@@ -85,6 +101,7 @@ export const PendingView = observer((props: Props) => {
                         tableColumns={columns.addedColumns}
                         templates={getTemplates()}
                         tableDataProvider={dataProvider}
+                        rowChangedHandler={rowChangeHandler}
                     />}
             </div>
             <ReorderColumnsPopup
@@ -99,6 +116,19 @@ export const PendingView = observer((props: Props) => {
                 columnsMetaData={columns}
                 okFunction={addRemoveColumns}
             />
+            <CustomConfirmationPopup
+                show={popupHooks[Hooks.OpenConfirmation]}
+                closePopup={() => closePopup(Hooks.OpenConfirmation)}
+                message="Are you sure you want to withdraw this request?"
+                okAction={deleteSelected}
+            />
         </div>
     )
-})
+});
+
+
+const WithdrawConfirmation = (props: { declaration: Declaration }) => {
+    const { declaration } = props;
+
+
+}

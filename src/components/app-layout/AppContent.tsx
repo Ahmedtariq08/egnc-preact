@@ -19,7 +19,6 @@ export const AppContent = observer(() => {
     updateDocumentTitle(location.pathname);
 
     const isNotDashboardPage = getPageFromLocation(location.pathname) !== Pages.Dashboard;
-    console.log(isNotDashboardPage);
 
     useEffect(() => {
         populateAuth();
