@@ -7,7 +7,6 @@ import { Greetings } from "./components/Greetings";
 
 const DashboardView = () => {
     const { dashboardStore: { loadAllCards } } = useStore();
-    console.log("dashboard component mounted");
 
     useEffect(() => {
         loadAllCards();

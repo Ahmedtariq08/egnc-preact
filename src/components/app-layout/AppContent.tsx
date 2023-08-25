@@ -5,7 +5,7 @@ import "ojs/ojnavigationlist";
 import { useEffect } from 'react';
 import { Outlet, useLocation } from "react-router-dom";
 import { useStore } from "../../modules/store";
-import { Paths, updateDocumentTitle } from "../../routes/paths";
+import { updateDocumentTitle, Pages, getPageFromLocation } from "../../routes/redirection";
 import Notifications from '../notification/Notification';
 import { BreadCrumbs } from "./Breadcrumbs";
 import { Drawer } from "./Drawer";
@@ -17,9 +17,9 @@ export const AppContent = observer(() => {
 
     const location = useLocation();
     updateDocumentTitle(location.pathname);
-    console.log(location.pathname);
-    console.log(Paths.Dashboard);
-    const isDashboardPage = location.pathname === Paths.Dashboard;
+
+    const isNotDashboardPage = getPageFromLocation(location.pathname) !== Pages.Dashboard;
+    console.log(isNotDashboardPage);
 
     useEffect(() => {
         populateAuth();
@@ -31,11 +31,10 @@ export const AppContent = observer(() => {
             <Header />
             <div class="app-container">
                 <oj-drawer-layout startOpened={isDrawerOpened} class="drawer-height" style={{ border: 0 }}>
-                    {isDashboardPage ? <Outlet /> :
-                        <div class="app-content-container">
-                            <BreadCrumbs />
-                            <Outlet />
-                        </div>}
+                    <div class={isNotDashboardPage ? "app-content-container" : undefined}>
+                        {isNotDashboardPage && <BreadCrumbs />}
+                        <Outlet />
+                    </div>
                     <Drawer />
                 </oj-drawer-layout>
             </div>

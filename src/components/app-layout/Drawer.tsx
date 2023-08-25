@@ -1,17 +1,17 @@
 import { observer } from "mobx-react-lite";
 import "ojs/ojnavigationlist";
 import { useStore } from "../../modules/store";
-import { Paths, navigateToPath } from "../../routes/redirection";
+import { Pages, Paths, navigateToPath } from "../../routes/redirection";
 import MutableArrayDataProvider = require('ojs/ojmutablearraydataprovider');
 
 export const Drawer = observer(() => {
     const { dashboardStore: { conveyorBeltCards }, layoutStore: { toggleDrawer } } = useStore();
     const data = new MutableArrayDataProvider(conveyorBeltCards, { keyAttributes: 'label' });
 
-    const redirection = (event: any, link: Paths) => {
+    const redirection = (event: any, link: Pages) => {
         event.preventDefault();
         toggleDrawer();
-        navigateToPath(link as any);
+        navigateToPath(link);
     }
 
     return (

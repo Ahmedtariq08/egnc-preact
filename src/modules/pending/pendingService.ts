@@ -11,16 +11,6 @@ export const PendingApis = {
         () => requests.get<Declaration[]>(`MainService/declaration/?state=${Constants.WORKFLOWSTATES.OPEN_TO_MANAGER}`),
 }
 
-//ANCHOR - Service
-// export class PendingService {
-
-//     public static getPendingData = async (isApprovals: boolean) : Promise<Declaration[]> => {
-//         const response = isApprovals ? await PendingApis.getPendingApprovals() : await PendingApis.getPendingRequests();
-
-//         return data;
-//     }
-// }
-
 //ANCHOR - Table Constants
 export const PendingTemplates = {
     requestId: 'id',

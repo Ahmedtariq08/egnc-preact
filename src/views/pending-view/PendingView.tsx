@@ -1,16 +1,15 @@
 import { observer } from "mobx-react-lite";
 import { useEffect, useState } from 'react';
+import Skeleton from "react-loading-skeleton";
 import { Action, ActionBar, ActionBarElement } from "../../common/action-bar/ActionBar";
 import { AddRemoveColumnsPopup } from "../../common/add-remove/AddRemoveColumns";
 import { DataTable } from "../../common/data-table/DataTable";
-import { LoaderCircle } from "../../common/loader/LoaderCircle";
 import { ReorderColumnsPopup } from "../../common/reorder-columns/ReorderColumns";
+import { Declaration } from "../../models/categories/declaration";
 import { PendingTemplates } from "../../modules/pending/pendingService";
 import { useStore } from "../../modules/store";
+import { Pages, getRedirectionPath, navigateToPath } from "../../routes/redirection";
 import { getReadonlyTemplates } from "../../utils/render";
-import { Declaration } from "../../models/categories/declaration";
-import { Paths, getRedirectionPath, navigateToPath } from "../../routes/redirection";
-import Skeleton from "react-loading-skeleton";
 
 interface Props {
     isApprovals: boolean
@@ -62,8 +61,8 @@ export const PendingView = observer((props: Props) => {
         const { requestId, ...readonlyTemplates } = PendingTemplates
         const idTemplate = <template slot={requestId} render={(data) => {
             const row = data.item.data as Declaration;
-            return <a onClick={() => navigateToPath(Paths.Declaration, { id: row.id })}
-                href={getRedirectionPath(Paths.Declaration, { id: row.id })}
+            return <a onClick={() => navigateToPath(Pages.Declaration, { id: row.id })}
+                href={getRedirectionPath(Pages.Declaration, { id: row.id })}
                 class="oj-link-standalone">
                 <label>{row.id}</label>
             </a>

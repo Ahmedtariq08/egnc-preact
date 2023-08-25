@@ -1,75 +1,64 @@
 import { Icons } from "../constants/iconsData";
 import { UserRole } from "../modules/auth/authService";
 
-export enum Paths {
+//NOTE - This file must contain all the relevant constants and configuration related to routing / redirection
+
+export enum Pages {
     Root = '/',
-    Login = '/login',
-    EGNC = '/egnc',
+    Login = 'login',
     Dashboard = 'dashboard',
     ProductManagement = 'product-management',
-    ProductManagementFetch = 'product-management/:category',
+    ProductManagementFetch = 'product-management/fetch',
     PendingRequests = 'pending-requests',
     PendingApprovals = 'pending-approvals',
     AdminPanel = 'admin-panel',
     Reports = 'reports',
     Dossiers = 'doessiers',
-    Declaration = 'declaration/:id'
+    Declaration = 'declaration'
+}
+
+export enum Paths {
+    Root = '/',
+    Login = '/login',
+    EGNC = '/egnc',
+    Dashboard = '/egnc/dashboard',
+    ProductManagement = '/egnc/product-management',
+    ProductManagementFetch = '/egnc/product-management/fetch/:category',
+    PendingRequests = '/egnc/pending-requests',
+    PendingApprovals = '/egnc/pending-approvals',
+    AdminPanel = '/egnc/admin-panel',
+    Reports = '/egnc/reports',
+    Dossiers = '/egnc/doessiers',
+    Declaration = '/egnc/declaration/:id'
 }
 
 //ANCHOR - Navigation setting for paths used in dashboard cards, sidebar, breadcrumbs, favorites and recents
 interface PathDetails {
     displayName: string,
+    path: Paths,
     order?: number, //required for order in drawer and conveyor cards
     icon?: string,
 }
 
-export const NavData = new Map<Paths, PathDetails>([
-    [Paths.Login, { displayName: "Login" }],
-    [Paths.Dashboard, { displayName: "Dashboard" }],
-    [Paths.ProductManagement, { displayName: "Product Management", order: 1, icon: Icons.icons.ProductManagement, }],
-    [Paths.PendingRequests, { displayName: "Pending Requests", order: 2, icon: Icons.icons.pendingRequests }],
-    [Paths.PendingApprovals, { displayName: "Pending Approvals", order: 3, icon: Icons.icons.pendingApprovals }],
-    [Paths.AdminPanel, { displayName: "Admin Panel", order: 4, icon: Icons.icons.adminPanel }],
-    [Paths.Reports, { displayName: "Reports", order: 5, icon: Icons.icons.reports }],
-    [Paths.Dossiers, { displayName: "Dossiers", order: 6, icon: Icons.icons.dossiers }],
-    [Paths.Declaration, { displayName: "Declaration" }]
+export const NavData = new Map<Pages, PathDetails>([
+    [Pages.Login, { displayName: "Login", path: Paths.Login }],
+    [Pages.Dashboard, { displayName: "Dashboard", path: Paths.Dashboard }],
+    [Pages.ProductManagement, { displayName: "Product Management", path: Paths.ProductManagement, order: 1, icon: Icons.icons.ProductManagement, }],
+    [Pages.ProductManagementFetch, { displayName: "Product Management", path: Paths.ProductManagementFetch, order: 1, icon: Icons.icons.ProductManagement, }],
+    [Pages.PendingRequests, { displayName: "Pending Requests", path: Paths.PendingRequests, order: 2, icon: Icons.icons.pendingRequests }],
+    [Pages.PendingApprovals, { displayName: "Pending Approvals", path: Paths.PendingApprovals, order: 3, icon: Icons.icons.pendingApprovals }],
+    [Pages.AdminPanel, { displayName: "Admin Panel", order: 4, path: Paths.AdminPanel, icon: Icons.icons.adminPanel }],
+    [Pages.Reports, { displayName: "Reports", order: 5, path: Paths.Reports, icon: Icons.icons.reports }],
+    [Pages.Dossiers, { displayName: "Dossiers", order: 6, path: Paths.Dossiers, icon: Icons.icons.dossiers }],
+    [Pages.Declaration, { displayName: "Declaration", path: Paths.Declaration }]
 ]);
 
 
-const defaultDocumentTitle = 'EG&C';
-/**
- * @usage Updates the document title from respective displayName in NavData
- * @param location 
- */
-export const updateDocumentTitle = (location: string) => {
-    const getDocumentTitle = (location: string) => {
-        const locationData = NavData.get(location as Paths)
-        if (locationData) {
-            return locationData.displayName;
-        }
-        const arr = location.split('/');
-        for (const path of arr) {
-            const currentPath = path as Paths;
-            const navData = NavData.get(currentPath);
-            if (navData) {
-                return navData.displayName || defaultDocumentTitle;
-            } else {
-                //TODO - Implement title mapping for paths with params
-            }
-        }
-        return defaultDocumentTitle;
-    }
-    const documentTitle = getDocumentTitle(location);
-    document.title = documentTitle;
-}
-
-
-
 /* Mapping used in dashboard cards and side drawer over path access for roles */
-export const RoleToPathMap = new Map<UserRole, Paths[]>([
-    [UserRole.ADMIN, [Paths.ProductManagement, Paths.PendingRequests, Paths.PendingApprovals, Paths.AdminPanel, Paths.Reports, Paths.Dossiers]],
-    [UserRole.COMPLIANCE_MANAGER, [Paths.ProductManagement, Paths.PendingRequests, Paths.PendingApprovals, Paths.Reports, Paths.Dossiers]],
-    [UserRole.TITLE_BLOCK_VIEWER, [Paths.ProductManagement, Paths.Reports]],
-    [UserRole.REPORT_VIEWER, [Paths.ProductManagement, Paths.Reports]],
-    [UserRole.SUPPLIER, [Paths.PendingRequests]]
+export const RoleToPathMap = new Map<UserRole, Pages[]>([
+    [UserRole.ADMIN, [Pages.ProductManagement, Pages.PendingRequests, Pages.PendingApprovals, Pages.AdminPanel, Pages.Reports, Pages.Dossiers]],
+    [UserRole.COMPLIANCE_MANAGER, [Pages.ProductManagement, Pages.PendingRequests, Pages.PendingApprovals, Pages.Reports, Pages.Dossiers]],
+    [UserRole.TITLE_BLOCK_VIEWER, [Pages.ProductManagement, Pages.Reports]],
+    [UserRole.REPORT_VIEWER, [Pages.ProductManagement, Pages.Reports]],
+    [UserRole.SUPPLIER, [Pages.PendingRequests]]
 ]);

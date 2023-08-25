@@ -1,13 +1,12 @@
 import { observer } from "mobx-react-lite";
 import "ojs/ojtable";
 import { useEffect, useState } from "preact/hooks";
-import { LoaderCircle } from "../../../common/loader/LoaderCircle";
+import Skeleton from "react-loading-skeleton";
 import { AuthService } from "../../../modules/auth/authService";
 import { DashboardCardRow } from "../../../modules/dashboard/dashboardService";
 import { useStore } from "../../../modules/store";
-import { navigateToLink, navigateToPath } from "../../../routes/redirection";
+import { navigateToLink } from "../../../routes/redirection";
 import MutableArrayDataProvider = require("ojs/ojmutablearraydataprovider");
-import Skeleton from "react-loading-skeleton";
 
 export const CountCards = observer(() => {
     const userPermissions = AuthService.getPermissionsFromStorage();

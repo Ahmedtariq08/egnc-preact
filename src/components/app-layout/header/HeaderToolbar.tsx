@@ -1,9 +1,9 @@
 import { observer } from "mobx-react-lite";
-import { useStore } from "../../../modules/store";
 import { ButtonComponent } from "../../../common/button/ButtonComponent";
 import { Icons } from "../../../constants/iconsData";
+import { useStore } from "../../../modules/store";
+import { navigateToPath, Pages } from '../../../routes/redirection';
 import { FavouritesAndRecents } from "./FavouritesRecents";
-import { navigateToPath, Paths } from '../../../routes/redirection'
 
 export const HeaderToolbar = observer(() => {
     const { authStore } = useStore();
@@ -17,7 +17,7 @@ export const HeaderToolbar = observer(() => {
         return <ButtonComponent
             buttonTitle="Dashboard"
             icon={Icons.icons.home}
-            ojAction={() => navigateToPath(Paths.Dashboard)}
+            ojAction={() => navigateToPath(Pages.Dashboard)}
         />
     }
 
