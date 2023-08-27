@@ -2,6 +2,7 @@ import { customElement, GlobalProps } from 'ojs/ojvcomponent';
 import { Component, ComponentChild } from 'preact';
 import { RouterProvider } from 'react-router-dom';
 import "./app.css";
+import "react-loading-skeleton/dist/skeleton.css";
 import { store, StoreContext } from './modules/store';
 import { router } from './routes/Router';
 import Context = require('ojs/ojcontext');

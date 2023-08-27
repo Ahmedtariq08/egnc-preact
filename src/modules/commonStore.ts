@@ -1,11 +1,16 @@
 import { ojMessage } from "@oracle/oraclejet/ojmessage";
 import { makeAutoObservable } from "mobx";
+import MutableArrayDataProvider = require('ojs/ojmutablearraydataprovider');
 
 export default class CommonStore {
-    notifications: ojMessage.Message[] = [];
+    notifications: MutableArrayDataProvider<string, ojMessage.Message> = new MutableArrayDataProvider<string, ojMessage.Message>([], { keyAttributes: 'id' });
+
+    constructor() {
+        makeAutoObservable(this);
+    }
 
     showNotification = (severity: ojMessage.Message['severity'], summary: string, detail?: string, autoTimeout?: number, timestamp?: string) => {
-        this.notifications = [{
+        this.notifications.data = [{
             severity: severity,
             summary: summary,
             detail: detail,
@@ -15,6 +20,7 @@ export default class CommonStore {
     }
 
     clearNotifications = () => {
-        this.notifications = [];
+        this.notifications.data = [];
     }
+
 }

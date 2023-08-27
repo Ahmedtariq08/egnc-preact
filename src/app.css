@@ -80,7 +80,7 @@ html[dir="rtl"] .demo-oracle-icon {
 }
 
 .app-content-container {
-    /* margin: 1.8rem 4rem; */
+    margin: 1.8rem 7rem;
     overflow: auto;
 }
 
@@ -223,7 +223,7 @@ html[dir="rtl"] .demo-oracle-icon {
     background-color: rgba(0, 0, 0, 0.5);
 }
 
-.popup-inner {
+#popupInner {
     position: relative;
     top: 50%;
     -webkit-transform: translateY(-50%);

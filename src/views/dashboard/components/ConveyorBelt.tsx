@@ -3,12 +3,12 @@ import "ojs/ojactioncard";
 import "ojs/ojavatar";
 import "ojs/ojconveyorbelt";
 import { useStore } from "../../../modules/store";
-import { Paths, navigateToPath } from "../../../routes/redirection";
+import { Pages, navigateToPath } from "../../../routes/redirection";
 
 const ConveyorBelt = () => {
     const { dashboardStore: { conveyorBeltCards } } = useStore();
 
-    const redirection = (event: any, link: Paths) => {
+    const redirection = (event: any, link: Pages) => {
         event.preventDefault();
         navigateToPath(link as any);
     }

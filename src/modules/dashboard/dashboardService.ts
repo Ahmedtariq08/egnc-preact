@@ -1,8 +1,8 @@
-import { NavData, Paths, RoleToPathMap } from '../../routes/paths';
-import { AuthService, UserPermissionsStorage } from "../auth/authService";
 import { requests } from "../../api/apiClient";
-import { getRedirectionPath } from '../../routes/redirection';
 import { Constants } from '../../constants/constants';
+import { NavData, Pages, RoleToPathMap } from '../../routes/paths';
+import { getRedirectionPath } from '../../routes/redirection';
+import { AuthService, UserPermissionsStorage } from "../auth/authService";
 
 //ANCHOR - Interfaces / Constants
 export interface DashboardCardRow {
@@ -18,7 +18,7 @@ export interface ConveyorBeltCard {
     order: number,
     icon: string,
     label: string,
-    link: Paths
+    link: Pages
 }
 
 const ShowObjectCard = { item: true, mpn: true, partGroup: true }
@@ -40,7 +40,7 @@ export class DashboardService {
 
     public static getConveyorBeltCards = (roles: UserPermissionsStorage['roles']): ConveyorBeltCard[] => {
         const userRoles = roles.map(role => role.name);
-        let allPages: Paths[] = [];
+        let allPages: Pages[] = [];
         userRoles.forEach(role => { //get all possible pages
             const pagesForThisRole = RoleToPathMap.get(role);
             if (Array.isArray(pagesForThisRole)) {
@@ -51,10 +51,10 @@ export class DashboardService {
         })
         const uniquePages = [...new Set(allPages)]; //generate unique pages
         let cards: ConveyorBeltCard[] = [];
-        NavData.forEach((details, path) => {
-            if (uniquePages.includes(path)) {
+        NavData.forEach((details, page) => {
+            if (uniquePages.includes(page)) {
                 const { order, icon, displayName } = details;
-                cards.push({ order: order!, icon: icon!, label: displayName!, link: path })
+                cards.push({ order: order!, icon: icon!, label: displayName!, link: page })
             }
         });
         cards.sort((a, b) => a.order - b.order);
@@ -99,7 +99,7 @@ export class DashboardService {
                     superscript: itemCount == 100,
                     class: "oj-text-color-danger",
                     visibility: itemVisible,
-                    link: getRedirectionPath(Paths.ProductManagementFetch, { category: "item" })
+                    link: getRedirectionPath(Pages.ProductManagementFetch, { category: "item" })
                 },
                 {
                     label: "Manufacturer Parts",
@@ -107,7 +107,7 @@ export class DashboardService {
                     superscript: mpnCount == 100,
                     class: "oj-text-color-secondary",
                     visibility: mpnVisible,
-                    link: getRedirectionPath(Paths.ProductManagementFetch, { category: "mpn" })
+                    link: getRedirectionPath(Pages.ProductManagementFetch, { category: "mpn" })
                 },
                 {
                     label: "Part Groups",
@@ -115,7 +115,7 @@ export class DashboardService {
                     superscript: partGroupCount == 100,
                     class: "oj-text-color-warning",
                     visibility: partGroupVisible,
-                    link: getRedirectionPath(Paths.ProductManagementFetch, { category: "partGroup" })
+                    link: getRedirectionPath(Pages.ProductManagementFetch, { category: "partGroup" })
                 },
             ];
             cards = cards.filter(card => card.visibility);
@@ -145,7 +145,7 @@ export class DashboardService {
                 count: response.length,
                 class: "oj-text-color-danger",
                 visibility: isCardVisible,
-                link: getRedirectionPath(Paths.PendingRequests),
+                link: getRedirectionPath(Pages.PendingRequests),
             }]
         }
         return [];
@@ -160,7 +160,7 @@ export class DashboardService {
                 count: response.length,
                 class: "oj-text-color-success",
                 visibility: isCardVisible,
-                link: getRedirectionPath(Paths.PendingApprovals),
+                link: getRedirectionPath(Pages.PendingApprovals),
             }]
         }
         return [];

@@ -11,7 +11,7 @@ import { Footer } from "../../components/app-layout/Footer";
 import Notification from "../../components/notification/Notification";
 import { useStore } from "../../modules/store";
 import { useLocation } from "react-router-dom";
-import { updateDocumentTitle } from "../../routes/paths";
+import { updateDocumentTitle } from "../../routes/redirection";
 
 const passwordValidator = [new AsyncLengthValidator({
     max: 32, countBy: "codeUnit",

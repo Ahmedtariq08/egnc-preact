@@ -1,13 +1,12 @@
 import { observer } from "mobx-react-lite";
 import "ojs/ojtable";
 import { useEffect, useState } from "preact/hooks";
-import { LoaderCircle } from "../../../common/loader/LoaderCircle";
+import Skeleton from "react-loading-skeleton";
 import { AuthService } from "../../../modules/auth/authService";
 import { DashboardCardRow } from "../../../modules/dashboard/dashboardService";
 import { useStore } from "../../../modules/store";
-import { navigateToLink, navigateToPath } from "../../../routes/redirection";
+import { navigateToLink } from "../../../routes/redirection";
 import MutableArrayDataProvider = require("ojs/ojmutablearraydataprovider");
-import Skeleton from "react-loading-skeleton";
 
 export const CountCards = observer(() => {
     const userPermissions = AuthService.getPermissionsFromStorage();
@@ -85,16 +84,16 @@ const DashboardCard = (props: CardProps) => {
                 <span>{cardTitle}</span>
             </div>
             <div>
-                <LoaderCircle isLoading={isCardLoading} text="  "></LoaderCircle>
-                {!isCardLoading && <oj-table
-                    data={rowsDp}
-                    columns={[{ "width": "100px" }, { "width": "16rem" }]}
-                    columnsDefault={{ "sortable": "disabled" }}
-                    style={{ borderRadius: '6px' }}
-                >
-                    <template slot='rowTemplate' render={renderRow}></template>
-                </oj-table>}
-
+                {isCardLoading ?
+                    <Skeleton count={3} height={35} style={{ margin: '4px 0', opacity: 0.3 }} highlightColor="white" /> :
+                    <oj-table
+                        data={rowsDp}
+                        columns={[{ "width": "100px" }, { "width": "16rem" }]}
+                        columnsDefault={{ "sortable": "disabled" }}
+                        style={{ borderRadius: '6px' }}
+                    >
+                        <template slot='rowTemplate' render={renderRow}></template>
+                    </oj-table>}
             </div>
             {!isCardLoading && <span>{footerText ? <oj-label class="oj-label oj-text-color-secondary">{footerText}</oj-label> : null}</span>}
 

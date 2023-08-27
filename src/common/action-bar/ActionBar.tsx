@@ -7,7 +7,11 @@ import { OptionComponent } from "../options/OptionComponent";
 import { Action, ActionBarElement, ActionOrView, DefaultProperties, CONSTANTS } from "./metadata";
 export { Action, ActionBarElement };
 
-export const ActionBar = (props: { actions: ActionBarElement[] }) => {
+export interface ActionBarProps {
+    actions: ActionBarElement[]
+}
+
+export const ActionBar = (props: ActionBarProps) => {
     const { actions } = props;
     return (
         <div id="toolbars">

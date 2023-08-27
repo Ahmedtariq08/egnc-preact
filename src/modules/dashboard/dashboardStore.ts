@@ -22,7 +22,7 @@ export default class DashboardStore {
     }
 
     /*This is also needed in layout store to populate drawer on refresh */
-    private loadConveyorCards = () => {
+    loadConveyorCards = () => {
         const permissions = AuthService.getPermissionsFromStorage();
         if (permissions && permissions.roles) {
             const conveyorCards = DashboardService.getConveyorBeltCards(permissions.roles);

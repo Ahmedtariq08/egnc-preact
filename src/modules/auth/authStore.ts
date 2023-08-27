@@ -1,8 +1,8 @@
-import { Auth, UserPermissionsStorage, AuthService } from "./authService";
-import { makeAutoObservable, reaction, runInAction } from "mobx";
-import { store } from "../store";
 import { AxiosError } from "axios";
-import { Paths, navigateToPath } from '../../routes/redirection'
+import { makeAutoObservable, runInAction } from "mobx";
+import { Pages, navigateToPath } from '../../routes/redirection';
+import { store } from "../store";
+import { Auth, AuthService, UserPermissionsStorage } from "./authService";
 
 /**
  * @classdesc Used for login page and storing user auth data
@@ -24,7 +24,7 @@ export default class AuthStore {
         if (token === null || permissions === null) {
             this.isLoggedIn = false;
             AuthService.clearStorage();
-            navigateToPath(Paths.Login);
+            navigateToPath(Pages.Login);
         } else {
             this.isLoggedIn = true;
             this.userPemissions = permissions;
@@ -39,7 +39,7 @@ export default class AuthStore {
         if (token === null || permissions === null) {
             this.isLoggedIn = false;
             AuthService.clearStorage();
-            navigateToPath(Paths.Login);
+            navigateToPath(Pages.Login);
         } else {
             this.appLoader = true;
             try {
@@ -48,13 +48,13 @@ export default class AuthStore {
                     this.isLoggedIn = true;
                     this.userPemissions = permissions;
                 });
-                navigateToPath(Paths.Dashboard);
+                navigateToPath(Pages.Dashboard);
             } catch (error) {
                 runInAction(() => {
                     this.isLoggedIn = false;
                     AuthService.clearStorage();
                 });
-                navigateToPath(Paths.Login);
+                navigateToPath(Pages.Login);
             } finally {
                 runInAction(() => {
                     this.appLoader = false;
@@ -80,7 +80,7 @@ export default class AuthStore {
                     this.isLoggedIn = true;
                 });
                 store.commonStore.clearNotifications();
-                navigateToPath(Paths.Dashboard);
+                navigateToPath(Pages.Dashboard);
             } catch (error) {
                 const message = (error as AxiosError).response?.data;
                 store.commonStore.showNotification("error", `${message ?? 'Login failed'}`);
@@ -98,7 +98,7 @@ export default class AuthStore {
             AuthService.clearStorage();
             this.userPemissions = undefined;
             this.isLoggedIn = false;
-            navigateToPath(Paths.Login);
+            navigateToPath(Pages.Login);
         } catch (error) {
             console.log(error);
         }
