@@ -10,7 +10,8 @@ import { PendingTemplates } from "../../modules/pending/pendingService";
 import { useStore } from "../../modules/store";
 import { Pages, getRedirectionPath, navigateToPath } from "../../routes/redirection";
 import { getReadonlyTemplates } from "../../utils/render";
-import { CustomConfirmationPopup } from "../../common/confirmation-popup/ConfirmationPopup";
+import { ConfirmationPopup } from "../../common/confirmation-popup/ConfirmationPopup";
+import { TableRowSkeleton } from "../../components/skeleton/Skeleton";
 
 interface Props {
     isApprovals: boolean
@@ -43,6 +44,7 @@ export const PendingView = observer((props: Props) => {
     const openPopup = (hook: Hooks) => { setPopupHooks({ ...popupHooks, [hook]: true }); };
     const closePopup = (hook: Hooks) => { setPopupHooks({ ...popupHooks, [hook]: false }) };
 
+    //TODO - Export
     const exportData = () => {
         console.log("Exporting data");
     }
@@ -94,15 +96,17 @@ export const PendingView = observer((props: Props) => {
                 <ActionBar
                     actions={getActions()}
                 />
-
                 {loadingData ?
-                    <Skeleton count={15} height={35} style={{ margin: '4px 0' }} /> :
-                    <DataTable
-                        tableColumns={columns.addedColumns}
-                        templates={getTemplates()}
-                        tableDataProvider={dataProvider}
-                        rowChangedHandler={rowChangeHandler}
-                    />}
+                    <TableRowSkeleton count={15} /> :
+                    <div className={'oj-sm-margin-2x-top'}>
+                        <DataTable
+                            tableColumns={columns.addedColumns}
+                            templates={getTemplates()}
+                            tableDataProvider={dataProvider}
+                            rowChangedHandler={rowChangeHandler}
+                        />
+                    </div>
+                }
             </div>
             <ReorderColumnsPopup
                 showPopup={popupHooks[Hooks.ReorderColumns]}
@@ -116,19 +120,12 @@ export const PendingView = observer((props: Props) => {
                 columnsMetaData={columns}
                 okFunction={addRemoveColumns}
             />
-            <CustomConfirmationPopup
+            <ConfirmationPopup
                 show={popupHooks[Hooks.OpenConfirmation]}
                 closePopup={() => closePopup(Hooks.OpenConfirmation)}
-                message="Are you sure you want to withdraw this request?"
+                message={`Are you sure you want to withdraw the request ${selectedDeclaration?.id}?`}
                 okAction={deleteSelected}
             />
         </div>
     )
 });
-
-
-const WithdrawConfirmation = (props: { declaration: Declaration }) => {
-    const { declaration } = props;
-
-
-}
