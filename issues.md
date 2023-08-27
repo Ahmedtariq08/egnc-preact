@@ -18,3 +18,6 @@
 2. Showing count text font color and margin
 3. Incorporate list view instead of table in dashboard cards (placeholder for loading if possible)
 4. Add newsletter
+
+### Pending view
+1. How to export? Sheetjs has a large library size. Need to implement backend export?
