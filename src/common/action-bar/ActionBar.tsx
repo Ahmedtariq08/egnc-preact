@@ -1,6 +1,7 @@
 import "ojs/ojlabel";
 import "ojs/ojtable";
 import "ojs/ojtoolbar";
+import { useState } from 'react';
 import { ojMenu } from "ojs/ojmenu";
 import { ButtonComponent } from "../button/ButtonComponent";
 import { OptionComponent } from "../options/OptionComponent";
@@ -8,11 +9,12 @@ import { Action, ActionBarElement, ActionOrView, DefaultProperties, CONSTANTS } 
 export { Action, ActionBarElement };
 
 export interface ActionBarProps {
-    actions: ActionBarElement[]
+    actions: ActionBarElement[],
+    filterHandler?: (value: string) => void
 }
 
 export const ActionBar = (props: ActionBarProps) => {
-    const { actions } = props;
+    const { actions, filterHandler } = props;
     return (
         <div id="toolbars">
             <div class="oj-toolbar-row oj-toolbars">
@@ -20,6 +22,7 @@ export const ActionBar = (props: ActionBarProps) => {
                     <ActionMenu actions={actions} />
                     <ViewMenu actions={actions} />
                     <ActionButtons actions={actions} />
+                    {filterHandler && <FilterData handler={filterHandler} />}
                 </oj-toolbar>
             </div>
         </div>
@@ -143,6 +146,33 @@ const ViewMenu = (props: { actions: ActionBarElement[] }) => {
         />
     );
 };
+
+const FilterData = (props: { handler: (value: string) => void }) => {
+    const [filter, setFilter] = useState<string>('');
+
+    const valueChangeHandler = (event: any) => {
+        const value = event.detail.value;
+        setFilter(value);
+        props.handler(value);
+    }
+
+    return (
+        <>
+            <Seperator />
+            <oj-input-text
+                id="filter"
+                label-hint="Filter"
+                label-edge="inside"
+                value={filter}
+                placeholder="Type to filter"
+                onrawValueChanged={valueChangeHandler}
+                clearIcon="always"
+                style={{ width: 300, marginLeft: 10 }}
+            />
+        </>
+
+    )
+}
 
 const Seperator = () => {
     return (<span role="separator" aria-orientation="vertical" class="oj-toolbar-separator"></span>);

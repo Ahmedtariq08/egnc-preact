@@ -9,6 +9,7 @@ import { PendingView } from '../views/pending-view/PendingView';
 import { Reports } from '../views/reports/Reports';
 import { Dossiers } from '../views/dossiers/Dossiers';
 import { DeclarationBlock } from '..//views/declaration-block/DeclarationBlock';
+import { AdminPanel } from '../views/admin-panel/AdminPanel';
 
 export const routes: RouteObject[] = [
     {
@@ -26,7 +27,7 @@ export const routes: RouteObject[] = [
             { path: Paths.ProductManagementFetch, element: <ProductManagement /> },
             { path: Paths.PendingRequests, element: <PendingView isApprovals={false} /> },
             { path: Paths.PendingApprovals, element: <PendingView isApprovals={true} /> },
-            { path: Paths.AdminPanel, element: <Dashboard /> },
+            { path: Paths.AdminPanel, element: <AdminPanel /> },
             { path: Paths.Reports, element: <Reports /> },
             { path: Paths.Dossiers, element: <Dossiers /> },
             { path: Paths.Declaration, element: <DeclarationBlock /> },
