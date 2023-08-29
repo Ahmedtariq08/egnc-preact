@@ -47,8 +47,8 @@ export interface User extends NewUser {
 // }
 //ANCHOR - APIs
 export const UserApis = {
-    getAllUsers: () => requests.get<User[]>('/auth/users'),
-    getRoles: () => requests.get<Roles[]>('/auth/roles'),
+    getAllUsers: () => requests.get<User[]>('/auth/users/'),
+    getRoles: () => requests.get<Roles[]>('/auth/roles/'),
 }
 
 //ANCHOR - Service
@@ -56,5 +56,15 @@ export class UserService {
 
     public static getNewUser = (): NewUser => {
         return { username: '', email: '', roles: [], name: '', company: '', phone: '', businessTitle: '', active: false }
+    }
+
+    public static mapRolesToName = (users: User[]): User[] => {
+        return users.map((user) => {
+            return {
+                ...user, roles: user.roles.map((role) => {
+                    return typeof role === "string" ? role : role.name
+                })
+            }
+        })
     }
 }

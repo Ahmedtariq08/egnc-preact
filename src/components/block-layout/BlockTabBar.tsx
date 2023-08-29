@@ -13,11 +13,12 @@ interface Tab {
 
 interface Props {
     tabs: Tab[],
-    onTabSwitch?: (tab: string) => void
+    onTabSwitch?: (tab: string) => void,
+    vh?: string
 }
 
 export const BlockTabBar = (props: Props) => {
-    const { tabs, onTabSwitch } = props;
+    const { tabs, onTabSwitch, vh = '70' } = props;
     const currentEdge = "start";
     const firstTab = (Array.isArray(tabs) && tabs.length > 0) ? tabs[0].slot : undefined;
     const [selectedTab, setSelectedTab] = useState(firstTab);
@@ -52,7 +53,7 @@ export const BlockTabBar = (props: Props) => {
     }
 
     return (
-        <div class="oj-panel oj-sm-margin-2x" style={{ height: '70vh' }}>
+        <div class="oj-panel oj-sm-margin-2x" style={{ height: `${vh}vh` }}>
             <div id="demo-container" class="oj-flex demo-edge-start" style={{ height: '100%' }}>
                 {tabElement()}
                 <div class="demo-switcher-container" style={{ width: '90%' }}>

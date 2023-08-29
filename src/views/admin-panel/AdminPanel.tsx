@@ -15,7 +15,7 @@ export const AdminPanel = observer(() => {
     return (
         <AdminPanelStoreContext.Provider value={AdminPanelStore}>
             <div class='oj-sm-margin-8x-top'>
-                <BlockTabBar tabs={tabs} />
+                <BlockTabBar tabs={tabs} vh="75" />
             </div>
         </AdminPanelStoreContext.Provider>
     )
