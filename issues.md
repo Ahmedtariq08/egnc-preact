@@ -20,3 +20,6 @@
 
 ### Pending view
 1. [Feature] Export data. Sheetjs has a large library size. Need to implement backend export?
+
+### Admin Panel
+1. [Fix] Validator messages in create update user popup
