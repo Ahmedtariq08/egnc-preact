@@ -10,11 +10,13 @@ import { Icons } from "../../../constants/iconsData";
 import { tableTemplates } from "../../../constants/templates";
 import { useAdminPanelStore } from "../../../modules/admin-panel/adminPanelStore";
 import { getReadonlyTemplates } from "../../../utils/render";
+import { CreateOrUpdateUserPopup } from "./CreateUpdateUser";
 
 
 export const UsersTab = observer(() => {
     const { userStore } = useAdminPanelStore();
-    const { loadUserData, openPopup, closePopup, reorderColumns, addRemoveColumns, rowChangedHandler, setFilter } = userStore;
+    const { loadUserData, openPopup, closePopup, reorderColumns, addRemoveColumns,
+        rowChangedHandler, setFilter, openCreateUpdatePopup } = userStore;
     const { usersDp, isLoading, popupHooks, columns, isRowSelected } = userStore;
 
     useEffect(() => {
@@ -24,8 +26,8 @@ export const UsersTab = observer(() => {
     const actions: ActionBarElement[] = [
         { type: Action.ReorderColumns, action: () => openPopup("reorder") },
         { type: Action.AddColumn, action: () => openPopup("addRemove") },
-        { type: Action.Create, title: "Create User", action: () => { }, icon: Icons.blockIcons.createNew, hasStartSeperator: true, inActionMenu: { present: true, showIcon: true } },
-        { type: Action.Update, title: "Update User", disable: !isRowSelected, action: () => { }, icon: Icons.icons.updateUser, inActionMenu: { present: true, showIcon: true } },
+        { type: Action.Create, title: "Create User", action: () => openCreateUpdatePopup("Create"), icon: Icons.blockIcons.createNew, hasStartSeperator: true, inActionMenu: { present: true, showIcon: true } },
+        { type: Action.Update, title: "Update User", disable: !isRowSelected, action: () => openCreateUpdatePopup("Update"), icon: Icons.icons.updateUser, inActionMenu: { present: true, showIcon: true } },
         { type: Action.Reset, title: "Reset Password", disable: !isRowSelected, action: () => openPopup("resetPassword"), icon: Icons.icons.resetPassword, inActionMenu: { present: true, showIcon: true } },
     ]
 
@@ -62,6 +64,7 @@ export const UsersTab = observer(() => {
                     okFunction={addRemoveColumns}
                 />
                 <ResetPassword />
+                <CreateOrUpdateUserPopup />
             </div>
         </>
 

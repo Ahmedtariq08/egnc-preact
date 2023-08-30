@@ -33,7 +33,10 @@ export interface User extends NewUser {
 export const UserApis = {
     getAllUsers: () => requests.get<User[]>('/auth/users/'),
     getRoles: () => requests.get<Roles[]>('/auth/roles/'),
-    resetPassword: (userId: string) => requests.post<string>(`/auth/users/reset/${userId}`)
+    resetPassword: (userId: string) => requests.post<string>(`/auth/users/reset/${userId}`),
+    createUser: (newUser: NewUser) => requests.post<User>('/auth/users/register/',
+        { ...newUser, active: (!!newUser.active).toString(), provider: "EGNC" }),
+    updateUser: (user: NewUser) => requests.post<User>('/auth/users/update', user)
 }
 
 //ANCHOR - Service
@@ -41,6 +44,11 @@ export class UserService {
 
     public static getNewUser = (): NewUser => {
         return { username: '', email: '', roles: [], name: '', company: '', phone: '', businessTitle: '', active: false }
+    }
+
+    public static copyUserFields = (user: User): NewUser => {
+        const { id, provider, isApplication, createdBy, createdDate, lastModifiedBy, lastModifiedDate, ...newUserFields } = user;
+        return newUserFields;
     }
 
     public static mapRolesToName = (users: User[]): User[] => {
