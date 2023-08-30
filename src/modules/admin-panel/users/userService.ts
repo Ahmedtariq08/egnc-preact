@@ -28,27 +28,12 @@ export interface User extends NewUser {
     lastModifiedDate?: string;
 }
 
-// export const getUserFromObject = (jsonObject: Object) : User => {
-//     const user: User = {
-//         id: undefined,
-//         provider: data.provider,
-//         isApplication: data.isApplication,
-//         createdBy: data.createdBy,
-//         lastModifiedBy: data.lastModifiedBy,
-//     };
 
-//     for (const key in data) {
-//         if (key in user) {
-//             user[key] = data[key];
-//         }
-//     }
-
-//     return user;
-// }
 //ANCHOR - APIs
 export const UserApis = {
     getAllUsers: () => requests.get<User[]>('/auth/users/'),
     getRoles: () => requests.get<Roles[]>('/auth/roles/'),
+    resetPassword: (userId: string) => requests.post<string>(`/auth/users/reset/${userId}`)
 }
 
 //ANCHOR - Service
