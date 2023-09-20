@@ -1,4 +1,5 @@
-import { requests } from "../../api/apiClient";
+import { Declaration } from "../../models";
+import { requests, URLs } from "../../api";
 import { Constants } from '../../constants/constants';
 import { NavData, Pages, RoleToPathMap } from '../../routes/paths';
 import { getRedirectionPath } from '../../routes/redirection';
@@ -26,12 +27,16 @@ const ShowPendingCard = { pendingApprovals: true, pendingRequests: true }
 
 
 //ANCHOR - APIs
+const { ITEM, MANUFACTURER, PART_GROUP, DECLARATION } = URLs.MAIN;
+const { OPEN_TO_MANAGER, OPEN_TO_SUPPLIER } = Constants.WORKFLOWSTATES;
+
+//?state=${Constants.WORKFLOWSTATES.OPEN_TO_SUPPLIER}
 const DashboardApi = {
-    getItems: (body: {}) => requests.post<{ result: any[] }>('MainService/item/advanceSearch/', body),
-    getPartGroups: (body: {}) => requests.post<{ result: any[] }>('MainService/partGroup//advanceSearch/', body),
-    getMpns: (body: {}) => requests.post<{ result: any[] }>('MainService/manufacturer/advanceSearch/', body),
-    getPendingRequests: () => requests.get<any[]>(`MainService/declaration/?state=${Constants.WORKFLOWSTATES.OPEN_TO_SUPPLIER}`),
-    getPendingApprovals: () => requests.get<any[]>(`MainService/declaration/?state=${Constants.WORKFLOWSTATES.OPEN_TO_MANAGER}`),
+    getItems: (body: {}) => requests.post<{ result: any[] }>(`${ITEM}/advanceSearch/`, body),
+    getPartGroups: (body: {}) => requests.post<{ result: any[] }>(`${PART_GROUP}/advanceSearch/`, body),
+    getMpns: (body: {}) => requests.post<{ result: any[] }>(`${MANUFACTURER}/advanceSearch/`, body),
+    getPendingRequests: () => requests.get<Declaration[]>(`${DECLARATION}/`, { params: { state: OPEN_TO_SUPPLIER } }),
+    getPendingApprovals: () => requests.get<Declaration[]>(`${DECLARATION}/`, { params: { state: OPEN_TO_MANAGER } }),
 }
 
 

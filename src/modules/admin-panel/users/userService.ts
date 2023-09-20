@@ -1,4 +1,4 @@
-import { requests } from "../../../api/apiClient"
+import { requests, URLs } from "../../../api"
 
 //ANCHOR - Interfaces 
 export interface Roles {
@@ -30,13 +30,15 @@ export interface User extends NewUser {
 
 
 //ANCHOR - APIs
+const { USERS, ROLES } = URLs.AUTH;
+
 export const UserApis = {
-    getAllUsers: () => requests.get<User[]>('/auth/users/'),
-    getRoles: () => requests.get<Roles[]>('/auth/roles/'),
-    resetPassword: (userId: string) => requests.post<string>(`/auth/users/reset/${userId}`),
-    createUser: (newUser: NewUser) => requests.post<User>('/auth/users/register/',
+    getAllUsers: () => requests.get<User[]>(`${USERS}/`),
+    getRoles: () => requests.get<Roles[]>(`${ROLES}/`),
+    resetPassword: (userId: string) => requests.post<string>(`${USERS}/reset/${userId}`),
+    createUser: (newUser: NewUser) => requests.post<User>(`${USERS}/register/`,
         { ...newUser, active: (!!newUser.active).toString(), provider: "EGNC" }),
-    updateUser: (user: NewUser) => requests.post<User>('/auth/users/update', user)
+    updateUser: (user: NewUser) => requests.post<User>(`${USERS}/update`, user)
 }
 
 //ANCHOR - Service

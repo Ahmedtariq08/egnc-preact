@@ -1,5 +1,4 @@
-import { requests } from "../../api/apiClient";
-
+import { requests, URLs } from "../../api";
 
 //ANCHOR - Interfaces
 export enum UserRole {
@@ -26,10 +25,11 @@ export interface UserPermissionsStorage extends UserPermissions {
 }
 
 //ANCHOR - APIs
+const { USERS } = URLs.AUTH;
 export const Auth = {
-        loginUser: (username: string, password: string) => requests.post<{ token: string }>('/auth/users/authenticate', { username, password }),
-        logoutUser: () => requests.post<void>('auth//users/logout'),
-        permissions: () => requests.get<UserPermissions>('auth/users/permissions')
+        loginUser: (username: string, password: string) => requests.post<{ token: string }>(`${USERS}/authenticate`, { username, password }),
+        logoutUser: () => requests.post<void>(`${USERS}/logout`),
+        permissions: () => requests.get<UserPermissions>(`${USERS}/permissions`)
 }
 
 //ANCHOR - Service
