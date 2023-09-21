@@ -30,7 +30,6 @@ const ShowPendingCard = { pendingApprovals: true, pendingRequests: true }
 const { ITEM, MANUFACTURER, PART_GROUP, DECLARATION } = URLs.MAIN;
 const { OPEN_TO_MANAGER, OPEN_TO_SUPPLIER } = Constants.WORKFLOWSTATES;
 
-//?state=${Constants.WORKFLOWSTATES.OPEN_TO_SUPPLIER}
 const DashboardApi = {
     getItems: (body: {}) => requests.post<{ result: any[] }>(`${ITEM}/advanceSearch/`, body),
     getPartGroups: (body: {}) => requests.post<{ result: any[] }>(`${PART_GROUP}/advanceSearch/`, body),
