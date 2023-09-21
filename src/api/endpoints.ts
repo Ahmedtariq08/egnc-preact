@@ -6,16 +6,16 @@ export const URLs = {
     AUTH: {
         USERS: `${Auth}/users`,
         ROLES: `${Auth}/roles`,
+        THIRDPARTY_AUTH: {
+            SSO: `${Auth}/${ThirdPartyAuth}/sso`,
+            CLOUD: `${Auth}/${ThirdPartyAuth}/cloud`,
+            AUTHORIZE: `${Auth}/${ThirdPartyAuth}/authorize`,
+        },
     },
     MAIN: {
         ITEM: `${Main}/item`,
         PART_GROUP: `${Main}/partGroup`,
         MANUFACTURER: `${Main}/manufacturer`,
         DECLARATION: `${Main}/declaration`,
-    },
-    THIRDPARTY_AUTH: {
-        SSO: `${ThirdPartyAuth}/sso`,
-        CLOUD: `${ThirdPartyAuth}/cloud`,
-        AUTHORIZE: `${ThirdPartyAuth}/authorize`,
-    },
+    }
 }

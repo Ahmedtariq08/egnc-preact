@@ -259,3 +259,12 @@ html[dir="rtl"] .demo-oracle-icon {
     display: flex;
     justify-content: center;
 }
+
+/* ANCHOR - Block Header */
+#buttonsWithLeftPadding oj-button {
+    padding-left: 10px;
+}
+
+#buttonsWithRightPadding oj-button {
+    padding-right: 10px;
+}

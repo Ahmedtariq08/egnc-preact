@@ -1,7 +1,7 @@
 import { makeAutoObservable, runInAction } from "mobx";
 import { SSO, SSOApis } from "./ssoService";
-import { store } from "src/modules/store";
-import { areObjectsEqual } from "src/utils/generic";
+import { store } from "../../../modules/store";
+import { areObjectsEqual } from "../../../utils/generic";
 
 export default class SsoStore {
     sso: SSO | undefined = undefined;
@@ -30,6 +30,13 @@ export default class SsoStore {
         }
     }
 
+    valueChangeHandler = (event: any, key: keyof SSO) => {
+        const { value } = event.detail;
+        if (this.sso) {
+            (this.sso as any)[key] = value;
+        }
+    }
+
     editAction = () => {
         this.editDisabled = false;
     }
@@ -47,7 +54,7 @@ export default class SsoStore {
                 await SSOApis.updateSSO(this.sso!);
                 runInAction(() => {
                     this.editDisabled = true;
-                    this.prevSso = this.sso;
+                    this.prevSso = { ...this.sso } as SSO;
                 });
                 store.commonStore.showNotification("confirmation", "Single Sign-On updated successfully.")
             } catch (error) {
