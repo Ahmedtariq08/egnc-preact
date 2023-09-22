@@ -70,14 +70,38 @@ export const generalConfigApis = {
 
 
 //ANCHOR - Utility functions
-export const successMessage = (value: string): string => {
+const successMessage = (value: string): string => {
     return `${value} updated successfully.`
 }
-export const errorMessage = (value: string): string => {
+
+const errorMessage = (value: string): string => {
     return `Unable to update ${value}`
 }
+
 export const substancePreventionSuccessMessage = (value: YesNo): string => {
     const placeholder = value === "yes" ? "will" : "will not";
     return `Declaration submission ${placeholder} be prevented on unknown substance presence.`
 }
 
+export const MessageMap: { [K in keyof ConfigData]: { successMsg: string, errorMsg: string }; } = {
+    cloud: {
+        successMsg: successMessage('Cloud Link'),
+        errorMsg: errorMessage('Cloud Link')
+    },
+    thresholdTolerance: {
+        successMsg: successMessage('Threshold Tolerance'),
+        errorMsg: errorMessage('Threshold Tolerance')
+    },
+    company: {
+        successMsg: successMessage('Company name'),
+        errorMsg: errorMessage('Company name')
+    },
+    followUpDays: {
+        successMsg: successMessage('Follow up days'),
+        errorMsg: errorMessage('Follow up days')
+    },
+    substancePrevention: {
+        successMsg: successMessage('Unknown substance severity prevention'), //Not to use this
+        errorMsg: errorMessage('Unknown substance severity prevention')
+    },
+}
