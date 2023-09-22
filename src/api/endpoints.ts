@@ -17,5 +17,6 @@ export const URLs = {
         PART_GROUP: `${Main}/partGroup`,
         MANUFACTURER: `${Main}/manufacturer`,
         DECLARATION: `${Main}/declaration`,
+        PREFERENCE: `${Main}/preference`,
     }
 }
