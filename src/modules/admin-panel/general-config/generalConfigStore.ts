@@ -78,6 +78,9 @@ export default class GeneralConfigStore {
             }
             store.commonStore.showNotification('confirmation', successMsg);
         } catch (error) {
+            runInAction(() => {
+                config.value = config.prev;
+            });
             store.commonStore.showNotification('error', errorMsg);
         } finally {
             runInAction(() => {
@@ -85,90 +88,4 @@ export default class GeneralConfigStore {
             })
         }
     }
-
-    // saveOracleCloudLink = async () => {
-    //     this.saveConfigValue('cloud', successMessage('Cloud link'), errorMessage('Cloud link'));
-    //     // const cloud = this.configData.cloud;
-    //     // cloud.loading = true;
-    //     // try {
-    //     //     await generalConfigApis.updateOracleCloudLink(cloud.value!);
-    //     //     runInAction(() => {
-    //     //         cloud.disabled = true;
-    //     //         cloud.prev = cloud.value;
-    //     //     })
-    //     //     store.commonStore.showNotification("confirmation", successMessage('Cloud link'));
-    //     // } catch (error) {
-    //     //     store.commonStore.showNotification("error", errorMessage('Cloud link'));
-    //     // } finally {
-    //     //     runInAction(() => {
-    //     //         cloud.loading = false;
-    //     //     })
-    //     // }
-    // }
-
-    // saveThresholdTolerance = async () => {
-    //     this.saveConfigValue('thresholdTolerance', successMessage('Threshold Tolerance'), errorMessage('Threshold Tolerance'));
-    //     // const tolerance = this.configData.thresholdTolerance;
-    //     // tolerance.loading = true;
-    //     // try {
-    //     //     await generalConfigApis.updateThresholdTolerance(tolerance.value!);
-    //     //     runInAction(() => {
-    //     //         tolerance.disabled = true;
-    //     //         tolerance.prev = tolerance.value;
-    //     //     })
-    //     //     store.commonStore.showNotification("confirmation", successMessage('Threshold Tolerance'));
-    //     // } catch (error) {
-    //     //     store.commonStore.showNotification("error", errorMessage('Threshold Tolerance'));
-    //     // } finally {
-    //     //     runInAction(() => {
-    //     //         tolerance.loading = false;
-    //     //     })
-    //     // }
-    // }
-
-    // saveSeverityPrevention = async () => {
-    //     this.saveConfigValue('substancePrevention',
-    //         substancePreventionSuccessMessage(this.configData.substancePrevention.value!),
-    //         errorMessage('Unknown substance severity prevention'));
-    //     // const prevention = this.configData.substancePrevention;
-    //     // prevention.loading = true;
-    //     // try {
-    //     //     await generalConfigApis.updateUnknownSubstanceSeverityPrevention(prevention.value!);
-    //     //     runInAction(() => {
-    //     //         prevention.disabled = true;
-    //     //         prevention.prev = prevention.value;
-    //     //     })
-    //     //     store.commonStore.showNotification("confirmation", substancePreventionSuccessMessage(prevention.value!));
-    //     // } catch (error) {
-    //     //     store.commonStore.showNotification("error", errorMessage('Unknown substance severity prevention'));
-    //     // } finally {
-    //     //     runInAction(() => {
-    //     //         prevention.loading = false;
-    //     //     })
-    //     // }
-    // }
-
-    // saveCompanyName = async () => {
-    //     this.saveConfigValue('company', successMessage('Company name'), errorMessage('Company name'));
-    //     // const company = this.configData.company;
-    //     // company.loading = true;
-    //     // try {
-    //     //     await generalConfigApis.updateCompanyName(company.value!);
-    //     //     runInAction(() => {
-    //     //         company.disabled = true;
-    //     //         company.prev = company.value;
-    //     //     })
-    //     //     store.commonStore.showNotification("confirmation", successMessage('Company name'));
-    //     // } catch (error) {
-    //     //     store.commonStore.showNotification("error", errorMessage('Company name'));
-    //     // } finally {
-    //     //     runInAction(() => {
-    //     //         company.loading = false;
-    //     //     })
-    //     // }
-    // }
-    // saveFollowUpDays = async () => {
-    //     this.saveConfigValue('followUpDays', successMessage('Follow up days'), errorMessage('Follow up days'));
-    // }
-
 }

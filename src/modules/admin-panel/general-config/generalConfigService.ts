@@ -53,7 +53,7 @@ export const generalConfigApis = {
 
     getThresholdTolerance: () => requests.get<number>(`${prefernceUrl}/thresholdTolerance`),
     updateThresholdTolerance:
-        (tolerance: number) => requests.put<number>(`${prefernceUrl}/thresholdTolerance`, tolerance),
+        (tolerance: number) => requests.put<number>(`${prefernceUrl}/thresholdTolerance`, { value: tolerance }),
 
     getUnknownSubstanceSeverityPrevention:
         () => requests.get<SeverityPrevention>(`${prefernceUrl}/UnknownSubstanceSeverity`)
