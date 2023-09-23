@@ -32,134 +32,110 @@ const elementClass = (md: number, optionalClass?: string) => {
 
 export const GeneralConfigurationTab = observer(() => {
     const { generalConfigStore } = useAdminPanelStore();
-    const { loadGeneralConfigurations } = generalConfigStore;
+    const { configData, loadGeneralConfigurations, updateConfigValue } = generalConfigStore;
+    const { cloud, thresholdTolerance, substancePrevention, company, followUpDays } = configData;
 
     useEffect(() => {
         loadGeneralConfigurations();
     }, [loadGeneralConfigurations]);
+
+    const cloudValueChangeHandler = (event: any) => {
+        const newUri = event.detail.value;
+        let newCloudData = { ...cloud.value } as Cloud;
+        newCloudData.authorizationUri = newUri;
+        updateConfigValue('cloud', newCloudData)
+    }
 
     return (
         <div class="oj-sm-margin-2x">
             <h5>{CONSTANTS.TITLE_PAGE}</h5>
             <div class="oj-panel">
                 <div class="oj-flex oj-sm-flex-direction-column">
-                    <FirstRow />
+                    <div class={CLASSES.FLEX_ITEM}>
+                        <div class={CLASSES.FLEX_ITEM_ROW}>
+                            <div class={elementClass(2, CLASSES.ALIGN_CENTER)}>
+                                <b>{CONSTANTS.CLOUD.TITLE}</b>
+                            </div>
+                            <oj-input-text
+                                disabled={cloud.disabled}
+                                spellcheck={false}
+                                value={cloud.value?.authorizationUri}
+                                onvalueChanged={cloudValueChangeHandler}
+                                class={elementClass(8)}
+                            ></oj-input-text>
+                            <ActionButtons configKey='cloud' />
+                        </div>
+                    </div>
                     <hr></hr>
-                    <SecondRow />
+                    <div class={CLASSES.FLEX_ITEM}>
+                        <div class={CLASSES.FLEX_ITEM_ROW}>
+                            <div class={elementClass(2, CLASSES.ALIGN_CENTER)}>
+                                <b>{CONSTANTS.THRESHOLD.TITLE}</b>
+                            </div>
+                            <oj-input-number
+                                disabled={thresholdTolerance.disabled}
+                                spellcheck={false}
+                                onvalueChanged={(event) => updateConfigValue('thresholdTolerance', event.detail.value!)}
+                                value={thresholdTolerance.value}
+                                max={CONSTANTS.THRESHOLD.MAX}
+                                min={CONSTANTS.THRESHOLD.MIN}
+                                step={CONSTANTS.THRESHOLD.STEP}
+                                class={elementClass(2)}
+                            ></oj-input-number>
+                            <ActionButtons configKey="thresholdTolerance" />
+                            <div class="oj-md-1"></div>
+                            <div class={elementClass(3, CLASSES.ALIGN_CENTER)}>
+                                <b>{CONSTANTS.PREVENT.TITLE}</b>
+                            </div>
+                            <oj-combobox-one
+                                disabled={substancePrevention.disabled}
+                                value={substancePrevention.value}
+                                onvalueChanged={(event) => updateConfigValue('substancePrevention', event.detail.value)}
+                                class={elementClass(2)}>
+                                <oj-option value={"yes"}>Yes</oj-option>
+                                <oj-option value={"no"}>No</oj-option>
+                            </oj-combobox-one>
+                            <ActionButtons configKey="substancePrevention" />
+                        </div>
+                    </div>
                     <hr></hr>
-                    <ThirdRow />
+                    <div class={CLASSES.FLEX_ITEM}>
+                        <div class={CLASSES.FLEX_ITEM_ROW}>
+                            <div class={elementClass(2, CLASSES.ALIGN_CENTER)}>
+                                <b>{CONSTANTS.COMPANY.TITLE}</b>
+                            </div>
+                            <oj-input-text
+                                disabled={company.disabled}
+                                spellcheck={false}
+                                length={{ max: CONSTANTS.COMPANY.MAX_CHAR }}
+                                value={company.value}
+                                onvalueChanged={(event) => updateConfigValue('company', event.detail.value)}
+                                class={elementClass(2)}
+                            ></oj-input-text>
+                            <ActionButtons configKey='company' />
+                            <div class="oj-md-1"></div>
+                            <div class={elementClass(3, CLASSES.ALIGN_CENTER)}>
+                                <b>{CONSTANTS.FOLLOWUP.TITLE}</b>
+                            </div>
+                            <oj-input-number
+                                disabled={followUpDays.disabled}
+                                spellcheck={false}
+                                onvalueChanged={(event) => updateConfigValue('followUpDays', event.detail.value!)}
+                                value={followUpDays.value}
+                                max={CONSTANTS.FOLLOWUP.MAX}
+                                min={CONSTANTS.FOLLOWUP.MIN}
+                                step={CONSTANTS.FOLLOWUP.STEP}
+                                class={elementClass(2)}
+                            ></oj-input-number>
+                            <ActionButtons configKey='followUpDays' />
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     )
 });
 
-const FirstRow = observer(() => {
-    const { generalConfigStore: { configData, updateConfigValue } } = useAdminPanelStore();
-    const { value, disabled } = configData.cloud;
-
-    const valueChangeHandler = (event: any) => {
-        const newUri = event.detail.value;
-        let newCloudData = { ...value } as Cloud;
-        newCloudData.authorizationUri = newUri;
-        updateConfigValue('cloud', newCloudData)
-    }
-
-    return (
-        <div class={CLASSES.FLEX_ITEM}>
-            <div class={CLASSES.FLEX_ITEM_ROW}>
-                <div class={elementClass(2, CLASSES.ALIGN_CENTER)}>
-                    <b>{CONSTANTS.CLOUD.TITLE}</b>
-                </div>
-                <oj-input-text
-                    disabled={disabled}
-                    spellcheck={false}
-                    value={value?.authorizationUri}
-                    onvalueChanged={valueChangeHandler}
-                    class={elementClass(8)}
-                ></oj-input-text>
-                <ActionButtons configKey='cloud' />
-            </div>
-        </div>)
-});
-
-const SecondRow = observer(() => {
-    const { generalConfigStore: { configData, updateConfigValue } } = useAdminPanelStore();
-    const { thresholdTolerance, substancePrevention } = configData;
-
-    return (
-        <div class={CLASSES.FLEX_ITEM}>
-            <div class={CLASSES.FLEX_ITEM_ROW}>
-                <div class={elementClass(2, CLASSES.ALIGN_CENTER)}>
-                    <b>{CONSTANTS.THRESHOLD.TITLE}</b>
-                </div>
-                <oj-input-number
-                    disabled={thresholdTolerance.disabled}
-                    spellcheck={false}
-                    onvalueChanged={(event) => updateConfigValue('thresholdTolerance', event.detail.value!)}
-                    value={thresholdTolerance.value}
-                    max={CONSTANTS.THRESHOLD.MAX}
-                    min={CONSTANTS.THRESHOLD.MIN}
-                    step={CONSTANTS.THRESHOLD.STEP}
-                    class={elementClass(2)}
-                ></oj-input-number>
-                <ActionButtons configKey="thresholdTolerance" />
-                <div class="oj-md-1"></div>
-                <div class={elementClass(3, CLASSES.ALIGN_CENTER)}>
-                    <b>{CONSTANTS.PREVENT.TITLE}</b>
-                </div>
-                <oj-combobox-one
-                    disabled={substancePrevention.disabled}
-                    value={substancePrevention.value}
-                    onvalueChanged={(event) => updateConfigValue('substancePrevention', event.detail.value)}
-                    class={elementClass(2)}>
-                    <oj-option value={"yes"}>Yes</oj-option>
-                    <oj-option value={"no"}>No</oj-option>
-                </oj-combobox-one>
-                <ActionButtons configKey="substancePrevention" />
-            </div>
-        </div>
-    )
-});
-
-const ThirdRow = observer(() => {
-    const { generalConfigStore: { configData, updateConfigValue } } = useAdminPanelStore();
-    const { company, followUpDays } = configData;
-
-    return (
-        <div class={CLASSES.FLEX_ITEM}>
-            <div class={CLASSES.FLEX_ITEM_ROW}>
-                <div class={elementClass(2, CLASSES.ALIGN_CENTER)}>
-                    <b>{CONSTANTS.COMPANY.TITLE}</b>
-                </div>
-                <oj-input-text
-                    disabled={company.disabled}
-                    spellcheck={false}
-                    length={{ max: CONSTANTS.COMPANY.MAX_CHAR }}
-                    value={company.value}
-                    onvalueChanged={(event) => updateConfigValue('company', event.detail.value)}
-                    class={elementClass(2)}
-                ></oj-input-text>
-                <ActionButtons configKey='company' />
-                <div class="oj-md-1"></div>
-                <div class={elementClass(3, CLASSES.ALIGN_CENTER)}>
-                    <b>{CONSTANTS.FOLLOWUP.TITLE}</b>
-                </div>
-                <oj-input-number
-                    disabled={followUpDays.disabled}
-                    spellcheck={false}
-                    onvalueChanged={(event) => updateConfigValue('followUpDays', event.detail.value!)}
-                    value={followUpDays.value}
-                    max={CONSTANTS.FOLLOWUP.MAX}
-                    min={CONSTANTS.FOLLOWUP.MIN}
-                    step={CONSTANTS.FOLLOWUP.STEP}
-                    class={elementClass(2)}
-                ></oj-input-number>
-                <ActionButtons configKey='followUpDays' />
-            </div>
-        </div>
-    )
-});
 
 interface ActionButtonProps {
     configKey: keyof ConfigData
