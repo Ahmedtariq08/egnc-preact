@@ -4,7 +4,7 @@ import { useState } from 'react';
 import "ojs/ojswitcher";
 import "ojs/ojtoolbar";
 
-interface Tab {
+export interface Tab {
     slot: string,
     title: string,
     icon: string,

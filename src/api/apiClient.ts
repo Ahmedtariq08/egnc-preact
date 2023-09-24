@@ -26,11 +26,11 @@ apiClient.interceptors.response.use(async response => {
             //handle bad request
             break;
         case 401:
-            store.commonStore.showNotification("error", "Unauthorised. Session expired.");
-            const fn = async () => {
+            const redirectIfNotAuthorized = async () => {
                 await store.authStore.checkSignedIn()
             }
-            fn()
+            redirectIfNotAuthorized();
+            store.commonStore.showNotification("error", "Unauthorised. Session expired.");
             break;
         case 403:
             //handle forbidden

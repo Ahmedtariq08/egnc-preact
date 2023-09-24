@@ -1,15 +1,15 @@
 import { observer } from "mobx-react-lite";
 import { useEffect } from 'react';
-import { Action, ActionBar, ActionBarElement } from "../../../common/action-bar/ActionBar";
-import { AddRemoveColumnsPopup } from "../../../common/add-remove/AddRemoveColumns";
-import { DataTable } from "../../../common/data-table/DataTable";
-import { Popup } from "../../../common/popup/Popup";
-import { ReorderColumnsPopup } from "../../../common/reorder-columns/ReorderColumns";
-import { TableRowSkeleton } from "../../../components/skeleton/Skeleton";
-import { Icons } from "../../../constants/iconsData";
-import { tableTemplates } from "../../../constants/templates";
-import { useAdminPanelStore } from "../../../modules/admin-panel/adminPanelStore";
-import { getReadonlyTemplates } from "../../../utils/render";
+import { Action, ActionBar, ActionBarElement } from "../../../../common/action-bar/ActionBar";
+import { AddRemoveColumnsPopup } from "../../../../common/add-remove/AddRemoveColumns";
+import { DataTable } from "../../../../common/data-table/DataTable";
+import { Popup } from "../../../../common/popup/Popup";
+import { ReorderColumnsPopup } from "../../../../common/reorder-columns/ReorderColumns";
+import { TableRowSkeleton } from "../../../../components/skeleton/Skeleton";
+import { Icons } from "../../../../constants/iconsData";
+import { tableTemplates } from "../../../../constants/templates";
+import { useAdminPanelStore } from "../../../../modules/admin-panel/adminPanelStore";
+import { getReadonlyTemplates } from "../../../../utils/render";
 import { CreateOrUpdateUserPopup } from "./CreateUpdateUser";
 
 

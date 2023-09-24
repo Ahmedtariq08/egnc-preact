@@ -1,7 +1,7 @@
 import AsyncRegExpValidator = require("ojs/ojasyncvalidator-regexp");
-import { Popup } from "../../../common/popup/Popup";
-import { useAdminPanelStore } from "../../../modules/admin-panel/adminPanelStore";
-import { eatNonNumbers } from "../../../utils/generic";
+import { Popup } from "../../../../common/popup/Popup";
+import { useAdminPanelStore } from "../../../../modules/admin-panel/adminPanelStore";
+import { eatNonNumbers } from "../../../../utils/generic";
 import "ojs/ojswitch";
 import "ojs/ojselectcombobox";
 
