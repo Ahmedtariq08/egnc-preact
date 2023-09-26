@@ -1,3 +1,4 @@
+import { URLs, requests } from "../../../api";
 import { Categories } from "../../../constants";
 
 //ANCHOR - Interfaces / Types / Constants
@@ -48,11 +49,28 @@ export const getEmptyMappedAttribute = (): MappedAttribute => {
     return { ...emptyAttribute, attributeName: '' };
 }
 
-// export const copyObjectToAttributeObject = (jsonObject: Object, attrObject: AttributeObject) : AttributeObject => {
-//     for (let i = 1; i <= 10; i++) {
-//         const attributeName = `attribute${i}`;
-//         attrObject[attributeName as keyof AttributeObject] = jsonObject[attributeName as keyof typeof jsonObject] ? jsonObject[attributeName as keyof typeof jsonObject] : getEmptyAttribute();
-//     }
-//     return attrObject;
-// }
+const mapAttribute = (attr: Attribute, attributeName: string): MappedAttribute => {
+    return { ...attr, attributeName: attributeName }
+}
+
+/* function used to map response from api to array of attributes to show */
+export const mapAttributes = (object: AttributeObject): MappedAttribute[] => {
+    let mappedAttributes: MappedAttribute[] = [];
+    for (let i = 1; i <= 10; i++) {
+        const attributeName = `attribute${i}`;
+        const obj = object[attributeName as keyof object]
+        mappedAttributes.push(obj ? mapAttribute(obj, attributeName) : mapAttribute(getEmptyAttribute(), attributeName))
+    }
+    return mappedAttributes;
+}
+
+//ANCHOR - APIs
+const attributeMappingUrl = `${URLs.MAIN.PREFERENCE}/attributeMapping`;
+
+export const attributeMappingApis = {
+    getAttributes: (value: string) => requests.get<AttributeObject>(`${attributeMappingUrl}/${value}`)
+        .then((data) => { return mapAttributes(data) })
+
+
+}
 

@@ -1,15 +1,22 @@
 import { observer } from "mobx-react-lite";
+import { useEffect } from 'react';
 import { useAdminPanelStore } from "../../../../modules/admin-panel/adminPanelStore";
 import { CategorySelections } from "../../../../modules/admin-panel/attribute-mapping/attributeMappingService";
 import { OptionComponent } from "../../../../common/options/OptionComponent";
 import { Action, ActionBar, ActionBarElement } from "../../../../common/action-bar/ActionBar";
-import { Icons } from "../../../../constants";
+import { Icons, tableColumnsData, tableTemplates } from "../../../../constants";
+import { DataTable } from "../../../../common/data-table/DataTable";
+import { getReadonlyTemplates } from "../../../../utils/render";
 
 
 export const AttributeMappingTab = observer(() => {
     const { attributeMappingStore } = useAdminPanelStore();
-    const { selectedCategory, disableDelete, disableEdit } = attributeMappingStore;
-    const { entitySelectionHandler, openPopup, closePopup } = attributeMappingStore;
+    const { selectedCategory, disableDelete, disableEdit, attributesDp } = attributeMappingStore;
+    const { entitySelectionHandler, openPopup, closePopup, loadAttributes } = attributeMappingStore;
+
+    useEffect(() => {
+        loadAttributes();
+    }, [loadAttributes])
 
     const Header = () => {
         return (<div class="oj-flex oj-sm-flex-direction-row">
@@ -44,8 +51,13 @@ export const AttributeMappingTab = observer(() => {
         <div class="oj-sm-margin-2x">
             <Header />
             <ActionBar actions={actions} key={'attributeMapping'} />
-
-
+            <div class={'oj-panel'}>
+                <DataTable
+                    tableDataProvider={attributesDp}
+                    tableColumns={tableColumnsData.ADMIN_PANEL.ATTRIBUTE_MAPPING}
+                    templates={getReadonlyTemplates(Object.values(tableTemplates.ADMIN_PANEL.ATTRIBUTE_MAPPING))}
+                />
+            </div>
         </div>
     )
 })

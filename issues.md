@@ -29,6 +29,7 @@
 ### Admin Panel
 ![Fix][FixBadge]&nbsp; - &nbsp; Validator messages in create update user popup \
 ![Fix][FixBadge]&nbsp; - &nbsp; Attribute mapping dropdown shows users action menu \
-![Feature][FeatureBadge]&nbsp; - &nbsp; Attribute Mapping tab
+![Enhancement][EnhancementBadge]&nbsp; - &nbsp; Loading skeleton in table of attribute mapping \
+![Feature][FeatureBadge]&nbsp; - &nbsp; Edit, Delete Attribute Mapping.
 
 
