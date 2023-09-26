@@ -1,9 +1,22 @@
-import { requests } from "./apiClient";
+import { EnvServices } from "../models/env";
 
-export const APIs = {
+const { Auth, Main, Bom, Export, ThirdPartyAuth } = JSON.parse(process.env.SERVICES!) as EnvServices;
+
+export const URLs = {
     AUTH: {
-        loginUser: (username: string, password: string) => requests.post<{ token: string }>('/auth/users/authenticate', { username, password }),
-        logoutUser: () => requests.post('auth//users/logout'),
-        permissions: () => requests.get<void>('auth/users/permissions')
+        USERS: `${Auth}/users`,
+        ROLES: `${Auth}/roles`,
+        THIRDPARTY_AUTH: {
+            SSO: `${Auth}/${ThirdPartyAuth}/sso`,
+            CLOUD: `${Auth}/${ThirdPartyAuth}/cloud`,
+            AUTHORIZE: `${Auth}/${ThirdPartyAuth}/authorize`,
+        },
+    },
+    MAIN: {
+        ITEM: `${Main}/item`,
+        PART_GROUP: `${Main}/partGroup`,
+        MANUFACTURER: `${Main}/manufacturer`,
+        DECLARATION: `${Main}/declaration`,
+        PREFERENCE: `${Main}/preference`,
     }
 }

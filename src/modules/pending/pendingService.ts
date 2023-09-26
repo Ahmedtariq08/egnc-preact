@@ -1,17 +1,18 @@
-import { requests } from "../../api/apiClient";
+import { requests, URLs } from "../../api";
 import { Constants } from "../../constants/constants";
 import { Column } from "../../constants/tableColumns";
 import { Declaration } from "../../models/categories/declaration";
 import { AuthService } from "../auth/authService";
 
 //ANCHOR - APIs
+const { DECLARATION } = URLs.MAIN;
+const { OPEN_TO_MANAGER, OPEN_TO_SUPPLIER } = Constants.WORKFLOWSTATES;
+
 export const PendingApis = {
-    getPendingRequests:
-        () => requests.get<Declaration[]>(`MainService/declaration/?state=${Constants.WORKFLOWSTATES.OPEN_TO_SUPPLIER}`),
-    getPendingApprovals:
-        () => requests.get<Declaration[]>(`MainService/declaration/?state=${Constants.WORKFLOWSTATES.OPEN_TO_MANAGER}`),
+    getPendingRequests: () => requests.get<Declaration[]>(`${DECLARATION}/`, { params: { state: OPEN_TO_SUPPLIER } }),
+    getPendingApprovals: () => requests.get<Declaration[]>(`${DECLARATION}/`, { params: { state: OPEN_TO_MANAGER } }),
     withdrawRequest:
-        (declarationId: string | number) => requests.put(`MainService/declaration/${declarationId}/state`, {
+        (declarationId: string | number) => requests.put(`${DECLARATION}/${declarationId}/state`, {
             action: 'prev', comments: '', lastModifiedBy: AuthService.getPermissionsFromStorage()?.username
         })
 }

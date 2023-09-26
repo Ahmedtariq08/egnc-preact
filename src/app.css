@@ -101,6 +101,13 @@ html[dir="rtl"] .demo-oracle-icon {
     overflow: hidden !important;
 }
 
+/* ANCHOR - Block layout */
+#hnavlist {
+    width: 70px;
+    padding: 7px;
+    border: 1px solid #d1d1d1;
+}
+
 /* ANCHOR - Login Page */
 .or-text {
     margin: 0 10px;
@@ -251,4 +258,13 @@ html[dir="rtl"] .demo-oracle-icon {
     margin-left: auto;
     display: flex;
     justify-content: center;
+}
+
+/* ANCHOR - Block Header */
+#buttonsWithLeftPadding oj-button {
+    padding-left: 10px;
+}
+
+#buttonsWithRightPadding oj-button {
+    padding-right: 10px;
 }

@@ -52,6 +52,7 @@ module.exports = {
       new webpack.DefinePlugin({
         // define variables to be used in the application                        
         'process.env.BASE_URL': JSON.stringify(BASE_URL),
+        'process.env.SERVICES': JSON.stringify(process.env.SERVICES),
       }),
     );
     if (APP_MODE == AppModes.PROD || context.buildType === 'release') {

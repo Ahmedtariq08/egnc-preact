@@ -1,11 +1,11 @@
-import { makeAutoObservable, reaction, runInAction } from "mobx";
+import { makeAutoObservable, runInAction } from "mobx";
+import { ColumnsMetaData } from "../../common/add-remove/AddRemoveColumns";
+import { Column } from "../../constants/tableColumns";
 import { Declaration } from "../../models/categories/declaration";
+import { dateFormatter } from "../../utils/dateUtils";
 import { store } from "../store";
 import { PendingApis, PendingColumns } from "./pendingService";
-import { Column } from "../../constants/tableColumns";
-import { ColumnsMetaData } from "../../common/add-remove/AddRemoveColumns";
 import MutableArrayDataProvider = require("ojs/ojmutablearraydataprovider");
-import { dateFormatter } from "../../utils/dateUtils";
 
 export default class PendingStore {
     loadingData = false;
@@ -39,7 +39,6 @@ export default class PendingStore {
     }
 
     withdrawRequest = async (declarationId: string | number) => {
-        this.loadingData = true;
         try {
             await PendingApis.withdrawRequest(declarationId);
             const declarations = this.pendingDeclarations.filter(dec => dec.id !== declarationId);
@@ -47,8 +46,6 @@ export default class PendingStore {
             store.commonStore.showNotification("confirmation", 'Withdrawl request made successfully');
         } catch (error) {
             store.commonStore.showNotification("error", "Withdraw request failed.")
-        } finally {
-            this.loadingData = false;
         }
     }
 

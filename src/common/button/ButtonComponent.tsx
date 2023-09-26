@@ -14,7 +14,8 @@ export type ButtonProps = {
  * @returns oj-button either as only icon or default button 
  */
 export const ButtonComponent = (props: ButtonProps) => {
-  const { buttonTitle, icon, disabled = false, ojAction, styleClass, chroming = "borderless" } = props;
+  const { buttonTitle, icon, disabled = false, ojAction, styleClass, chroming } = props;
+  const chromingToApply = chroming ? chroming : (icon ? 'borderless' : undefined);
 
   const buttonClick = (event: any) => {
     ojAction && ojAction(event);
@@ -23,7 +24,7 @@ export const ButtonComponent = (props: ButtonProps) => {
   const buttonWithIcon = () => {
     return (
       <oj-button
-        chroming={chroming}
+        chroming={chromingToApply}
         class={styleClass}
         display="icons"
         onojAction={buttonClick}
@@ -42,7 +43,7 @@ export const ButtonComponent = (props: ButtonProps) => {
         class={styleClass}
         onojAction={buttonClick}
         disabled={disabled}
-        chroming={chroming}>
+        chroming={chromingToApply}>
         {buttonTitle}
       </oj-button>
     );

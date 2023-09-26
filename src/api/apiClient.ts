@@ -1,16 +1,5 @@
-import axios, { AxiosError, AxiosResponse } from 'axios';
-import { ojMessage } from "@oracle/oraclejet/ojmessage";
-import { router } from '../routes/Router';
-import { Paths } from '../routes/paths';
+import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { store } from '../modules/store';
-import { AuthService } from '../modules/auth/authService';
-
-export interface ApiResponse<T> {
-    isSuccess: boolean,
-    error?: AxiosError,
-    data?: T,
-    message?: ojMessage.Message
-}
 
 const apiClient = axios.create({
     withCredentials: true,
@@ -20,10 +9,10 @@ const apiClient = axios.create({
 const responseBody = <T>(response: AxiosResponse<T>) => response.data;
 
 export const requests = {
-    get: <T>(url: string) => apiClient.get<T>(url).then(responseBody),
-    post: <T>(url: string, body?: {}) => apiClient.post<T>(url, body ?? {}).then(responseBody),
-    put: <T>(url: string, body?: {}) => apiClient.put<T>(url, body ?? {}).then(responseBody),
-    del: <T>(url: string) => apiClient.delete<T>(url).then(responseBody),
+    get: <T>(url: string, config?: AxiosRequestConfig) => apiClient.get<T>(url, config).then(responseBody),
+    post: <T>(url: string, body?: {}, config?: AxiosRequestConfig) => apiClient.post<T>(url, body ?? {}, config).then(responseBody),
+    put: <T>(url: string, body?: {}, config?: AxiosRequestConfig) => apiClient.put<T>(url, body ?? {}, config).then(responseBody),
+    del: <T>(url: string, config?: AxiosRequestConfig) => apiClient.delete<T>(url, config).then(responseBody),
 }
 
 apiClient.interceptors.response.use(async response => {
@@ -37,12 +26,11 @@ apiClient.interceptors.response.use(async response => {
             //handle bad request
             break;
         case 401:
+            const redirectIfNotAuthorized = async () => {
+                await store.authStore.checkSignedIn()
+            }
+            redirectIfNotAuthorized();
             store.commonStore.showNotification("error", "Unauthorised. Session expired.");
-            // AuthService.clearStorage();
-            // // store.authStore.logoutUser();
-            // const currentState = router.state;
-            // console.log(currentState);
-            // router.navigate(Paths.Login, { state: currentState });
             break;
         case 403:
             //handle forbidden

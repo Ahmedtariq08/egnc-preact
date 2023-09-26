@@ -11,7 +11,7 @@ interface Store {
     authStore: AuthStore
     layoutStore: LayoutStore
     dashboardStore: DashboardStore
-    pendingStore: PendingStore
+    pendingStore: PendingStore,
 }
 
 export const store: Store = {
@@ -19,7 +19,7 @@ export const store: Store = {
     authStore: new AuthStore(),
     layoutStore: new LayoutStore(),
     dashboardStore: new DashboardStore(),
-    pendingStore: new PendingStore()
+    pendingStore: new PendingStore(),
 }
 
 injectStores({
