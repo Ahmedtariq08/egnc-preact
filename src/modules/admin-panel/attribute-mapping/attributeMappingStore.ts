@@ -1,38 +1,38 @@
-import { makeAutoObservable, runInAction } from "mobx";
-import { Categories } from "../../../constants";
-import { MappedAttribute, attributeMappingApis } from "./attributeMappingService";
-import MutableArrayDataProvider = require("ojs/ojmutablearraydataprovider");
-import { store } from "../../../modules/store";
+import { makeAutoObservable, runInAction } from 'mobx'
+import { Categories } from '../../../constants'
+import { type MappedAttribute, attributeMappingApis } from './attributeMappingService'
+import MutableArrayDataProvider = require('ojs/ojmutablearraydataprovider')
+import { store } from '../../../modules/store'
 
 export default class AttributeMappingStore {
-    attributes: MappedAttribute[] = [];
-    loadingAttributes = false;
-    selectedCategory = Categories.ITEM;
-    selectedAttribute: MappedAttribute | undefined = undefined;
+    attributes: MappedAttribute[] = []
+    loadingAttributes = false
+    selectedCategory = Categories.ITEM
+    selectedAttribute: MappedAttribute | undefined = undefined
     popupHooks = { delete: false, edit: false }
 
     constructor() {
-        makeAutoObservable(this);
+        makeAutoObservable(this)
     }
 
     loadAttributes = async () => {
-        this.loadingAttributes = true;
+        this.loadingAttributes = true
         try {
-            const response = await attributeMappingApis.getAttributes(this.selectedCategory.value);
-            console.log(response);
-            this.attributes = response;
+            const response = await attributeMappingApis.getAttributes(this.selectedCategory.value)
+            console.log(response)
+            this.attributes = response
         } catch (error) {
-            store.commonStore.showNotification("error", `Unable to fetch attributes for ${this.selectedCategory.label}`);
+            store.commonStore.showNotification('error', `Unable to fetch attributes for ${this.selectedCategory.label}`)
         } finally {
             runInAction(() => {
-                this.loadingAttributes = false;
+                this.loadingAttributes = false
             })
         }
     }
 
     entitySelectionHandler = (category: any) => {
-        this.selectedCategory = category;
-        this.loadAttributes();
+        this.selectedCategory = category
+        this.loadAttributes()
     }
 
     openPopup = (hook: keyof typeof this.popupHooks) => {
@@ -43,10 +43,10 @@ export default class AttributeMappingStore {
         this.popupHooks = { ...this.popupHooks, [hook]: false }
     }
 
-    //only show attribute1 - attribute 5
+    // only show attribute1 - attribute 5
     get attributesDp() {
-        const slicedAttributes = this.attributes.slice(0, 5);
-        return new MutableArrayDataProvider(slicedAttributes, { keyAttributes: "attributeName" });
+        const slicedAttributes = this.attributes.slice(0, 5)
+        return new MutableArrayDataProvider(slicedAttributes, { keyAttributes: 'attributeName' })
     }
 
     get disableDelete() {
@@ -54,6 +54,6 @@ export default class AttributeMappingStore {
     }
 
     get disableEdit() {
-        return !!this.selectedAttribute;
+        return !!this.selectedAttribute
     }
 }
