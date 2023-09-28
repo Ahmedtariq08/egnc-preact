@@ -1,10 +1,10 @@
-import { requests, URLs } from "../../../api"
+import { requests, URLs } from "../../../api";
 
-//ANCHOR - Interfaces 
+// ANCHOR - Interfaces
 export interface Roles {
     id: number;
     name: string;
-    description: any;
+    description: string;
 }
 
 export interface NewUser {
@@ -28,38 +28,58 @@ export interface User extends NewUser {
     lastModifiedDate?: string;
 }
 
-
-//ANCHOR - APIs
+// ANCHOR - APIs
 const { USERS, ROLES } = URLs.AUTH;
 
 export const UserApis = {
-    getAllUsers: () => requests.get<User[]>(`${USERS}/`),
-    getRoles: () => requests.get<Roles[]>(`${ROLES}/`),
-    resetPassword: (userId: string) => requests.post<string>(`${USERS}/reset/${userId}`),
-    createUser: (newUser: NewUser) => requests.post<User>(`${USERS}/register/`,
-        { ...newUser, active: (!!newUser.active).toString(), provider: "EGNC" }),
-    updateUser: (user: NewUser) => requests.post<User>(`${USERS}/update`, user)
-}
+    getAllUsers: async () => await requests.get<User[]>(`${USERS}/`),
+    getRoles: async () => await requests.get<Roles[]>(`${ROLES}/`),
+    resetPassword: async (userId: string) => await requests.post<string>(`${USERS}/reset/${userId}`),
+    createUser: async (newUser: NewUser) =>
+        await requests.post<User>(`${USERS}/register/`, {
+            ...newUser,
+            active: (!!newUser.active).toString(),
+            provider: "EGNC",
+        }),
+    updateUser: async (user: NewUser) => await requests.post<User>(`${USERS}/update`, user),
+};
 
-//ANCHOR - Service
-export class UserService {
+// ANCHOR - Utility Functions
 
-    public static getNewUser = (): NewUser => {
-        return { username: '', email: '', roles: [], name: '', company: '', phone: '', businessTitle: '', active: false }
-    }
+export const getNewUser = (): NewUser => {
+    return {
+        username: "",
+        email: "",
+        roles: [],
+        name: "",
+        company: "",
+        phone: "",
+        businessTitle: "",
+        active: false,
+    };
+};
 
-    public static copyUserFields = (user: User): NewUser => {
-        const { id, provider, isApplication, createdBy, createdDate, lastModifiedBy, lastModifiedDate, ...newUserFields } = user;
-        return newUserFields;
-    }
+export const copyUserFields = (user: User): NewUser => {
+    const {
+        id,
+        provider,
+        isApplication,
+        createdBy,
+        createdDate,
+        lastModifiedBy,
+        lastModifiedDate,
+        ...newUserFields
+    } = user;
+    return newUserFields;
+};
 
-    public static mapRolesToName = (users: User[]): User[] => {
-        return users.map((user) => {
-            return {
-                ...user, roles: user.roles.map((role) => {
-                    return typeof role === "string" ? role : role.name
-                })
-            }
-        })
-    }
-}
+export const mapRolesToName = (users: User[]): User[] => {
+    return users.map((user) => {
+        return {
+            ...user,
+            roles: user.roles.map((role) => {
+                return typeof role === "string" ? role : role.name;
+            }),
+        };
+    });
+};

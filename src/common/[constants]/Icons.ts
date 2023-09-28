@@ -12,4 +12,4 @@ export const DefaultIcons = {
     reset: "oj-ux-ico-reset-password",
     upload: "oj-ux-ico-upload",
     download: "oj-ux-ico-download",
-}
+};

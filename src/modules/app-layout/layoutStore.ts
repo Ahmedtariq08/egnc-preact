@@ -8,10 +8,10 @@ export default class LayoutStore {
     isDrawerOpened: boolean = false;
 
     constructor() {
-        makeAutoObservable(this)
+        makeAutoObservable(this);
     }
 
     toggleDrawer = () => {
         this.isDrawerOpened = !this.isDrawerOpened;
-    }
+    };
 }

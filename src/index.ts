@@ -1,3 +1,3 @@
 // injector:preactDebugImport
 // endinjector
-import './app';
+import "./app";

@@ -5,21 +5,21 @@ import GeneralConfigStore from "./general-config/generalConfigStore";
 import AttributeMappingStore from "./attribute-mapping/attributeMappingStore";
 
 interface Store {
-    userStore: UserStore,
-    ssoStore: SsoStore,
-    generalConfigStore: GeneralConfigStore,
-    attributeMappingStore: AttributeMappingStore
+    userStore: UserStore;
+    ssoStore: SsoStore;
+    generalConfigStore: GeneralConfigStore;
+    attributeMappingStore: AttributeMappingStore;
 }
 
 export const AdminPanelStore: Store = {
     userStore: new UserStore(),
-    ssoStore: new SsoStore,
+    ssoStore: new SsoStore(),
     generalConfigStore: new GeneralConfigStore(),
-    attributeMappingStore: new AttributeMappingStore()
-}
+    attributeMappingStore: new AttributeMappingStore(),
+};
 
 export const AdminPanelStoreContext = createContext(AdminPanelStore);
 
 export const useAdminPanelStore = () => {
     return useContext(AdminPanelStoreContext);
-}
+};

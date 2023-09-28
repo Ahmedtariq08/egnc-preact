@@ -1,4 +1,4 @@
-import { DefaultIcons } from "../[constants]/Icons"
+import { DefaultIcons } from "../[constants]/Icons";
 
 export const DIALOG = {
     TITLE: "Reorder Columns",
@@ -6,12 +6,12 @@ export const DIALOG = {
     TEXT: "Visible Columns",
     OK: "OK",
     CANCEL: "Cancel",
-    KEY: 'Id',
+    KEY: "Id",
     POSITION_AFTER: "after",
-    LIST_ID: "reorderListview"
-}
+    LIST_ID: "reorderListview",
+};
 
 export const CONSTANTS = {
     ICON: DefaultIcons.reorderColumns,
-    TITLE: "Reorder Columns"
-}
+    TITLE: "Reorder Columns",
+};
