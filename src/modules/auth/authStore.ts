@@ -34,7 +34,7 @@ export default class AuthStore {
         if (token === null || permissions === null) {
             this.isLoggedIn = false;
             clearStorage();
-            navigateToPath(Pages.Login);
+            void navigateToPath(Pages.Login);
         } else {
             this.isLoggedIn = true;
             this.userPemissions = permissions;
@@ -49,7 +49,7 @@ export default class AuthStore {
         if (token === null || permissions === null) {
             this.isLoggedIn = false;
             clearStorage();
-            navigateToPath(Pages.Login);
+            void navigateToPath(Pages.Login);
         } else {
             this.appLoader = true;
             try {
@@ -58,13 +58,13 @@ export default class AuthStore {
                     this.isLoggedIn = true;
                     this.userPemissions = permissions;
                 });
-                navigateToPath(Pages.Dashboard);
+                void navigateToPath(Pages.Dashboard);
             } catch (error) {
                 runInAction(() => {
                     this.isLoggedIn = false;
                     clearStorage();
                 });
-                navigateToPath(Pages.Login);
+                void navigateToPath(Pages.Login);
             } finally {
                 runInAction(() => {
                     this.appLoader = false;
@@ -90,7 +90,7 @@ export default class AuthStore {
                     this.isLoggedIn = true;
                 });
                 store.commonStore.clearNotifications();
-                navigateToPath(Pages.Dashboard);
+                void navigateToPath(Pages.Dashboard);
             } catch (error) {
                 const message = (error as AxiosError).response?.data;
                 store.commonStore.showNotification(
@@ -111,7 +111,7 @@ export default class AuthStore {
             clearStorage();
             this.userPemissions = undefined;
             this.isLoggedIn = false;
-            navigateToPath(Pages.Login);
+            void navigateToPath(Pages.Login);
         } catch (error) {
             console.log(error);
         }

@@ -10,19 +10,13 @@ export interface CustomLoader {
 
 export const LoaderCircle = (props: CustomLoader) => {
     const { isLoading, text = "Loading ...", styleClasses } = props;
-    const classesToApply = styleClasses
-        ? `loader-center ${styleClasses}`
-        : "loader-center";
+    const classesToApply = styleClasses ? `loader-center ${styleClasses}` : "loader-center";
     const Circle = () => {
         return (
             <div>
                 <br></br>
                 <div id="loader" className={classesToApply}>
-                    <oj-progress-circle
-                        id="progressCircle"
-                        value={-1}
-                        size="sm"
-                    ></oj-progress-circle>
+                    <oj-progress-circle id="progressCircle" value={-1} size="sm"></oj-progress-circle>
                     <div className="oj-sm-margin-4x-vertical"></div>&nbsp;&nbsp;
                     <oj-label-value>
                         <oj-label slot="label" label-id="status">

@@ -27,21 +27,13 @@ const CLASSES = {
 };
 
 export const Popup = (props: Props) => {
-    const {
-        show,
-        popupTitle,
-        body,
-        footer,
-        onClose,
-        showCloseButton,
-        showBackgroundLayer,
-        loader,
-    } = { ...DEFAULTS, ...props };
+    const { show, popupTitle, body, footer, onClose, showCloseButton, showBackgroundLayer, loader } = {
+        ...DEFAULTS,
+        ...props,
+    };
 
     const fade = show ? CLASSES.FADE_IN : CLASSES.FADE_OUT;
-    const popupClass = showBackgroundLayer
-        ? `${CLASSES.MAIN_CLASS} ${CLASSES.LAYER}`
-        : CLASSES.MAIN_CLASS;
+    const popupClass = showBackgroundLayer ? `${CLASSES.MAIN_CLASS} ${CLASSES.LAYER}` : CLASSES.MAIN_CLASS;
 
     const dialog = () => {
         return (
@@ -61,9 +53,7 @@ export const Popup = (props: Props) => {
                                     title="Close"
                                     onojAction={onClose}
                                 >
-                                    <span className="oj-button-text">
-                                        Close
-                                    </span>
+                                    <span className="oj-button-text">Close</span>
                                     <span
                                         className="oj-button-icon oj-start 
                                         oj-fwk-icon oj-fwk-icon-cross"
@@ -75,11 +65,7 @@ export const Popup = (props: Props) => {
                         <div className="oj-dialog-content oj-dialog-default-content">
                             <div>
                                 <div slot="body" className="oj-dialog-body">
-                                    {loader?.isLoading ? (
-                                        <LoaderCircle {...loader} />
-                                    ) : (
-                                        body()
-                                    )}
+                                    {loader?.isLoading ? <LoaderCircle {...loader} /> : body()}
                                 </div>
                             </div>
                         </div>

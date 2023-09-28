@@ -6,8 +6,7 @@ import { type ISearchField, ValidInputs, OjFilterDropdowns } from "./metadata";
 import ArrayDataProvider = require("ojs/ojarraydataprovider");
 
 const CLASSES = {
-    SEARCH_FIELD:
-        "oj-flex oj-flex-item oj-md-align-items-center oj-sm-padding-4x-horizontal",
+    SEARCH_FIELD: "oj-flex oj-flex-item oj-md-align-items-center oj-sm-padding-4x-horizontal",
     LABEL: "oj-typography-body-md oj-typography-bold",
 };
 
@@ -17,9 +16,7 @@ export const AdvancedSearchFields = () => {
         const value = event.detail.value;
         const updatedArray: ISearchField[] = searchFields.map((field) => {
             console.log(field);
-            return field.label === label
-                ? { ...field, textProps: { ...field.textProps, value } }
-                : field;
+            return field.label === label ? { ...field, textProps: { ...field.textProps, value } } : field;
         });
         console.log(updatedArray);
         setSearchFields(updatedArray);
@@ -69,19 +66,13 @@ export const AdvancedSearchFields = () => {
         },
     ];
 
-    const [searchFields, setSearchFields] =
-        useState<ISearchField[]>(defaultFields);
+    const [searchFields, setSearchFields] = useState<ISearchField[]>(defaultFields);
 
     return (
         <>
             {Array.isArray(searchFields) &&
                 searchFields.map((searchField) => {
-                    return (
-                        <DisplaySearchField
-                            searchField={searchField}
-                            key={searchField.label}
-                        />
-                    );
+                    return <DisplaySearchField searchField={searchField} key={searchField.label} />;
                 })}
         </>
     );
@@ -104,9 +95,7 @@ const DisplaySearchField = (props: { searchField: ISearchField }) => {
 
     const Label = () => {
         return (
-            <div
-                className={`oj-md-2 oj-md-justify-content-flex-end ${CLASSES.SEARCH_FIELD}`}
-            >
+            <div className={`oj-md-2 oj-md-justify-content-flex-end ${CLASSES.SEARCH_FIELD}`}>
                 <oj-label class={CLASSES.LABEL}>{searchField.label}</oj-label>
             </div>
         );
@@ -131,30 +120,17 @@ const DisplaySearchField = (props: { searchField: ISearchField }) => {
         const element = () => {
             switch (searchField.inputType) {
                 case ValidInputs.TEXT:
-                    return (
-                        <oj-input-text
-                            {...searchField.textProps}
-                        ></oj-input-text>
-                    );
+                    return <oj-input-text {...searchField.textProps}></oj-input-text>;
                 case ValidInputs.SINGLE_LIST:
-                    return (
-                        <oj-combobox-one
-                            {...searchField.singleListProps}
-                        ></oj-combobox-one>
-                    );
+                    return <oj-combobox-one {...searchField.singleListProps}></oj-combobox-one>;
             }
         };
 
-        return (
-            <div className={`oj-md-3 ${CLASSES.SEARCH_FIELD}`}>{element()}</div>
-        );
+        return <div className={`oj-md-3 ${CLASSES.SEARCH_FIELD}`}>{element()}</div>;
     };
 
     return (
-        <div
-            className="oj-flex-item"
-            style={{ maxHeight: "60px", maxWidth: "50vw" }}
-        >
+        <div className="oj-flex-item" style={{ maxHeight: "60px", maxWidth: "50vw" }}>
             <div className="oj-flex oj-flex-direction-row">
                 <Label />
                 <Filter />

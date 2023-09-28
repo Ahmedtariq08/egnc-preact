@@ -63,6 +63,12 @@
                 "ignoreConditionalTests": true
             }
         ],
+        "@typescript-eslint/no-floating-promises": [
+            "error",
+            {
+                "ignoreVoid": true
+            }
+        ],
 
         /* React rules */
         "react/prop-types": "off",

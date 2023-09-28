@@ -1,9 +1,6 @@
 import { makeAutoObservable, runInAction } from "mobx";
 import { Categories } from "../../../constants";
-import {
-    type MappedAttribute,
-    attributeMappingApis,
-} from "./attributeMappingService";
+import { type MappedAttribute, attributeMappingApis } from "./attributeMappingService";
 import MutableArrayDataProvider = require("ojs/ojmutablearraydataprovider");
 import { store } from "../../../modules/store";
 
@@ -22,9 +19,7 @@ export default class AttributeMappingStore {
     loadAttributes = async (): Promise<void> => {
         this.loadingAttributes = true;
         try {
-            const response = await attributeMappingApis.getAttributes(
-                this.selectedCategory.value,
-            );
+            const response = await attributeMappingApis.getAttributes(this.selectedCategory.value);
             console.log(response);
             this.attributes = response;
         } catch (error) {

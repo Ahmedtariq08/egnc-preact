@@ -4,14 +4,7 @@ export interface ButtonProps {
     disabled?: boolean;
     styleClass?: string;
     ojAction?: (event?: unknown) => void;
-    chroming?:
-        | "borderless"
-        | "solid"
-        | "outlined"
-        | "callToAction"
-        | "danger"
-        | "full"
-        | "half";
+    chroming?: "borderless" | "solid" | "outlined" | "callToAction" | "danger" | "full" | "half";
 }
 
 /**
@@ -21,14 +14,7 @@ export interface ButtonProps {
  * @returns oj-button either as only icon or default button
  */
 export const ButtonComponent = (props: ButtonProps) => {
-    const {
-        buttonTitle,
-        icon,
-        disabled = false,
-        ojAction,
-        styleClass,
-        chroming,
-    } = props;
+    const { buttonTitle, icon, disabled = false, ojAction, styleClass, chroming } = props;
     const chromingToApply = chroming ?? (icon ? "borderless" : undefined);
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

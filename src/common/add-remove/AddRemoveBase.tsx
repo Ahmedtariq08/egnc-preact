@@ -44,16 +44,14 @@ export const AddRemovePopup = (props: AddRemovePopupProps) => {
     const [selectedAttributes, setSelectedAttributes] = useState<any[]>([]);
     // available attributes
     const [availableAttributes, setAvailableAttributes] = useState<any[]>([]);
-    const [selectedAvailableAttributes, setSelectedAvailableAttributes] =
-        useState<any[]>([]);
-    const [selectedSelectedAttributes, setSelectedSelectedAttributes] =
-        useState<any[]>([]);
-    const [
-        availableAttributesDataprovider,
-        setAvailableAttributesDataprovider,
-    ] = useState(new ArrayDataProvider([], { idAttribute: rowIdentifier }));
-    const [selectedAttributesDataprovider, setSelectedAttributesDataprovider] =
-        useState(new ArrayDataProvider([], { idAttribute: rowIdentifier }));
+    const [selectedAvailableAttributes, setSelectedAvailableAttributes] = useState<any[]>([]);
+    const [selectedSelectedAttributes, setSelectedSelectedAttributes] = useState<any[]>([]);
+    const [availableAttributesDataprovider, setAvailableAttributesDataprovider] = useState(
+        new ArrayDataProvider([], { idAttribute: rowIdentifier }),
+    );
+    const [selectedAttributesDataprovider, setSelectedAttributesDataprovider] = useState(
+        new ArrayDataProvider([], { idAttribute: rowIdentifier }),
+    );
 
     useEffect(() => {
         processColumnData();
@@ -69,12 +67,8 @@ export const AddRemovePopup = (props: AddRemovePopupProps) => {
     }, [selectedAvailableAttributes, selectedSelectedAttributes]);
 
     const setDataProviders = () => {
-        setAvailableAttributesDataprovider(
-            getListwithFilterCriterion(availableAttributes),
-        );
-        setSelectedAttributesDataprovider(
-            getListwithFilterCriterion(selectedAttributes),
-        );
+        setAvailableAttributesDataprovider(getListwithFilterCriterion(availableAttributes));
+        setSelectedAttributesDataprovider(getListwithFilterCriterion(selectedAttributes));
     };
 
     const processColumnData = () => {
@@ -101,9 +95,7 @@ export const AddRemovePopup = (props: AddRemovePopupProps) => {
 
     const getListwithFilterCriterion = (attributes: any[]) => {
         const filterCriterion =
-            filter.length > 0
-                ? FilterFactory.getFilter({ filterDef: { text: filter } })
-                : undefined;
+            filter.length > 0 ? FilterFactory.getFilter({ filterDef: { text: filter } }) : undefined;
         const arrayDataProvider = new ArrayDataProvider(attributes, {
             keyAttributes: rowIdentifier,
         });
@@ -125,12 +117,8 @@ export const AddRemovePopup = (props: AddRemovePopupProps) => {
         const { previousValue, value } = event.detail;
         let arraysAreSame: boolean = false;
         if (Array.isArray(previousValue) && Array.isArray(value)) {
-            const previousKeys = previousValue
-                .map((obj) => obj.startKey?.row)
-                .filter((e) => e !== undefined);
-            const latestKeys = value
-                .map((obj) => obj.startKey?.row)
-                .filter((e) => e !== undefined);
+            const previousKeys = previousValue.map((obj) => obj.startKey?.row).filter((e) => e !== undefined);
+            const latestKeys = value.map((obj) => obj.startKey?.row).filter((e) => e !== undefined);
             arraysAreSame =
                 previousKeys.length === latestKeys.length &&
                 previousKeys.every((element) => latestKeys.includes(element));
@@ -145,11 +133,7 @@ export const AddRemovePopup = (props: AddRemovePopupProps) => {
      * @param setSourceArray function to set selections of main array
      * @description Maintain selections of Available / Selected Attributes
      */
-    const handleSelection = (
-        event: any,
-        mainArray: any[],
-        setSourceArray: (array: any[]) => void,
-    ) => {
+    const handleSelection = (event: any, mainArray: any[], setSourceArray: (array: any[]) => void) => {
         const value = event.detail.value;
         if (!isSelectionSame(event)) {
             const { inverted, length } = value;
@@ -161,15 +145,11 @@ export const AddRemovePopup = (props: AddRemovePopupProps) => {
                         tempArray.push(element);
                     });
                 } else {
-                    const elementsToExclude = value.map(
-                        (element: { startKey: { row: any } }) => {
-                            return element.startKey.row;
-                        },
-                    );
+                    const elementsToExclude = value.map((element: { startKey: { row: any } }) => {
+                        return element.startKey.row;
+                    });
                     tempArray = mainArray.filter((element) => {
-                        return !elementsToExclude.includes(
-                            element[rowIdentifier],
-                        );
+                        return !elementsToExclude.includes(element[rowIdentifier]);
                     });
                 }
             } else {
@@ -264,12 +244,7 @@ export const AddRemovePopup = (props: AddRemovePopupProps) => {
         return <h6>{text}</h6>;
     };
 
-    const button = (
-        text: string,
-        action: () => void,
-        disable?: boolean,
-        styleClass?: string,
-    ) => {
+    const button = (text: string, action: () => void, disable?: boolean, styleClass?: string) => {
         return (
             <oj-button class={styleClass} onClick={action} disabled={disable}>
                 {text}
@@ -297,18 +272,9 @@ export const AddRemovePopup = (props: AddRemovePopupProps) => {
 
                     {title(TABLE.TITLE1)}
 
-                    {table(
-                        TABLE.ID1,
-                        TABLE.TITLE1,
-                        availableAttributesDataprovider,
-                        (event: any) => {
-                            handleSelection(
-                                event,
-                                availableAttributes,
-                                setSelectedAvailableAttributes,
-                            );
-                        },
-                    )}
+                    {table(TABLE.ID1, TABLE.TITLE1, availableAttributesDataprovider, (event: any) => {
+                        handleSelection(event, availableAttributes, setSelectedAvailableAttributes);
+                    })}
 
                     <oj-label class={TEXT.LABEL}></oj-label>
 
@@ -319,27 +285,14 @@ export const AddRemovePopup = (props: AddRemovePopupProps) => {
                             disableAdd,
                             "oj-sm-margin-2x-horizontal",
                         )}
-                        {button(
-                            TEXT.BUTTON.REMOVE,
-                            removeSelectedSelectedAttributes,
-                            disableRemove,
-                        )}
+                        {button(TEXT.BUTTON.REMOVE, removeSelectedSelectedAttributes, disableRemove)}
                     </div>
 
                     {title(TABLE.TITLE2)}
 
-                    {table(
-                        TABLE.ID2,
-                        TABLE.TITLE2,
-                        selectedAttributesDataprovider,
-                        (event: any) => {
-                            handleSelection(
-                                event,
-                                selectedAttributes,
-                                setSelectedSelectedAttributes,
-                            );
-                        },
-                    )}
+                    {table(TABLE.ID2, TABLE.TITLE2, selectedAttributesDataprovider, (event: any) => {
+                        handleSelection(event, selectedAttributes, setSelectedSelectedAttributes);
+                    })}
                 </div>
             </div>
         );
@@ -354,12 +307,5 @@ export const AddRemovePopup = (props: AddRemovePopupProps) => {
         );
     };
 
-    return (
-        <Popup
-            show={show}
-            body={popupBody}
-            footer={popupFooter}
-            popupTitle={popupTitle}
-        />
-    );
+    return <Popup show={show} body={popupBody} footer={popupFooter} popupTitle={popupTitle} />;
 };

@@ -51,11 +51,9 @@ const { PREFERENCE: prefernceUrl } = URLs.MAIN;
 
 export const generalConfigApis = {
     getOracleCloudLink: async () => await requests.get<Cloud>(cloudURL),
-    updateOracleCloudLink: async (cloud: Cloud) =>
-        await requests.put<boolean>(cloudURL, cloud),
+    updateOracleCloudLink: async (cloud: Cloud) => await requests.put<boolean>(cloudURL, cloud),
 
-    getThresholdTolerance: async () =>
-        await requests.get<number>(`${prefernceUrl}/thresholdTolerance`),
+    getThresholdTolerance: async () => await requests.get<number>(`${prefernceUrl}/thresholdTolerance`),
     updateThresholdTolerance: async (tolerance: number) =>
         await requests.put<number>(`${prefernceUrl}/thresholdTolerance`, {
             value: tolerance,
@@ -72,15 +70,13 @@ export const generalConfigApis = {
             value: prevent,
         }),
 
-    getCompanyName: async () =>
-        await requests.get<string>(`${prefernceUrl}/companyName`),
+    getCompanyName: async () => await requests.get<string>(`${prefernceUrl}/companyName`),
     updateCompanyName: async (company: string) =>
         await requests.put<string>(`${prefernceUrl}/companyName`, {
             value: company,
         }),
 
-    getFollowUpDays: async () =>
-        await requests.get<number>(`${prefernceUrl}/followUpDays`),
+    getFollowUpDays: async () => await requests.get<number>(`${prefernceUrl}/followUpDays`),
     updateFollowUpDays: async (followUp: number) =>
         await requests.put<number>(`${prefernceUrl}/followUpDays`, {
             value: followUp,

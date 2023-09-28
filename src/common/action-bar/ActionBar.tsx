@@ -5,13 +5,7 @@ import { useState } from "react";
 import type { ojMenu } from "ojs/ojmenu";
 import { ButtonComponent } from "../button/ButtonComponent";
 import { OptionComponent } from "../options/OptionComponent";
-import {
-    Action,
-    type ActionBarElement,
-    type ActionOrView,
-    DefaultProperties,
-    CONSTANTS,
-} from "./metadata";
+import { Action, type ActionBarElement, type ActionOrView, DefaultProperties, CONSTANTS } from "./metadata";
 export { Action, type ActionBarElement };
 
 export interface ActionBarProps {
@@ -19,7 +13,7 @@ export interface ActionBarProps {
     filterHandler?: (value: string) => void;
 }
 
-export const ActionBar = (props: ActionBarProps): unknown => {
+export const ActionBar = (props: ActionBarProps) => {
     const { actions, filterHandler } = props;
     return (
         <div id="toolbars">
@@ -28,9 +22,7 @@ export const ActionBar = (props: ActionBarProps): unknown => {
                     <ActionMenu actions={actions} />
                     <ViewMenu actions={actions} />
                     <ActionButtons actions={actions} />
-                    {filterHandler != null && (
-                        <FilterData handler={filterHandler} />
-                    )}
+                    {filterHandler != null && <FilterData handler={filterHandler} />}
                 </oj-toolbar>
             </div>
         </div>
@@ -82,10 +74,7 @@ const MenuButton = (props: MenuButtonProps) => {
     const { actions, menuSelection, filterCondition } = props;
     const menuActions = actions.filter(filterCondition);
     const hasMenu = Array.isArray(menuActions) && menuActions.length > 0;
-    const menuId =
-        menuSelection === "Actions"
-            ? CONSTANTS.ActionMenuId
-            : CONSTANTS.ViewMenuId;
+    const menuId = menuSelection === "Actions" ? CONSTANTS.ActionMenuId : CONSTANTS.ViewMenuId;
 
     const MenuOption = (props: { action: ActionBarElement }) => {
         const { action } = props;
@@ -97,10 +86,7 @@ const MenuButton = (props: MenuButtonProps) => {
         let icon: string | undefined;
         let title = action.title ?? defaultProperties.title;
         if (menuSelection === "Actions") {
-            title =
-                action.inActionMenu?.optionTitle ??
-                action.title ??
-                defaultProperties.title;
+            title = action.inActionMenu?.optionTitle ?? action.title ?? defaultProperties.title;
             icon =
                 action.inActionMenu?.showIcon ?? false
                     ? action.icon
@@ -127,12 +113,7 @@ const MenuButton = (props: MenuButtonProps) => {
         return subMenu != null ? (
             <>{subMenu()}</>
         ) : (
-            <OptionComponent
-                optTitle={title}
-                icon={icon}
-                ojAction={customAction}
-                disabled={action.disable}
-            />
+            <OptionComponent optTitle={title} icon={icon} ojAction={customAction} disabled={action.disable} />
         );
     };
 
@@ -162,10 +143,7 @@ const MenuButton = (props: MenuButtonProps) => {
 const ActionMenu = (props: { actions: ActionBarElement[] }) => {
     const filterActionMenuOptions = (action: ActionBarElement) => {
         const defaultProperties = DefaultProperties[action.type];
-        return (
-            !!action.inActionMenu?.present ||
-            defaultProperties.defaultSelection === "Actions"
-        );
+        return !!action.inActionMenu?.present || defaultProperties.defaultSelection === "Actions";
     };
     return (
         <MenuButton
@@ -179,17 +157,10 @@ const ActionMenu = (props: { actions: ActionBarElement[] }) => {
 const ViewMenu = (props: { actions: ActionBarElement[] }) => {
     const filterViewMenuOptions = (action: ActionBarElement) => {
         const defaultProperties = DefaultProperties[action.type];
-        return (
-            !!action.inViewMenu?.present ||
-            defaultProperties.defaultSelection === "View"
-        );
+        return !!action.inViewMenu?.present || defaultProperties.defaultSelection === "View";
     };
     return (
-        <MenuButton
-            actions={props.actions}
-            menuSelection="View"
-            filterCondition={filterViewMenuOptions}
-        />
+        <MenuButton actions={props.actions} menuSelection="View" filterCondition={filterViewMenuOptions} />
     );
 };
 
@@ -221,13 +192,7 @@ const FilterData = (props: { handler: (value: string) => void }) => {
 };
 
 const Seperator = () => {
-    return (
-        <span
-            role="separator"
-            aria-orientation="vertical"
-            className="oj-toolbar-separator"
-        ></span>
-    );
+    return <span role="separator" aria-orientation="vertical" className="oj-toolbar-separator"></span>;
 };
 
 const closeMenu = (id: string) => {

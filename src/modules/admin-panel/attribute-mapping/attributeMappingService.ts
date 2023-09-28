@@ -53,10 +53,7 @@ export const getEmptyMappedAttribute = (): MappedAttribute => {
     return { ...emptyAttribute, attributeName: "" };
 };
 
-const mapAttribute = (
-    attr: Attribute,
-    attributeName: string,
-): MappedAttribute => {
+const mapAttribute = (attr: Attribute, attributeName: string): MappedAttribute => {
     return { ...attr, attributeName };
 };
 
@@ -67,9 +64,7 @@ export const mapAttributes = (object: AttributeObject): MappedAttribute[] => {
         const attributeName = `attribute${i}`;
         const obj = object[attributeName as keyof object];
         mappedAttributes.push(
-            obj
-                ? mapAttribute(obj, attributeName)
-                : mapAttribute(getEmptyAttribute(), attributeName),
+            obj ? mapAttribute(obj, attributeName) : mapAttribute(getEmptyAttribute(), attributeName),
         );
     }
     return mappedAttributes;
@@ -80,9 +75,7 @@ const attributeMappingUrl = `${URLs.MAIN.PREFERENCE}/attributeMapping`;
 
 export const attributeMappingApis = {
     getAttributes: async (value: string) =>
-        await requests
-            .get<AttributeObject>(`${attributeMappingUrl}/${value}`)
-            .then((data) => {
-                return mapAttributes(data);
-            }),
+        await requests.get<AttributeObject>(`${attributeMappingUrl}/${value}`).then((data) => {
+            return mapAttributes(data);
+        }),
 };

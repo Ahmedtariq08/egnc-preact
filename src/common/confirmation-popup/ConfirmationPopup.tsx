@@ -48,12 +48,5 @@ export const ConfirmationPopup = (props: Props) => {
         );
     };
 
-    return (
-        <Popup
-            show={show}
-            popupTitle={popupTitle}
-            body={body}
-            footer={footer}
-        />
-    );
+    return <Popup show={show} popupTitle={popupTitle} body={body} footer={footer} />;
 };

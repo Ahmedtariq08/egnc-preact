@@ -20,14 +20,13 @@ export default class GeneralConfigStore {
     // Inital configuration load
     loadGeneralConfigurations = async () => {
         try {
-            const [cloud, tolerance, prevention, company, followUp] =
-                await Promise.all([
-                    generalConfigApis.getOracleCloudLink(),
-                    generalConfigApis.getThresholdTolerance(),
-                    generalConfigApis.getUnknownSubstanceSeverityPrevention(),
-                    generalConfigApis.getCompanyName(),
-                    generalConfigApis.getFollowUpDays(),
-                ]);
+            const [cloud, tolerance, prevention, company, followUp] = await Promise.all([
+                generalConfigApis.getOracleCloudLink(),
+                generalConfigApis.getThresholdTolerance(),
+                generalConfigApis.getUnknownSubstanceSeverityPrevention(),
+                generalConfigApis.getCompanyName(),
+                generalConfigApis.getFollowUpDays(),
+            ]);
             runInAction(() => {
                 this.configData = {
                     cloud: {
@@ -58,10 +57,7 @@ export default class GeneralConfigStore {
                 };
             });
         } catch (error) {
-            store.commonStore.showNotification(
-                "error",
-                "Error in fetching general configurations",
-            );
+            store.commonStore.showNotification("error", "Error in fetching general configurations");
         }
     };
 
@@ -74,10 +70,7 @@ export default class GeneralConfigStore {
         this.configData[key].disabled = true;
     };
 
-    updateConfigValue = <TKey extends keyof ConfigData>(
-        key: TKey,
-        newValue: ConfigData[TKey]["value"],
-    ) => {
+    updateConfigValue = <TKey extends keyof ConfigData>(key: TKey, newValue: ConfigData[TKey]["value"]) => {
         this.configData[key] = { ...this.configData[key], value: newValue };
     };
 
@@ -89,29 +82,19 @@ export default class GeneralConfigStore {
         try {
             switch (key) {
                 case "cloud":
-                    await generalConfigApis.updateOracleCloudLink(
-                        config.value as Cloud,
-                    );
+                    await generalConfigApis.updateOracleCloudLink(config.value as Cloud);
                     break;
                 case "company":
-                    await generalConfigApis.updateCompanyName(
-                        config.value as string,
-                    );
+                    await generalConfigApis.updateCompanyName(config.value as string);
                     break;
                 case "followUpDays":
-                    await generalConfigApis.updateFollowUpDays(
-                        config.value as number,
-                    );
+                    await generalConfigApis.updateFollowUpDays(config.value as number);
                     break;
                 case "substancePrevention":
-                    await generalConfigApis.updateUnknownSubstanceSeverityPrevention(
-                        config.value as YesNo,
-                    );
+                    await generalConfigApis.updateUnknownSubstanceSeverityPrevention(config.value as YesNo);
                     break;
                 case "thresholdTolerance":
-                    await generalConfigApis.updateThresholdTolerance(
-                        config.value as number,
-                    );
+                    await generalConfigApis.updateThresholdTolerance(config.value as number);
                     break;
             }
             runInAction(() => {
@@ -119,9 +102,7 @@ export default class GeneralConfigStore {
                 config.prev = config.value;
             });
             if (key === "substancePrevention") {
-                successMsg = substancePreventionSuccessMessage(
-                    config.value as YesNo,
-                );
+                successMsg = substancePreventionSuccessMessage(config.value as YesNo);
             }
             store.commonStore.showNotification("confirmation", successMsg);
         } catch (error) {
