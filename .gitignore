@@ -5,3 +5,4 @@
 .env
 /staged-themes
 /.vscode
+/coverage

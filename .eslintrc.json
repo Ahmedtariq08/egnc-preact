@@ -99,6 +99,7 @@
             }
         ]
     },
+    "ignorePatterns": ["jest.config.js", "ojet.config.js"],
     "settings": {
         "import/resolver": {
             "typescript": {}
