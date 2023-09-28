@@ -12,7 +12,7 @@ type Redirect =
     | { page: Pages.AdminPanel }
     | { page: Pages.Reports }
     | { page: Pages.Dossiers }
-    | { page: Pages.Declaration, params: { id: number | string } }
+    | { page: Pages.Declaration; params: { id: number | string } };
 
 const NoEgncPrefix = [Pages.Root, Pages.Login];
 
@@ -21,22 +21,23 @@ const NoEgncPrefix = [Pages.Root, Pages.Login];
  * @returns A router path that the react router can navigate to
  * @usage In link components, or router.navigate
  */
-export const getRedirectionPath = <Page extends Redirect['page']>(
+export const getRedirectionPath = <Page extends Redirect["page"]>(
     ...args: Extract<Redirect, { page: Page }> extends { params: infer TParams }
         ? [page: Page, params: TParams]
-        : [page: Page]): string => {
+        : [page: Page]
+): string => {
     const page = args[0];
     let outputPath = NavData.get(page)?.path as string;
     try {
         if (!NoEgncPrefix.includes(page)) {
-            const params = args[1] as {};
+            const params = args[1] as Record<string, unknown>;
             for (const key in params) {
-                const value = params[key as keyof typeof params];
+                const value = params[key];
                 outputPath = outputPath.replace(`:${key}`, value as string);
             }
         }
     } catch (error) {
-        console.log('Error in generating path');
+        console.log("Error in generating path");
         console.log(error);
     }
     return outputPath;
@@ -47,49 +48,50 @@ export const getRedirectionPath = <Page extends Redirect['page']>(
  * @function Redirects to the path given on the basis on params
  * @usage used standalone redirection, modifies document title if present
  */
-export const navigateToPath = <Page extends Redirect['page']>(
+export const navigateToPath = async <Page extends Redirect["page"]>(
     ...args: Extract<Redirect, { page: Page }> extends { params: infer TParams }
         ? [page: Page, params: TParams]
-        : [page: Page]) => {
+        : [page: Page]
+) => {
     const page = args[0];
     let outputPath = NavData.get(page)?.path as string;
     try {
         if (!NoEgncPrefix.includes(page)) {
-            const params = args[1] as {};
+            const params = args[1] as Record<string, unknown>;
             for (const key in params) {
-                const value = params[key as keyof typeof params];
+                const value = params[key];
                 outputPath = outputPath.replace(`:${key}`, value as string);
             }
         }
     } catch (error) {
-        console.log('Error in redirection');
+        console.log("Error in redirection");
         console.log(error);
     }
-    router.navigate(outputPath);
+    await router.navigate(outputPath);
 };
 
 /**
  * @description Still in testing phase, used when link is already embedded in UI elements
- * @param link 
+ * @param link
  */
-export const navigateToLink = (link: string) => {
+export const navigateToLink = async (link: string) => {
     if (link) {
-        router.navigate(link);
+        await router.navigate(link);
     }
-}
+};
 
-//ANCHOR - Updating document title
+// ANCHOR - Updating document title
 
-const defaultDocumentTitle = 'EG&C';
+const defaultDocumentTitle = "EG&C";
 /**
  * @usage Updates the document title from respective displayName in NavData
- * @param location 
+ * @param location
  */
 export const updateDocumentTitle = (location: string) => {
     const page = getPageFromLocation(location);
     if (page) {
         const displayName = NavData.get(page)?.displayName;
-        document.title = displayName || defaultDocumentTitle;
+        document.title = displayName ?? defaultDocumentTitle;
     }
     // const getDocumentTitle = (location: string) => {
     //     const locationData = NavData.get(location as Pages)
@@ -110,19 +112,18 @@ export const updateDocumentTitle = (location: string) => {
     // }
     // const documentTitle = getDocumentTitle(location);
     // document.title = documentTitle;
-}
+};
 
 export const getPageFromLocation = (location: string): Pages | undefined => {
-    const locationPaths = location.split('/').filter(value => value!!);
+    const locationPaths = location.split("/").filter((value) => value);
     const allPages = Object.values(Pages);
     for (const path of locationPaths) {
-        const page = allPages.find(p => p === path);
+        const page = allPages.find((p) => p === path);
         if (page) {
             return page;
         }
     }
     return undefined;
-}
-
+};
 
 export { Paths, Pages };

@@ -8,7 +8,7 @@ export const tableTemplates = {
             COMPANY: "company",
             BUSINESS_TITLE: "businessTitle",
             ROLES: "roles",
-            ACTIVE: "active"
+            ACTIVE: "active",
         },
         ATTRIBUTE_MAPPING: {
             ATTRIBUTE: "attributeName",
@@ -16,8 +16,8 @@ export const tableTemplates = {
             TYPE: "type",
             READONLY: "readonly",
             REQUIRED: "required",
-            POSSIBLE_VALUES: "possibleValues"
-        }
+            POSSIBLE_VALUES: "possibleValues",
+        },
     },
     SMELTER_BLOCK: {
         bundleId: "bundleId",
@@ -25,25 +25,25 @@ export const tableTemplates = {
         manufacturerNumber: "manufacturer_number",
         status: "status",
         manufacturerName: "manufacturer_name",
-        lookup: "lookup"
+        lookup: "lookup",
     },
     ATTACHMENTS: {
         fileName: "fileName",
         fileExtension: "fileExtension",
-        fileType: "fileType"
+        fileType: "fileType",
     },
     REPORTS: {
         fileName: "fileName",
         createdDate: "createdDate",
         id: "id",
-        status: "status"
+        status: "status",
     },
     DECLARATION_BLOCK: {
         STATEHISTORY: {
             comments: "comments",
             modifyBy: "modifyBy",
             modifyDate: "modifyDate",
-            workflowStateName: "workflowStateName"
+            workflowStateName: "workflowStateName",
         },
         AFFECTED_OBJECTS: {
             manufacturerPartNumber: "manufacturerPartNumber",
@@ -55,7 +55,7 @@ export const tableTemplates = {
             calculatedCompliance: "calculatedCompliance",
             declaredCompliance: "declaredCompliance",
             status: "status",
-            filled: "filled"
+            filled: "filled",
         },
         COPY_COMPOSITION: {
             status: "status",
@@ -65,14 +65,14 @@ export const tableTemplates = {
             partGroupName: "partGroupName",
             specificationName: "specificationName",
             manufacturerNumber: "manufacturerNumber",
-            manufacturerPartNumber: "manufacturerPartNumber"
-        }
+            manufacturerPartNumber: "manufacturerPartNumber",
+        },
     },
     CMRT_BLOCK: {
         DECLARATION_QUESTIONS: {
             answer: "answer",
             comments: "comments",
-            question: "question"
+            question: "question",
         },
         SMELTER_LIST: {
             substance: "metal",
@@ -80,21 +80,21 @@ export const tableTemplates = {
             smelterName: "smelterName",
             lookup: "lookups",
             country: "country",
-            source: "source"
-        }
+            source: "source",
+        },
     },
     DOSSIERS: {
         name: "name",
         status: "status",
         Date: "Date",
         uuid: "uuid",
-        submission_number: "Submission_No"
+        submission_number: "Submission_No",
     },
     AML_REPORT: {
         specificationName: "specificationName",
         manufacturerName: "manufacturerName",
         manufacturerPartNumber: "manufacturerPartNumber",
-        complianceStatus: "complianceStatus"
+        complianceStatus: "complianceStatus",
     },
     FMD_REPORT: {
         itemNumber: "itemNumber",
@@ -117,6 +117,6 @@ export const tableTemplates = {
         thresholdPpm: "thresholdPpm",
         finalCompliance: "finalCompliance",
         declaredCompliance: "declaredCompliance",
-        calculatedCompliance: "calculatedCompliance"
-    }
-}
+        calculatedCompliance: "calculatedCompliance",
+    },
+};

@@ -24,7 +24,7 @@
         "max-len": [
             "warn",
             {
-                "code": 100
+                "code": 120
             }
         ],
         "import/extensions": [
@@ -40,9 +40,29 @@
         "@typescript-eslint/no-use-before-define": ["error"],
         "@typescript-eslint/no-shadow": "off",
         "@typescript-eslint/semi": "off",
+        "@typescript-eslint/no-non-null-assertion": ["warn"],
         // "@typescript-eslint/no-explicit-any": "off",
         "@typescript-eslint/strict-boolean-expressions": "off",
         "@typescript-eslint/explicit-function-return-type": "off",
+        "@typescript-eslint/no-misused-promises": [
+            "error",
+            {
+                "checksVoidReturn": false
+            }
+        ],
+        "@typescript-eslint/consistent-type-assertions": [
+            "error",
+            {
+                "assertionStyle": "as",
+                "objectLiteralTypeAssertions": "allow"
+            }
+        ],
+        "@typescript-eslint/prefer-nullish-coalescing": [
+            "error",
+            {
+                "ignoreConditionalTests": true
+            }
+        ],
 
         /* React rules */
         "react/prop-types": "off",
@@ -54,6 +74,22 @@
             "warn",
             {
                 "extensions": [".tsx"]
+            }
+        ],
+
+        /* Prettier Rules */
+        "prettier/prettier": [
+            "error",
+            {
+                "trailingComma": "all",
+                "printWidth": 110,
+                "tabWidth": 4,
+                "semi": true,
+                "singleQuote": false,
+                "bracketSpacing": true,
+                "eslintIntegration": true,
+                "useTabs": false,
+                "endOfLine": "auto"
             }
         ]
     },

@@ -11,11 +11,12 @@
 ![Enhancement][EnhancementBadge]&nbsp; - &nbsp; Redirect to same page that uses was after logging in (router state ,location)
    
 ### Login
-![Fix][FixBadge]&nbsp; - &nbsp; Implement Company single sign on
+![Fix][FixBadge]&nbsp; - &nbsp; Implement Company single sign on \
+![Feature][FeatureBadge]&nbsp; - &nbsp; Reset Password
 
 ### App Layout
-![Feature][FeatureBadge]&nbsp; - &nbsp; favorites and recents \
-![Feature][FeatureBadge]&nbsp; - &nbsp; breadcrumbs \
+![Feature][FeatureBadge]&nbsp; - &nbsp; Favorites and Recents \
+![Feature][FeatureBadge]&nbsp; - &nbsp; Breadcrumbs \
 ![Fix][FixBadge]&nbsp; - &nbsp; Favicon not displayed (try html web plugin ?)
 
 ### Dashboard

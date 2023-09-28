@@ -1,6 +1,12 @@
 import { makeAutoObservable } from "mobx";
-import { AuthService } from "../../modules/auth/authService";
-import { ConveyorBeltCard, DashboardCardRow, DashboardService } from "./dashboardService";
+import { getPermissionsFromStorage } from "../../modules/auth/authService";
+import {
+    getConveyorBeltCards,
+    getObjectsNeedingDeclarationCards,
+    getPendingDataCards,
+    type ConveyorBeltCard,
+    type DashboardCardRow,
+} from "./dashboardService";
 
 export default class DashboardStore {
     cardsAreSet = false;
@@ -13,28 +19,30 @@ export default class DashboardStore {
         makeAutoObservable(this);
     }
 
-    loadAllCards = () => {
+    loadAllCards = async () => {
         if (!this.cardsAreSet) {
             this.loadConveyorCards();
-            this.loadObjectsAndThingsCards();
+            await this.loadObjectsAndThingsCards();
             this.cardsAreSet = true;
         }
-    }
+    };
 
-    /*This is also needed in layout store to populate drawer on refresh */
+    /* This is also needed in layout store to populate drawer on refresh */
     loadConveyorCards = () => {
-        const permissions = AuthService.getPermissionsFromStorage();
-        if (permissions && permissions.roles) {
-            const conveyorCards = DashboardService.getConveyorBeltCards(permissions.roles);
+        const permissions = getPermissionsFromStorage();
+        if (permissions?.roles) {
+            const conveyorCards = getConveyorBeltCards(permissions.roles);
             this.conveyorBeltCards = conveyorCards;
         }
-    }
+    };
 
-    private loadObjectsAndThingsCards = async () => {
+    private readonly loadObjectsAndThingsCards = async () => {
         this.cardsLoading = true;
         try {
             const [objectsCards, thingsCards] = await Promise.all([
-                DashboardService.getObjectsNeedingDeclarationCards(), DashboardService.getPendingDataCards()]);
+                getObjectsNeedingDeclarationCards(),
+                getPendingDataCards(),
+            ]);
             this.objectsCards = objectsCards;
             this.thingsCards = thingsCards;
         } catch (error) {
@@ -42,5 +50,5 @@ export default class DashboardStore {
         } finally {
             this.cardsLoading = false;
         }
-    }
+    };
 }

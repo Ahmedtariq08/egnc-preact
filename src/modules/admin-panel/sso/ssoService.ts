@@ -1,6 +1,6 @@
 import { requests, URLs } from "../../../api";
 
-//ANCHOR - Intefaces
+// ANCHOR - Intefaces
 export interface SSO {
     id: number;
     clientId: string;
@@ -13,16 +13,19 @@ export interface SSO {
     issuerUri: string;
     jwkUri: string;
     providerName: string;
-};
+}
 
 export const ScopeMapping = [
     { label: "Open Id", value: "openid" },
     { label: "Profile", value: "profile" },
     { label: "Email", value: "email" },
-    { label: "Offline Access", value: "offline_access" }
+    { label: "Offline Access", value: "offline_access" },
 ];
 
-export type TRow = { title: string, key: string }
+export interface TRow {
+    title: string;
+    key: string;
+}
 
 /**
  * @desc Component metadata for rows, key must be a key in sso interface
@@ -37,13 +40,12 @@ export const METADATA = {
     JWK_URI: { title: "Jwk URI", key: "jwkUri" },
     PROVIDER: { title: "Provider", key: "providerName" },
     SCOPE: { title: "Scope", key: "scope" },
-}
+};
 
-
-//ANCHOR - APIs
+// ANCHOR - APIs
 const { SSO: ssoURL } = URLs.AUTH.THIRDPARTY_AUTH;
 
 export const SSOApis = {
-    getSSO: () => requests.get<SSO>(ssoURL),
-    updateSSO: (sso: SSO) => requests.put<string>(ssoURL, sso)
-}
+    getSSO: async () => await requests.get<SSO>(ssoURL),
+    updateSSO: async (sso: SSO) => await requests.put<string>(ssoURL, sso),
+};

@@ -2,7 +2,7 @@ import { observer } from "mobx-react-lite";
 import { ButtonComponent } from "../../../common/button/ButtonComponent";
 import { Icons } from "../../../constants/iconsData";
 import { useStore } from "../../../modules/store";
-import { navigateToPath, Pages } from '../../../routes/redirection';
+import { navigateToPath, Pages } from "../../../routes/redirection";
 import { FavouritesAndRecents } from "./FavouritesRecents";
 
 export const HeaderToolbar = observer(() => {
@@ -11,24 +11,28 @@ export const HeaderToolbar = observer(() => {
 
     const resetPassword = () => {
         console.log("reset password");
-    }
+    };
 
     const HomeButton = () => {
-        return <ButtonComponent
-            buttonTitle="Dashboard"
-            icon={Icons.icons.home}
-            ojAction={() => navigateToPath(Pages.Dashboard)}
-        />
-    }
+        return (
+            <ButtonComponent
+                buttonTitle="Dashboard"
+                icon={Icons.icons.home}
+                ojAction={() => {
+                    navigateToPath(Pages.Dashboard);
+                }}
+            />
+        );
+    };
 
     return (
         <oj-toolbar>
-            {userPemissions?.isSupplier &&
+            {userPemissions?.isSupplier && (
                 <>
                     <HomeButton />
                     <FavouritesAndRecents />
                 </>
-            }
+            )}
             <oj-menu-button id="userMenu" chroming="borderless">
                 <span>{userPemissions?.username}</span>
                 <oj-menu id="menu1" slot="menu">
@@ -37,5 +41,5 @@ export const HeaderToolbar = observer(() => {
                 </oj-menu>
             </oj-menu-button>
         </oj-toolbar>
-    )
+    );
 });
