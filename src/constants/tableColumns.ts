@@ -5,12 +5,9 @@ export const smelterBlockTemplates = tableTemplates.SMELTER_BLOCK;
 export const declarationBlockTemplates = tableTemplates.DECLARATION_BLOCK;
 export const cmrtQuestionTemplates = cmrtBlockTemplates.DECLARATION_QUESTIONS;
 export const cmrtSmelterListTemplates = cmrtBlockTemplates.SMELTER_LIST;
-export const stateHistoryBlockTemplates =
-    declarationBlockTemplates.STATEHISTORY;
-export const copyCompositionTemplates =
-    declarationBlockTemplates.COPY_COMPOSITION;
-export const affectedObjectsBlockTemplates =
-    declarationBlockTemplates.AFFECTED_OBJECTS;
+export const stateHistoryBlockTemplates = declarationBlockTemplates.STATEHISTORY;
+export const copyCompositionTemplates = declarationBlockTemplates.COPY_COMPOSITION;
+export const affectedObjectsBlockTemplates = declarationBlockTemplates.AFFECTED_OBJECTS;
 export const amlReportTemplates = tableTemplates.AML_REPORT;
 export const FmdReportTemplates = tableTemplates.FMD_REPORT;
 
@@ -335,8 +332,7 @@ export const tableColumnsData = {
                     field: affectedObjectsBlockTemplates.manufacturerPartNumber,
                     Id: affectedObjectsBlockTemplates.manufacturerPartNumber,
                     resizable: "enabled",
-                    template:
-                        affectedObjectsBlockTemplates.manufacturerPartNumber,
+                    template: affectedObjectsBlockTemplates.manufacturerPartNumber,
                 },
                 {
                     headerText: "Manufacturer Name",
@@ -378,8 +374,7 @@ export const tableColumnsData = {
                     field: affectedObjectsBlockTemplates.calculatedCompliance,
                     Id: affectedObjectsBlockTemplates.calculatedCompliance,
                     resizable: "enabled",
-                    template:
-                        affectedObjectsBlockTemplates.calculatedCompliance,
+                    template: affectedObjectsBlockTemplates.calculatedCompliance,
                 },
                 {
                     headerText: "Declared Compliance",
@@ -410,24 +405,21 @@ export const tableColumnsData = {
                         field: affectedObjectsBlockTemplates.manufacturerPartNumber,
                         Id: affectedObjectsBlockTemplates.manufacturerPartNumber,
                         resizable: "enabled",
-                        template:
-                            affectedObjectsBlockTemplates.manufacturerPartNumber,
+                        template: affectedObjectsBlockTemplates.manufacturerPartNumber,
                     },
                     {
                         headerText: "Manufacturer Number",
                         field: affectedObjectsBlockTemplates.manufacturerNumber,
                         Id: affectedObjectsBlockTemplates.manufacturerNumber,
                         resizable: "enabled",
-                        template:
-                            affectedObjectsBlockTemplates.manufacturerNumber,
+                        template: affectedObjectsBlockTemplates.manufacturerNumber,
                     },
                     {
                         headerText: "Manufacturer Name",
                         field: affectedObjectsBlockTemplates.manufacturerName,
                         Id: affectedObjectsBlockTemplates.manufacturerName,
                         resizable: "enabled",
-                        template:
-                            affectedObjectsBlockTemplates.manufacturerName,
+                        template: affectedObjectsBlockTemplates.manufacturerName,
                     },
                     {
                         headerText: "Part Family",
@@ -441,16 +433,14 @@ export const tableColumnsData = {
                         field: affectedObjectsBlockTemplates.calculatedCompliance,
                         Id: affectedObjectsBlockTemplates.calculatedCompliance,
                         resizable: "enabled",
-                        template:
-                            affectedObjectsBlockTemplates.calculatedCompliance,
+                        template: affectedObjectsBlockTemplates.calculatedCompliance,
                     },
                     {
                         headerText: "Declared Compliance",
                         field: affectedObjectsBlockTemplates.declaredCompliance,
                         Id: affectedObjectsBlockTemplates.declaredCompliance,
                         resizable: "enabled",
-                        template:
-                            affectedObjectsBlockTemplates.declaredCompliance,
+                        template: affectedObjectsBlockTemplates.declaredCompliance,
                     },
                 ],
                 COMPANY: [
@@ -459,24 +449,21 @@ export const tableColumnsData = {
                         field: affectedObjectsBlockTemplates.manufacturerName,
                         Id: affectedObjectsBlockTemplates.manufacturerName,
                         resizable: "enabled",
-                        template:
-                            affectedObjectsBlockTemplates.manufacturerName,
+                        template: affectedObjectsBlockTemplates.manufacturerName,
                     },
                     {
                         headerText: "Calculated Compliance",
                         field: affectedObjectsBlockTemplates.calculatedCompliance,
                         Id: affectedObjectsBlockTemplates.calculatedCompliance,
                         resizable: "enabled",
-                        template:
-                            affectedObjectsBlockTemplates.calculatedCompliance,
+                        template: affectedObjectsBlockTemplates.calculatedCompliance,
                     },
                     {
                         headerText: "Declared Compliance",
                         field: affectedObjectsBlockTemplates.declaredCompliance,
                         Id: affectedObjectsBlockTemplates.declaredCompliance,
                         resizable: "enabled",
-                        template:
-                            affectedObjectsBlockTemplates.declaredCompliance,
+                        template: affectedObjectsBlockTemplates.declaredCompliance,
                     },
                 ],
             },

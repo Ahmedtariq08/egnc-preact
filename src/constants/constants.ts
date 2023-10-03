@@ -61,13 +61,7 @@ export const Constants = {
     ATTRIBUTE4: "attribute4",
     ATTRIBUTE5: "attribute5",
     ATTRIBUTE6: "attribute6",
-    VALIDCASNUMBERS: [
-        "-",
-        "N/A",
-        "Not in List",
-        "No CAS Reference",
-        "Proprietary Data",
-    ],
+    VALIDCASNUMBERS: ["-", "N/A", "Not in List", "No CAS Reference", "Proprietary Data"],
     COMPONENT_MODE: {
         BUTTON: "button",
         OPTION: "option",

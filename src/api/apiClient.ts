@@ -1,9 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import axios, {
-    type AxiosError,
-    type AxiosRequestConfig,
-    type AxiosResponse,
-} from "axios";
+import axios, { type AxiosError, type AxiosRequestConfig, type AxiosResponse } from "axios";
 import { store } from "../modules/store";
 
 const apiClient = axios.create({
@@ -31,8 +27,7 @@ apiClient.interceptors.response.use(
     },
     async (error: AxiosError) => {
         // handle error here
-        const { data, status, config, headers } =
-            error.response as AxiosResponse;
+        const { data, status, config, headers } = error.response as AxiosResponse;
         switch (status) {
             case 400:
                 // handle bad request
@@ -42,10 +37,7 @@ apiClient.interceptors.response.use(
                     await store.authStore.checkSignedIn();
                 };
                 void redirectIfNotAuthorized();
-                store.commonStore.showNotification(
-                    "error",
-                    "Unauthorised. Session expired.",
-                );
+                store.commonStore.showNotification("error", "Unauthorised. Session expired.");
                 break;
             }
             case 403:
