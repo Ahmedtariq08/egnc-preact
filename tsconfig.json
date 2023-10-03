@@ -1,54 +1,32 @@
 {
-  "compileOnSave": true,
-  "compilerOptions": {
-    "baseUrl": ".",
-    "target": "es6",
-    "strict": true,
-    "module": "amd",
-    "moduleResolution": "node",
-    "jsx": "react-jsx",
-    "jsxImportSource": "preact",
-    "lib": [
-      "es2021",
-      "dom",
-      "esnext.asynciterable"
-    ],
-    "typeRoots": [
-      "./types",
-      "./node_modules/@oracle/oraclejet/dist/types",
-      "./node_modules/@types"
-    ],
-    "paths": {
-      "ojs/*": [
-        "./node_modules/@oracle/oraclejet/dist/types/*"
-      ],
-      "@oracle/oraclejet-preact/*": [
-        "./node_modules/@oracle/oraclejet-preact/*"
-      ],
-      "oj-c/*": [
-        "./node_modules/@oracle/oraclejet-core-pack/oj-c/types/*"
-      ],
-      "preact": [
-        "./node_modules/preact"
-      ],
-      "react": [
-        "./node_modules/preact/compat/src/index.d.ts"
-      ],
-      "react-dom": [
-        "./node_modules/preact/compat/src/index.d.ts"
-      ]
+    "compileOnSave": true,
+    "compilerOptions": {
+        "baseUrl": ".",
+        "target": "es6",
+        "strict": true,
+        "module": "amd",
+        "moduleResolution": "node",
+        "jsx": "react-jsx",
+        "jsxImportSource": "preact",
+        "lib": ["es2021", "dom", "esnext.asynciterable"],
+        "typeRoots": ["./types", "./node_modules/@oracle/oraclejet/dist/types", "./node_modules/@types"],
+        "paths": {
+            "ojs/*": ["./node_modules/@oracle/oraclejet/dist/types/*"],
+            "@oracle/oraclejet-preact/*": ["./node_modules/@oracle/oraclejet-preact/*"],
+            "oj-c/*": ["./node_modules/@oracle/oraclejet-core-pack/oj-c/types/*"],
+            "preact": ["./node_modules/preact"],
+            "react": ["./node_modules/preact/compat/src/index.d.ts"],
+            "react-dom": ["./node_modules/preact/compat/src/index.d.ts"]
+        },
+        "declaration": true,
+        "noEmitOnError": true,
+        "experimentalDecorators": true,
+        "skipLibCheck": true,
+        "removeComments": true,
+        "rootDir": "./src",
+        "outDir": "./web",
+        "resolveJsonModule": true,
+        "esModuleInterop": true
     },
-    "declaration": true,
-    "noEmitOnError": true,
-    "experimentalDecorators": true,
-    "skipLibCheck": true,
-    "removeComments": true,
-    "rootDir": "./src",
-    "outDir": "./web",
-    "resolveJsonModule": true,
-    "esModuleInterop": true
-  },
-  "include": [
-    "./src/**/*"
-  ]
+    "include": ["./src/**/*", "./jest.setup.js"]
 }
