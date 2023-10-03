@@ -8,11 +8,15 @@ module.exports = {
     //     "^.+\\.(ts|tsx)?$": "ts-jest",
     //     "^.+\\.(js|jsx)$": "babel-jest",
     // },
+    extensionsToTreatAsEsm: [".ts", ".tsx"],
     moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "node"],
+    // transform: {
+    //     "^.+\\.[t|j]sx?$": "babel-jest",
+    // },
     transform: {
         "node_modules/variables/.+\\.(j|t)sx?$": "ts-jest",
         "^.+\\.(ts|tsx)?$": "ts-jest",
     },
-    transformIgnorePatterns: ["node_modules/(?!variables/.*)"],
+    transformIgnorePatterns: ["<rootDir>/node_modules/"],
     // modulePaths: ["<rootDir>"],
 };
