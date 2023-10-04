@@ -16,7 +16,8 @@
             "oj-c/*": ["./node_modules/@oracle/oraclejet-core-pack/oj-c/types/*"],
             "preact": ["./node_modules/preact"],
             "react": ["./node_modules/preact/compat/src/index.d.ts"],
-            "react-dom": ["./node_modules/preact/compat/src/index.d.ts"]
+            "react-dom": ["./node_modules/preact/compat/src/index.d.ts"],
+            "cypress": ["./node_modules/cypress"]
         },
         "declaration": true,
         "noEmitOnError": true,
@@ -30,4 +31,5 @@
         "allowJs": true
     },
     "include": ["./src/**/*"]
+    // "exclude": ["cypress.config.ts", "cypress", "node_modules"]
 }

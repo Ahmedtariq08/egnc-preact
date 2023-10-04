@@ -4,13 +4,13 @@ describe("areObjectsEqual function", () => {
     it("should return true for equal objects", () => {
         const obj1 = { a: 1, b: 2, c: "hello" };
         const obj2 = { a: 1, b: 2, c: "hello" };
-        expect(areObjectsEqual(obj1, obj2)).toBe(true);
+        expect(areObjectsEqual(obj1, obj2)).toEqual(true);
     });
 
     it("should return false for objects with different values", () => {
         const obj1 = { a: 1, b: 2, c: "hello" };
         const obj2 = { a: 1, b: 2, c: "world" };
-        expect(areObjectsEqual(obj1, obj2)).toBe(false);
+        expect(areObjectsEqual(obj1, obj2)).toEqual(false);
     });
 
     it("should return false for objects with different keys", () => {

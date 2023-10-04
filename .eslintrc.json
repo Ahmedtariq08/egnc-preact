@@ -102,10 +102,12 @@
     "ignorePatterns": [
         "jest.config.js",
         "ojet.config.js",
-        "jest.setup.js",
-        "babel.config.js",
+        "cypress.config.ts",
+        "webpack.config.ts",
         "*.css",
-        "*.svg"
+        "*.svg",
+        "/cypress",
+        "/coverage"
     ],
     "settings": {
         "import/resolver": {

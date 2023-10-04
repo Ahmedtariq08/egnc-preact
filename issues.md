@@ -19,6 +19,8 @@
 - "@testing-library/react": "^14.0.0",
 - "babel-jest": "^29.7.0",
 - "jest-environment-jsdom": "^29.7.0",
+- "jest": "^29.7.0",
+-  "@types/jest": "^29.5.5",
 
 #### Babel configuration - babel.config.json
 ```
