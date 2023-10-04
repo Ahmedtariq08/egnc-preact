@@ -3,8 +3,9 @@
 [EnhancementBadge]: https://img.shields.io/badge/Enhancement-yellow
 
 
-### Components
-![Fix][FixBadge]&nbsp; - &nbsp; Popup fade not working 
+### Generic / App
+![Fix][FixBadge]&nbsp; - &nbsp; Popup fade not working \
+![Fix][FixBadge]&nbsp; - &nbsp; Testing with react testing library and jsdom, render function cause file to not parse.
 
 ### Router
 ![Fix][FixBadge]&nbsp; - &nbsp; App gives multiple permissions call on redirection to login if unauthorized \

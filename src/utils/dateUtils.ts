@@ -32,8 +32,11 @@ export const dateTimeToDate = (date: string): string => {
  */
 export const dateFormatterForRequest = (date: string): string | undefined => {
     if (date) {
-        if (date.includes("T")) return date.split("T")[0] + " 00:00:00";
-        else return date + " 00:00:00";
+        if (date.includes("T")) {
+            return date.split("T")[0] + " 00:00:00";
+        } else {
+            return date + " 00:00:00";
+        }
     }
 };
 
@@ -52,7 +55,7 @@ export const dateFormatter = (date: string | null): string | null => {
                 const splitDate = date.split(dateSeperator);
                 let year = splitDate[0];
                 year = year.length > 4 ? year.substring(0, 4) : year;
-                const month = months[parseInt(splitDate[1]) - 1];
+                const month = months[parseInt(splitDate[1]) - 1] ?? "[Incorrect Month]";
                 let day = splitDate[2];
                 day = day.length > 2 ? day.substring(0, 2) : day;
                 outputDate = `${month} ${day}, ${year}`;
@@ -72,7 +75,10 @@ export const convertIsoString = (dateStr: string): string => {
     let result = dateStr;
     if (dateStr) {
         try {
-            const date = new Date(dateStr);
+            // replace GMT Timezone to avoid JS Date object conflicts
+            // const formattedDateStr = dateStr.replace(/-/g, "/").replace(/T.+/, "");
+            const formattedDateStr = dateStr.concat(" GMT");
+            const date = new Date(formattedDateStr);
             result = date.toISOString();
         } catch (error) {
             result = dateStr;

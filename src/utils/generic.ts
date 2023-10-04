@@ -122,7 +122,8 @@ export const getYesNoString = (attr: boolean): string => {
 
 export const isValidUrl = (urlString: string): boolean => {
     try {
-        return Boolean(new URL(urlString));
+        const url = new URL(urlString);
+        return ["http:", "https:"].includes(url.protocol);
     } catch (e) {
         return false;
     }
