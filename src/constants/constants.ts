@@ -110,6 +110,7 @@ export const Constants = {
         ACCESS_DENIED: "Access Denied.",
         SESSION_EXPIRED: "Session expired.",
         CONTACT_ADMIN: "You do not have access, please contact admin.",
+        FILE_OPENED: "File Opened",
     },
     TYPES: {
         TEXT: "TEXT",

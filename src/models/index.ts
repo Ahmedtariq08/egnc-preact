@@ -1,2 +1,2 @@
 export * from "./categories/declaration";
-export * from "./env";
+export * from "./generic";

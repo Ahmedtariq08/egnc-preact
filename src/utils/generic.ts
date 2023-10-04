@@ -1,4 +1,5 @@
 /* Generic functions to be used across application */
+import { type ojMessage } from "@oracle/oraclejet/ojmessage";
 
 export const areObjectsEqual = (obj1: object | undefined, obj2: object | undefined): boolean => {
     if (obj1 != null && obj2 != null) {
@@ -141,4 +142,20 @@ export const removeInputFocus = (elementId: string) => {
 // Generate random 11 character string (e.g 'bxzjw1ezyvr'), can be used for random DOM element Ids
 export const generateRandomString = (): string => {
     return Math.random().toString(36).substring(2);
+};
+
+export const getNotificationMessage = (
+    severity: ojMessage.Message["severity"],
+    summary: string,
+    detail?: string,
+    autoTimeout?: number,
+    timestamp?: string,
+): ojMessage.Message => {
+    return {
+        severity,
+        summary,
+        detail,
+        autoTimeout: severity !== "error" ? 5000 : -1,
+        timestamp: timestamp ?? new Date().toISOString(),
+    };
 };

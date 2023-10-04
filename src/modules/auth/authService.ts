@@ -56,6 +56,11 @@ export const getPermissionsFromStorage = (): UserPermissionsStorage | null => {
     return permissions ? JSON.parse(permissions) : null;
 };
 
+export const getUserId = () => {
+    const permissions = getPermissionsFromStorage();
+    return permissions?.id;
+};
+
 export const processPermissions = (permissions: UserPermissions): UserPermissionsStorage => {
     const roles = permissions.roles.map((role) => role.name);
     const isManager = roles.includes(UserRole.COMPLIANCE_MANAGER);
