@@ -6,7 +6,7 @@
 /**
  * @jest-environment jsdom
  */
-
+import react from "react";
 import { render, fireEvent } from "@testing-library/react";
 import { ButtonComponent } from "./ButtonComponent";
 
@@ -21,6 +21,14 @@ describe("Button test", () => {
         const button = result.getAllByRole("button");
         const input = 3;
         expect(input + 3).toEqual(6);
+    });
+    it("should create div", () => {
+        const element = document.createElement("div");
+        expect(element).not.toBeNull();
+    });
+    it("should render div", () => {
+        const element = render(<div></div>);
+        expect(element).not.toBeNull();
     });
 });
 

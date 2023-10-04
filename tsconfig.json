@@ -26,7 +26,8 @@
         "rootDir": "./src",
         "outDir": "./web",
         "resolveJsonModule": true,
-        "esModuleInterop": true
+        "esModuleInterop": true,
+        "allowJs": true
     },
     "include": ["./src/**/*"]
 }
