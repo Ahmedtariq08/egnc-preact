@@ -99,7 +99,16 @@
             }
         ]
     },
-    "ignorePatterns": ["jest.config.js", "ojet.config.js", "jest.setup.js", "babel.config.js"],
+    "ignorePatterns": [
+        "jest.config.js",
+        "ojet.config.js",
+        "cypress.config.ts",
+        "webpack.config.ts",
+        "*.css",
+        "*.svg",
+        "/cypress",
+        "/coverage"
+    ],
     "settings": {
         "import/resolver": {
             "typescript": {}

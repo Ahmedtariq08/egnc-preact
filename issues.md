@@ -7,6 +7,56 @@
 ![Fix][FixBadge]&nbsp; - &nbsp; Popup fade not working \
 ![Fix][FixBadge]&nbsp; - &nbsp; Testing with react testing library and jsdom, render function cause file to not parse.
 
+### Testing 
+**Packages for testing with Jest and testing-library/react, configuration with babel**
+- "@babel/core": "^7.23.0"
+- "@babel/plugin-transform-modules-commonjs": "^7.23.0",
+- "@babel/preset-env": "^7.22.20",
+- "@babel/preset-react": "^7.22.15",
+- "@babel/preset-typescript": "^7.23.0",
+- "@testing-library/jest-dom": "^6.1.3",
+- "@testing-library/preact": "^3.2.3",
+- "@testing-library/react": "^14.0.0",
+- "babel-jest": "^29.7.0",
+- "jest-environment-jsdom": "^29.7.0",
+- "jest": "^29.7.0",
+-  "@types/jest": "^29.5.5",
+
+#### Babel configuration - babel.config.json
+```
+{
+    "presets": [
+        ["@babel/preset-env", { "targets": { "node": "current" } }],
+        "@babel/preset-react",
+        "@babel/preset-typescript"
+    ],
+    "plugins": ["@babel/plugin-transform-modules-commonjs"]
+}
+```
+
+#### Jest configuration - jest.config.js
+```
+module.exports = {
+    preset: "ts-jest",
+    testEnvironment: "jsdom",
+    // setupFilesAfterEnv: ["<rootDir>/jest.setup.js"],
+    // transform: {
+    //     "^.+\\.(ts|tsx)?$": "ts-jest",
+    //     "^.+\\.(js|jsx)$": "babel-jest",
+    // },
+    extensionsToTreatAsEsm: [".ts", ".tsx"],
+    moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "node"],
+    // transform: {
+    //     "^.+\\.[t|j]sx?$": "babel-jest",
+    // },
+    transform: {
+        "node_modules/variables/.+\\.(j|t)sx?$": "ts-jest",
+        "^.+\\.(ts|tsx)?$": "ts-jest",
+    },
+    transformIgnorePatterns: ["<rootDir>/node_modules/"],
+    // modulePaths: ["<rootDir>"],
+};
+```
 ### Router
 ![Fix][FixBadge]&nbsp; - &nbsp; App gives multiple permissions call on redirection to login if unauthorized \
 ![Enhancement][EnhancementBadge]&nbsp; - &nbsp; Redirect to same page that uses was after logging in (router state ,location)
