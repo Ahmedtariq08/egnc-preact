@@ -1,6 +1,11 @@
 /* Contains all types / Interfaces / Constants related to reports page */
 import { Icons } from "../../constants";
 import { type OjOption } from "../../models";
+import {
+    generateSpecificationSubstanceReport,
+    getNonParentSpecification,
+    getSubstanceOfSpecification,
+} from "./reportService";
 
 // ANCHOR - Interfaces
 export interface Report {
@@ -37,6 +42,8 @@ export interface Field {
 }
 
 // ANCHOR - Configuration of specific reports
+
+// Specification Substance Report
 const SVHC_REPORT: ReportToBeGenerated = {
     title: "Specification Substance Report",
     icon: Icons.icons.specification,
@@ -46,18 +53,19 @@ const SVHC_REPORT: ReportToBeGenerated = {
             label: "Select a Specification",
             value: "",
             selection: "single",
-            getOptions: reportService.getNonParentSpecification,
+            getOptions: getNonParentSpecification as Field["getOptions"],
         },
         {
             title: "Substance",
             label: "Select one or more Substances",
             value: [],
             selection: "multiple",
-            getOptions: reportService.getSubstanceOfSpecification,
+            getOptions: getSubstanceOfSpecification as Field["getOptions"],
             dependsOn: "Specification",
         },
     ],
-    generateReport: reportService.generateSpecificationSubstanceReport,
+    generateReport: generateSpecificationSubstanceReport as ReportToBeGenerated["generateReport"],
 };
 
+// Add all reports in the array
 export const allReports: ReportToBeGenerated[] = [SVHC_REPORT];

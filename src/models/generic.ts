@@ -12,6 +12,7 @@ export interface EnvServices {
 export interface OjOption {
     value: unknown;
     label: string;
+    children?: unknown;
 }
 
 export class Response {

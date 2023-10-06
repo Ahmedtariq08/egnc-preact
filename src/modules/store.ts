@@ -5,6 +5,7 @@ import AuthStore from "./auth/authStore";
 import CommonStore from "./commonStore";
 import DashboardStore from "./dashboard/dashboardStore";
 import PendingStore from "./pending/pendingStore";
+import ReportStore from "./reports/reportsStore";
 
 interface Store {
     commonStore: CommonStore;
@@ -12,6 +13,7 @@ interface Store {
     layoutStore: LayoutStore;
     dashboardStore: DashboardStore;
     pendingStore: PendingStore;
+    reportStore: ReportStore;
 }
 
 export const store: Store = {
@@ -20,6 +22,7 @@ export const store: Store = {
     layoutStore: new LayoutStore(),
     dashboardStore: new DashboardStore(),
     pendingStore: new PendingStore(),
+    reportStore: new ReportStore(),
 };
 
 injectStores({

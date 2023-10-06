@@ -17,6 +17,7 @@ export const URLs = {
         PART_GROUP: `${Main}/partGroup`,
         MANUFACTURER: `${Main}/manufacturer`,
         DECLARATION: `${Main}/declaration`,
+        SPECIFICATION: `${Main}/specification`,
         PREFERENCE: `${Main}/preference`,
         REPORT: `${Main}/report`,
         ATTACHMENT: `${Main}/attachments`,
