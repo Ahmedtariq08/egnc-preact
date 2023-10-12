@@ -39,9 +39,7 @@ export const Header = observer(() => {
                         className="oj-sm-only-hide oj-web-applayout-header-title oj-color-invert"
                         title="Application Name"
                     >
-                        <span className="space">
-                            Environment Governance &amp; Compliance
-                        </span>
+                        <span className="space">Environment Governance &amp; Compliance</span>
                     </h1>
                 </div>
                 <div className="oj-flex-bar-end">

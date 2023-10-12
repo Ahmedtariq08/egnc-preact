@@ -107,7 +107,8 @@
         "*.css",
         "*.svg",
         "/cypress",
-        "/coverage"
+        "/coverage",
+        "/tests"
     ],
     "settings": {
         "import/resolver": {

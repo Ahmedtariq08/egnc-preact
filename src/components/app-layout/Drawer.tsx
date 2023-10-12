@@ -18,14 +18,11 @@ export const Drawer = observer(() => {
     const redirection = (event: any, link: Pages) => {
         event.preventDefault();
         toggleDrawer();
-        navigateToPath(link);
+        void navigateToPath(link);
     };
 
     return (
-        <div
-            slot="start"
-            className="drawer-start oj-sm-margin demo-drawer oj-bg-neutral-170 oj-color-invert"
-        >
+        <div slot="start" className="drawer-start oj-sm-margin demo-drawer oj-bg-neutral-170 oj-color-invert">
             <oj-navigation-list display="all" drillMode="none" data={data}>
                 <template
                     slot="itemTemplate"
@@ -36,9 +33,7 @@ export const Drawer = observer(() => {
                             }}
                         >
                             <a href="#">
-                                <span
-                                    className={`oj-navigationlist-item-icon ${item.data.icon}`}
-                                ></span>
+                                <span className={`oj-navigationlist-item-icon ${item.data.icon}`}></span>
                                 {item.data.label}
                             </a>
                         </li>

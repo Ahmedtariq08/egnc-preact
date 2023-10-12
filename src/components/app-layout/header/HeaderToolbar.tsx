@@ -19,7 +19,7 @@ export const HeaderToolbar = observer(() => {
                 buttonTitle="Dashboard"
                 icon={Icons.icons.home}
                 ojAction={() => {
-                    navigateToPath(Pages.Dashboard);
+                    void navigateToPath(Pages.Dashboard);
                 }}
             />
         );

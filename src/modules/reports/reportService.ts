@@ -3,7 +3,7 @@ import { requests, URLs } from "../../api";
 import { dateFormatter } from "../../utils/dateUtils";
 import { downloadAttachment } from "../[common]/attachmentService";
 import { getUserId } from "../auth/authService";
-import { type Report } from "./reportModels";
+import { type Field, type Report } from "./reportModels";
 import { type OjOption, type Response } from "../../models";
 import { specificationApi } from "../[common]/specificationService";
 
@@ -11,6 +11,8 @@ export const SELECT_ALL_SUBSTANCE = { value: 8031998, label: "*All Substances*" 
 
 // ANCHOR - APIs
 const reportUrl = URLs.MAIN.REPORT;
+export const reportProgressUrl = `${reportUrl}/progress`;
+
 export const reportApis = {
     getAllReports: async (userId: number) => await requests.get<Report[]>(`${reportUrl}/${userId}`),
 
@@ -50,6 +52,21 @@ export const deleteReports = async (reportIds: number[]): Promise<string> => {
 
 export const downloadReport = async (reportUUID: string): Promise<Response> => {
     return await downloadAttachment(reportUUID);
+};
+
+// ANCHOR - Utility functions
+export const valueIsValid = (value: string | string[] | number | number[]) => {
+    return (Array.isArray(value) && value.length > 0) || (!Array.isArray(value) && value);
+};
+export const getNoMatchesFoundMessage = (optionsDP: unknown) => {
+    return optionsDP ? "No result found" : "Loading results";
+};
+export const getDependedUponField = (field: Field, allFields: Field[]): Field | undefined => {
+    return allFields.find((fd) => fd.title === field.dependsOn);
+};
+export const getFilterMessage = (totalResults: number) => {
+    const msg = "More results available, please filter further.";
+    return totalResults ? msg.replace("More", String(totalResults)) : msg;
 };
 
 // ANCHOR - Specification Substance report functions

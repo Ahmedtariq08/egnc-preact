@@ -45,9 +45,7 @@ const testFavourites = new MutableArrayDataProvider(
 );
 
 export const FavouritesAndRecents = () => {
-    const [selectedTab, setSelectedTab] = useState<FavAndRecent>(
-        FavAndRecent.Recents,
-    );
+    const [selectedTab, setSelectedTab] = useState<FavAndRecent>(FavAndRecent.Recents);
 
     const getFavouritesAndRecents = () => {
         console.log("api call goes");
@@ -56,11 +54,7 @@ export const FavouritesAndRecents = () => {
     const FavouritesList = () => {
         return (
             <div className="oj-panel oj-sm-margin-2x">
-                <oj-list-view
-                    id="listview"
-                    data={testFavourites}
-                    class="oj-listview-item-padding-off favDiv"
-                >
+                <oj-list-view id="listview" data={testFavourites} class="oj-listview-item-padding-off favDiv">
                     <template
                         slot="itemTemplate"
                         render={(item) => (
@@ -74,9 +68,7 @@ export const FavouritesAndRecents = () => {
                                     className="oj-link-embedded oj-disabled oj-link-standalone 
                                     oj-link-subtle-primary"
                                 >
-                                    <span
-                                        className={`oj-ux-icon-size-3x ${Icons.icons.cross}`}
-                                    ></span>
+                                    <span className={`oj-ux-icon-size-3x ${Icons.icons.cross}`}></span>
                                 </a>
                             </li>
                         )}
@@ -88,12 +80,7 @@ export const FavouritesAndRecents = () => {
 
     const RecentsList = () => {
         return (
-            <div
-                slot="Recent Items"
-                id="Recent Items"
-                role="tabpanel"
-                aria-labelledby="Recent Items-tab"
-            >
+            <div slot="Recent Items" id="Recent Items" role="tabpanel" aria-labelledby="Recent Items-tab">
                 <div className="oj-panel oj-sm-margin-2x">
                     <oj-list-view
                         id="listview"
@@ -113,9 +100,7 @@ export const FavouritesAndRecents = () => {
                                         className="oj-link-embedded oj-disabled oj-link-standalone 
                                         oj-link-subtle-primary"
                                     >
-                                        <span
-                                            className={`oj-ux-icon-size-3x ${Icons.icons.cross}`}
-                                        ></span>
+                                        <span className={`oj-ux-icon-size-3x ${Icons.icons.cross}`}></span>
                                     </a>
                                 </li>
                             )}
@@ -137,8 +122,7 @@ export const FavouritesAndRecents = () => {
 
     return (
         <oj-menu-button onojAction={getFavouritesAndRecents} display="icons">
-            <span slot="endIcon" className={Icons.icons.star}></span>Favorites
-            and Recent Items
+            <span slot="endIcon" className={Icons.icons.star}></span>Favorites and Recent Items
             <oj-menu id="myMenu5" slot="menu" class="oj-sm-padding-4x">
                 <h5>Favorites and Recent Items</h5>
                 <div>
@@ -165,11 +149,7 @@ export const FavouritesAndRecents = () => {
                         </oj-tab-bar>
                     </div>
                 </div>
-                {selectedTab === FavAndRecent.Recents ? (
-                    <RecentsList />
-                ) : (
-                    <FavouritesList />
-                )}
+                {selectedTab === FavAndRecent.Recents ? <RecentsList /> : <FavouritesList />}
             </oj-menu>
         </oj-menu-button>
     );

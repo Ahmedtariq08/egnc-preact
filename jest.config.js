@@ -2,4 +2,7 @@
 
 module.exports = {
     preset: "ts-jest",
+    moduleNameMapper: {
+        "^ojs/": "<rootDir>/src/assets/dummy.js",
+    },
 };
