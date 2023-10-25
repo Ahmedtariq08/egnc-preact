@@ -1,6 +1,6 @@
 import type { EnvServices } from "../models";
 
-const { Auth, Main, ThirdPartyAuth } = JSON.parse(process.env.SERVICES ?? "") as EnvServices;
+const { Auth, Main, ThirdPartyAuth } = JSON.parse(process.env.SERVICES ?? "{}") as EnvServices;
 
 export const URLs = {
     AUTH: {
